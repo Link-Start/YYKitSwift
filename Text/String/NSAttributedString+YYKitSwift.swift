@@ -107,7 +107,10 @@ public extension NSAttributedString {
     }
 
     func strikethroughStyle(at index: Int) -> NSUnderlineStyle {
-        return attribute(NSStrikethroughStyleAttributeName, at: index) as? NSUnderlineStyle ?? .styleNone
+        if let style = attribute(NSStrikethroughStyleAttributeName, at: index) as? NSUnderlineStyle {
+            return style
+        }
+        return .styleNone
     }
 
     /// 删除线颜色（只读）
@@ -125,7 +128,10 @@ public extension NSAttributedString {
     }
 
     func underlineStyle(at index: Int) -> NSUnderlineStyle {
-        return attribute(kCTUnderlineStyleAttributeName as String, at: index) as? NSUnderlineStyle ?? .styleNone
+        if let style = attribute(kCTUnderlineStyleAttributeName as String, at: index) as? NSUnderlineStyle {
+            return style
+        }
+        return .styleNone
     }
 
     /// 下划线颜色（只读）
@@ -729,7 +735,12 @@ public extension NSMutableAttributedString {
     ///   - string: 要插入的字符串
     ///   - location: 插入位置
     func insert(_ string: String, at location: Int) {
-        let attrs = self.attributes(at: location, effectiveRange: nil) ?? [:]
+        let attrs: [NSAttributedString.Key: Any]
+        if let attr = self.attributes(at: location, effectiveRange: nil) {
+            attrs = attr
+        } else {
+            attrs = [:]
+        }
         let attrString = NSAttributedString(string: string, attributes: attrs)
         insert(attrString, at: location)
     }
@@ -740,7 +751,12 @@ public extension NSMutableAttributedString {
     ///
     /// - Parameter string: 要追加的字符串
     func append(_ string: String) {
-        let attrs = self.attributes(at: max(0, length - 1), effectiveRange: nil) ?? [:]
+        let attrs: [NSAttributedString.Key: Any]
+        if let attr = self.attributes(at: max(0, length - 1), effectiveRange: nil) {
+            attrs = attr
+        } else {
+            attrs = [:]
+        }
         let attrString = NSAttributedString(string: string, attributes: attrs)
         append(attrString)
     }
