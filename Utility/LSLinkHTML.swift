@@ -79,7 +79,7 @@ public class LSLinkHTML: NSObject {
     /// - Parameter text: 原始文本
     /// - Returns: 链接数组
     public static func detectURLs(in text: String) -> [LSLink] {
-        let urlPattern = "(?i)\\b((?:https?://|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(?:\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(?:\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»""'']))"
+        let urlPattern = "(?i)\\b((?:https?://|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(?:\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(?:\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?]))"
         return detectPattern(in: text, pattern: urlPattern, type: .url)
     }
 

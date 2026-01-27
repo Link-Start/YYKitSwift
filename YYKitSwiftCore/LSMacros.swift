@@ -100,10 +100,16 @@ public struct LSMacros {
     /// 状态栏高度
     @inlinable
     public static var statusBarHeight: CGFloat {
-        let window = UIApplication.shared.windows.first ?? UIApplication.shared.connectedScenes
-            .compactMap { ($0 as? UIWindowScene)?.keyWindow }
-            .first ?? UIWindow()
-        return window.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        if #available(iOS 15.0, *) {
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let statusBarManager = windowScene.statusBarManager {
+                return statusBarManager.statusBarFrame.height
+            }
+        }
+        if let window = UIApplication.shared.windows.first {
+            return window.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        }
+        return 0
     }
 
     /// 导航栏高度
@@ -121,10 +127,16 @@ public struct LSMacros {
     /// 底部安全区域高度
     @inlinable
     public static var safeAreaBottom: CGFloat {
-        let window = UIApplication.shared.windows.first ?? UIApplication.shared.connectedScenes
-            .compactMap { ($0 as? UIWindowScene)?.keyWindow }
-            .first ?? UIWindow()
-        return window.safeAreaInsets.bottom
+        if #available(iOS 15.0, *) {
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let window = windowScene.windows.first {
+                return window.safeAreaInsets.bottom
+            }
+        }
+        if let window = UIApplication.shared.windows.first {
+            return window.safeAreaInsets.bottom
+        }
+        return 0
     }
 
     // MARK: - 主窗口
@@ -209,10 +221,12 @@ public final class LSWeakBox<T: AnyObject>: NSObject {
 // MARK: - 关联对象 Key
 
 /// 关联对象 Key 空间
-private var associatedObjectKey: UInt8 = 0
+private enum AssociatedObjectKey {
+    static var key: UInt8 = 0
+}
 
 /// 获取关联对象 Key
 @inlinable
 public func LSAssociatedObjectKey() -> UnsafeRawPointer {
-    UnsafeRawPointer(&associatedObjectKey)
+    UnsafeRawPointer(&AssociatedObjectKey.key)
 }

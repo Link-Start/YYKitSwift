@@ -568,7 +568,7 @@ private class HashContext {
         }
     }
 
-    var init: (() -> Void)? {
+    var `init`: (() -> Void)? {
         return initFn
     }
 
@@ -576,7 +576,7 @@ private class HashContext {
         return updateFn
     }
 
-    var final: (() -> Data?)? {
+    var `final`: (() -> Data?)? {
         return finalFn
     }
 

@@ -561,7 +561,7 @@ public struct LSActionSheetAction {
     }
 
     /// 默认操作
-    public static func default(_ title: String, handler: (() -> Void)? = nil) -> LSActionSheetAction {
+    public static func `default`(_ title: String, handler: (() -> Void)? = nil) -> LSActionSheetAction {
         return LSActionSheetAction(title: title, style: .default, handler: handler)
     }
 

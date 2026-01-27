@@ -489,7 +489,7 @@ public class LSHighlightTextView: LSTextView {
         setupHighlight()
     }
 
-    public required init?(coder: NSCoder) NSCoder) {
+    public required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupHighlight()
     }

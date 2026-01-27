@@ -851,7 +851,7 @@ public extension UIViewController {
         return button
     }
 
-    @objc private func handleBarButtonTap(_ sender: UIBarButtonItem {
+    @objc private func handleBarButtonTap(_ sender: UIBarButtonItem) {
         if let action = objc_getAssociatedObject(sender, "%p") as? (() -> Void) {
             action()
         }
