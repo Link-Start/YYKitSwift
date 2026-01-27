@@ -153,6 +153,13 @@ public final class LSWebImageManager, @unchecked Sendable {
         }
 
         // 创建操作
+        let transformBlock: LSImageTransformBlock?
+        if let t = transform {
+            transformBlock = t
+        } else {
+            transformBlock = sharedTransformBlock
+        }
+
         let operation = LSWebImageOperation(
             url: url,
             options: options,
@@ -160,7 +167,7 @@ public final class LSWebImageManager, @unchecked Sendable {
             timeout: timeout,
             headers: headers(for: url),
             progress: progress,
-            transform: transform ?? sharedTransformBlock
+            transform: transformBlock
         ) { [weak self] image, url, from, stage, error in
             guard let self = self else { return }
 

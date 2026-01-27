@@ -86,7 +86,10 @@ public class LSAnimatedImageView: UIImageView {
 
     /// 当前动画图像（如果实现了 LSAnimatedImage 协议）
     private var animatedImage: LSAnimatedImage? {
-        return image as? LSAnimatedImage ?? highlightedImage as? LSAnimatedImage
+        if let animImg = image as? LSAnimatedImage {
+            return animImg
+        }
+        return highlightedImage as? LSAnimatedImage
     }
 
     /// 是否有有效的动画图像
