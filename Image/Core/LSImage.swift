@@ -196,8 +196,16 @@ public class LSImage: UIImage, LSAnimatedImage {
         _decoder = decoder
         animatedImageData = data
         animatedImageType = type
-        _frameCount = decoder?.frameCount ?? 1
-        _loopCount = decoder?.loopCount ?? 0
+        if let fc = decoder?.frameCount {
+            _frameCount = fc
+        } else {
+            _frameCount = 1
+        }
+        if let lc = decoder?.loopCount {
+            _loopCount = lc
+        } else {
+            _loopCount = 0
+        }
 
         // 计算内存大小
         calculateMemorySize()
@@ -209,7 +217,8 @@ public class LSImage: UIImage, LSAnimatedImage {
         // 从 NSCoding 恢复数据
         if let data = coder.decodeObject(forKey: "animatedImageData") as? Data {
             animatedImageData = data
-            animatedImageType = LSImageType(rawValue: coder.decodeInteger(forKey: "animatedImageType")) ?? .unknown
+            let typeValue = LSImageType(rawValue: coder.decodeInteger(forKey: "animatedImageType"))
+            animatedImageType = typeValue ?? .unknown
             _frameCount = UInt(coder.decodeInteger(forKey: "frameCount"))
             _loopCount = UInt(coder.decodeInteger(forKey: "loopCount"))
 
@@ -273,7 +282,10 @@ public class LSImage: UIImage, LSAnimatedImage {
 
     public func animatedImageDuration(at index: UInt) -> TimeInterval {
         guard index < _frameCount else { return 0 }
-        return _decoder?.frameDuration(at: index) ?? 0
+        if let decoder = _decoder {
+            return decoder.frameDuration(at: index)
+        }
+        return 0
     }
 
     public func animatedImageContentsRect(at index: UInt) -> CGRect {
