@@ -28,72 +28,114 @@ public extension Date {
 
     /// 年份
     var ls_year: Int {
-        return components.year ?? 0
+        if let y = components.year {
+            return y
+        }
+        return 0
     }
 
     /// 月份（1-12）
     var ls_month: Int {
-        return components.month ?? 0
+        if let m = components.month {
+            return m
+        }
+        return 0
     }
 
     /// 日（1-31）
     var ls_day: Int {
-        return components.day ?? 0
+        if let d = components.day {
+            return d
+        }
+        return 0
     }
 
     /// 小时（0-23）
     var ls_hour: Int {
-        return components.hour ?? 0
+        if let h = components.hour {
+            return h
+        }
+        return 0
     }
 
     /// 分钟（0-59）
     var ls_minute: Int {
-        return components.minute ?? 0
+        if let m = components.minute {
+            return m
+        }
+        return 0
     }
 
     /// 秒（0-59）
     var ls_second: Int {
-        return components.second ?? 0
+        if let s = components.second {
+            return s
+        }
+        return 0
     }
 
     /// 纳秒
     var ls_nanosecond: Int {
-        return components.nanosecond ?? 0
+        if let n = components.nanosecond {
+            return n
+        }
+        return 0
     }
 
     /// 星期（1-7，第一天基于用户设置）
     var ls_weekday: Int {
-        return components.weekday ?? 0
+        if let w = components.weekday {
+            return w
+        }
+        return 0
     }
 
     /// 本月第几周
     var ls_weekdayOrdinal: Int {
-        return components.weekdayOrdinal ?? 0
+        if let w = components.weekdayOrdinal {
+            return w
+        }
+        return 0
     }
 
     /// 本月第几周（1-5）
     var ls_weekOfMonth: Int {
-        return components.weekOfMonth ?? 0
+        if let w = components.weekOfMonth {
+            return w
+        }
+        return 0
     }
 
     /// 本年第几周（1-53）
     var ls_weekOfYear: Int {
-        return components.weekOfYear ?? 0
+        if let w = components.weekOfYear {
+            return w
+        }
+        return 0
     }
 
     /// 周年
     var ls_yearForWeekOfYear: Int {
-        return components.yearForWeekOfYear ?? 0
+        if let y = components.yearForWeekOfYear {
+            return y
+        }
+        return 0
     }
 
     /// 季度（1-4）
     var ls_quarter: Int {
-        return components.quarter ?? 0
+        if let q = components.quarter {
+            return q
+        }
+        return 0
     }
 
     /// 是否闰月
     var ls_isLeapMonth: Bool {
-        return components.isLeapMonth ?? false
+        if let isLeap = components.isLeapMonth {
+            return isLeap
+        }
+        return false
     }
 
     /// 是否闰年

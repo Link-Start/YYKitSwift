@@ -528,24 +528,37 @@ public extension Bundle {
 
     /// 应用名称
     var ls_appName: String {
-        return infoDictionary?["CFBundleDisplayName"] as? String
-            ?? infoDictionary?["CFBundleName"] as? String
-            ?? "Unknown"
+        if let name = infoDictionary?["CFBundleDisplayName"] as? String {
+            return name
+        }
+        if let name = infoDictionary?["CFBundleName"] as? String {
+            return name
+        }
+        return "Unknown"
     }
 
     /// 应用版本号
     var ls_appVersion: String {
-        return infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        if let version = infoDictionary?["CFBundleShortVersionString"] as? String {
+            return version
+        }
+        return ""
     }
 
     /// Build 版本
     var ls_buildVersion: String {
-        return infoDictionary?["CFBundleVersion"] as? String ?? ""
+        if let version = infoDictionary?["CFBundleVersion"] as? String {
+            return version
+        }
+        return ""
     }
 
     /// Bundle ID
     var ls_bundleIdentifier: String {
-        return bundleIdentifier ?? ""
+        if let bundleId = bundleIdentifier {
+            return bundleId
+        }
+        return ""
     }
 }
 
