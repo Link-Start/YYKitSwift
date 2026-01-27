@@ -96,7 +96,7 @@ public class LSScrollViewController: UIViewController {
         case bottom
         case topCenter
         case bottomCenter
-        hidden
+        case hidden
     }
 
     // MARK: - 初始化

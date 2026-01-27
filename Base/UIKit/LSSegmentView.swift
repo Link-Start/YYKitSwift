@@ -143,7 +143,7 @@ public class LSSegmentView: UIView {
         case line            // 线条指示器
         case underline       // 下划线指示器
         case box             // 背景框
-        .none            // 无指示器
+        case none            // 无指示器
     }
 
     // MARK: - UI 组件

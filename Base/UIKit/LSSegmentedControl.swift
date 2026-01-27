@@ -26,7 +26,7 @@ public class LSSegmentedControl: UIView {
         case plain              // 平面
         case stroked            // 描边
         case filled             // 填充
-        case胶囊                  // 胶囊样式
+        case capsule            // 胶囊样式
     }
 
     // MARK: - 属性

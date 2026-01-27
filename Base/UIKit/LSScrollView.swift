@@ -28,7 +28,7 @@ public class LSScrollView: UIView {
     public enum ScrollState {
         case idle
         case dragging
-        decelerating
+        case decelerating
     }
 
     // MARK: - 属性
