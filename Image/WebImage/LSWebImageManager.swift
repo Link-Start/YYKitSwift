@@ -19,8 +19,7 @@ import Foundation
 ///
 /// - Note: 此类使用 NSLock 保护内部状态，在 Swift 6 严格并发模式下
 ///         使用 @unchecked Sendable 表示手动实现了线程安全。
-@unchecked Sendable
-public class LSWebImageManager {
+public final class LSWebImageManager, @unchecked Sendable {
 
     // MARK: - 共享实例
 
