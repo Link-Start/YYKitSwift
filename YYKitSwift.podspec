@@ -37,6 +37,7 @@ YYKitSwift 是 YYKit 的 Swift 6 重写版本，提供了完整的 iOS 13+ 支�
   s.default_subspecs = 'Core'
   s.subspec 'Core' do |core|
     core.source_files = 'YYKitSwiftCore/**/*.swift'
+    core.resource_bundles = {'YYKitSwiftCore' => 'YYKitSwiftCore/PrivacyInfo.xcprivacy'}
     core.frameworks = 'Foundation'
   end
 
