@@ -98,22 +98,34 @@ public extension Dictionary {
 
     /// 获取字符串值（带默认值）
     func ls_string(forKey key: Key, default defaultValue: String) -> String {
-        return ls_string(forKey: key) ?? defaultValue
+        if let value = ls_string(forKey: key) {
+            return value
+        }
+        return defaultValue
     }
 
     /// 获取整数值（带默认值）
     func ls_int(forKey key: Key, default defaultValue: Int) -> Int {
-        return ls_int(forKey: key) ?? defaultValue
+        if let value = ls_int(forKey: key) {
+            return value
+        }
+        return defaultValue
     }
 
     /// 获取浮点数值（带默认值）
     func ls_double(forKey key: Key, default defaultValue: Double) -> Double {
-        return ls_double(forKey: key) ?? defaultValue
+        if let value = ls_double(forKey: key) {
+            return value
+        }
+        return defaultValue
     }
 
     /// 获取布尔值（带默认值）
     func ls_bool(forKey key: Key, default defaultValue: Bool) -> Bool {
-        return ls_bool(forKey: key) ?? defaultValue
+        if let value = ls_bool(forKey: key) {
+            return value
+        }
+        return defaultValue
     }
 
     // MARK: - 键操作
@@ -265,7 +277,15 @@ public extension Dictionary where Key == String, Value == String {
     ///
     /// - Returns: 查询字符串（如: key1=value1&key2=value2）
     var ls_queryString: String {
-        let components = map { "\($0.key)=\($0.value.ls_urlEncoded ?? "")" }
+        let components = map { key, value in
+            let encoded: String
+            if let enc = value.ls_urlEncoded {
+                encoded = enc
+            } else {
+                encoded = ""
+            }
+            return "\(key)=\(encoded)"
+        }
         return components.joined(separator: "&")
     }
 
@@ -280,8 +300,19 @@ public extension Dictionary where Key == String, Value == String {
             let components = pair.components(separatedBy: "=")
             guard components.count == 2 else { continue }
 
-            let key = components[0].ls_urlDecoded ?? components[0]
-            let value = components[1].ls_urlDecoded ?? components[1]
+            let key: String
+            if let decoded = components[0].ls_urlDecoded {
+                key = decoded
+            } else {
+                key = components[0]
+            }
+
+            let value: String
+            if let decoded = components[1].ls_urlDecoded {
+                value = decoded
+            } else {
+                value = components[1]
+            }
 
             result[key] = value
         }

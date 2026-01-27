@@ -81,7 +81,12 @@ public final class LSClassInfo: NSObject {
 
             // 获取类型编码
             let encoding = ivar_getTypeEncoding(ivar)
-            let typeString = encoding.map { String(cString: $0) } ?? ""
+            let typeString: String
+            if let enc = encoding {
+                typeString = String(cString: enc)
+            } else {
+                typeString = ""
+            }
 
             let propertyInfo = LSPropertyInfo(name: propertyName, typeEncoding: typeString)
 
