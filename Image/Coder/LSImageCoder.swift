@@ -110,8 +110,21 @@ public class LSImageFrame: NSObject, NSCopying {
     public convenience init(image: UIImage) {
         self.init()
         self.image = image
-        self.width = UInt(image.cgImage?.width ?? 0)
-        self.height = UInt(image.cgImage?.height ?? 0)
+        let cgWidth: Int
+        if let img = image.cgImage {
+            cgWidth = img.width
+        } else {
+            cgWidth = 0
+        }
+        self.width = UInt(cgWidth)
+
+        let cgHeight: Int
+        if let img = image.cgImage {
+            cgHeight = img.height
+        } else {
+            cgHeight = 0
+        }
+        self.height = UInt(cgHeight)
     }
 
     // MARK: - NSCopying
@@ -292,17 +305,53 @@ public enum LSImageTypeDetector {
 
     /// 创建 FourCC 码
     internal static func fourCC(_ c1: Character, _ c2: Character, _ c3: Character, _ c4: Character) -> UInt32 {
-        let v1 = UInt32(c1.asciiValue ?? 0)
-        let v2 = UInt32(c2.asciiValue ?? 0)
-        let v3 = UInt32(c3.asciiValue ?? 0)
-        let v4 = UInt32(c4.asciiValue ?? 0)
+        let v1: UInt32
+        if let av = c1.asciiValue {
+            v1 = UInt32(av)
+        } else {
+            v1 = 0
+        }
+
+        let v2: UInt32
+        if let av = c2.asciiValue {
+            v2 = UInt32(av)
+        } else {
+            v2 = 0
+        }
+
+        let v3: UInt32
+        if let av = c3.asciiValue {
+            v3 = UInt32(av)
+        } else {
+            v3 = 0
+        }
+
+        let v4: UInt32
+        if let av = c4.asciiValue {
+            v4 = UInt32(av)
+        } else {
+            v4 = 0
+        }
+
         return (v1 << 24) | (v2 << 16) | (v3 << 8) | v4
     }
 
     /// 创建 TwoCC 码
     internal static func twoCC(_ c1: Character, _ c2: Character) -> UInt16 {
-        let v1 = UInt16(c1.asciiValue ?? 0)
-        let v2 = UInt16(c2.asciiValue ?? 0)
+        let v1: UInt16
+        if let av = c1.asciiValue {
+            v1 = UInt16(av)
+        } else {
+            v1 = 0
+        }
+
+        let v2: UInt16
+        if let av = c2.asciiValue {
+            v2 = UInt16(av)
+        } else {
+            v2 = 0
+        }
+
         return (v1 << 8) | v2
     }
 
@@ -514,7 +563,12 @@ public enum LSCGImageHelper {
 
         let width = imageRef.width
         let height = imageRef.height
-        let colorSpace = imageRef.colorSpace ?? LSColorSpace.deviceRGB
+        let colorSpace: CGColorSpace
+        if let cs = imageRef.colorSpace {
+            colorSpace = cs
+        } else {
+            colorSpace = LSColorSpace.deviceRGB
+        }
 
         // 根据方向计算目标尺寸
         var destWidth = width
@@ -589,7 +643,12 @@ public enum LSCGImageHelper {
 
         let width = Int(ceil(destSize.width))
         let height = Int(ceil(destSize.height))
-        let colorSpace = imageRef.colorSpace ?? LSColorSpace.deviceRGB
+        let colorSpace: CGColorSpace
+        if let cs = imageRef.colorSpace {
+            colorSpace = cs
+        } else {
+            colorSpace = LSColorSpace.deviceRGB
+        }
 
         guard let context = CGContext(
             data: nil,
@@ -642,7 +701,7 @@ public enum LSCGImageHelper {
             return nil
         }
 
-        return (destination.data as? Data) ?? nil
+        return destination.data as? Data
     }
 }
 
@@ -740,7 +799,7 @@ public enum LSWebPHelper {
             return nil
         }
 
-        return (destination.data as? Data) ?? nil
+        return destination.data as? Data
     }
 }
 

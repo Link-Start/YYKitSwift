@@ -125,7 +125,10 @@ public final class LSDiskCache: NSObject, @unchecked Sendable {
     /// - Returns: 键是否在缓存中
     public func containsObject(forKey key: String) -> Bool {
         guard !key.isEmpty else { return false }
-        return kvStorage?.itemExists(forKey: key) ?? false
+        if let storage = kvStorage {
+            return storage.itemExists(forKey: key)
+        }
+        return false
     }
 
     /// 返回给定键是否在缓存中（异步）
@@ -253,7 +256,10 @@ public final class LSDiskCache: NSObject, @unchecked Sendable {
     ///
     /// - Returns: 总对象数量
     public var totalCount: Int {
-        return kvStorage?.getItemsCount() ?? 0
+        if let storage = kvStorage {
+            return storage.getItemsCount()
+        }
+        return 0
     }
 
     /// 获取缓存中的对象数量（异步）
@@ -262,7 +268,12 @@ public final class LSDiskCache: NSObject, @unchecked Sendable {
     /// - Parameter block: 完成时在后台队列调用的块
     public func totalCount(withBlock block: ((Int) -> Void)?) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            let count = self?.totalCount ?? 0
+            let count: Int
+            if let weakSelf = self {
+                count = weakSelf.totalCount
+            } else {
+                count = 0
+            }
             block?(count)
         }
     }
@@ -272,7 +283,10 @@ public final class LSDiskCache: NSObject, @unchecked Sendable {
     ///
     /// - Returns: 对象的总成本（字节）
     public var totalCost: Int {
-        return kvStorage?.getItemsSize() ?? 0
+        if let storage = kvStorage {
+            return storage.getItemsSize()
+        }
+        return 0
     }
 
     /// 获取缓存中对象的总成本（异步）
@@ -281,7 +295,12 @@ public final class LSDiskCache: NSObject, @unchecked Sendable {
     /// - Parameter block: 完成时在后台队列调用的块
     public func totalCost(withBlock block: ((Int) -> Void)?) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            let cost = self?.totalCost ?? 0
+            let cost: Int
+            if let weakSelf = self {
+                cost = weakSelf.totalCost
+            } else {
+                cost = 0
+            }
             block?(cost)
         }
     }
@@ -401,7 +420,10 @@ public final class LSDiskCache: NSObject, @unchecked Sendable {
         item.modTime = Int(Date().timeIntervalSince1970)
         item.accessTime = Int(Date().timeIntervalSince1970)
 
-        return kvStorage?.saveItem(item) ?? false
+        if let storage = kvStorage {
+            return storage.saveItem(item)
+        }
+        return false
     }
 
     private func encodeObject(_ object: Any) -> Data? {

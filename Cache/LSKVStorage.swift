@@ -152,7 +152,12 @@ public final class LSKVStorage, @unchecked Sendable {
 
         if shouldSaveToFile {
             // 保存到文件
-            let actualFilename = filename ?? generateFilename(for: item.key)
+            let actualFilename: String
+            if let fn = filename {
+                actualFilename = fn
+            } else {
+                actualFilename = generateFilename(for: item.key)
+            }
             let filePath = (dataPath as NSString).appendingPathComponent(actualFilename)
 
             do {
@@ -659,7 +664,12 @@ public final class LSKVStorage, @unchecked Sendable {
             }
         } else {
             // 保存到文件（只记录文件名）
-            let actualFilename = filename ?? ""
+            let actualFilename: String
+            if let fn = filename {
+                actualFilename = fn
+            } else {
+                actualFilename = ""
+            }
             sqlite3_bind_text(stmtUpdate, 1, (actualFilename as NSString).utf8String, -1, nil)
             sqlite3_bind_int(stmtUpdate, 2, Int32(value.count))
             sqlite3_bind_null(stmtUpdate, 3)

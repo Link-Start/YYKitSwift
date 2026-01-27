@@ -388,7 +388,9 @@ public final class LSMemoryCache: NSObject, @unchecked Sendable {
         guard countLimit < UInt.max else { return }
 
         DispatchQueue.global(qos: .utility).async { [weak self] in
-            self?.trimToCount(self?.countLimit ?? UInt.max)
+            if let weakSelf = self {
+                weakSelf.trimToCount(weakSelf.countLimit)
+            }
         }
     }
 
@@ -396,7 +398,9 @@ public final class LSMemoryCache: NSObject, @unchecked Sendable {
         guard costLimit < UInt.max else { return }
 
         DispatchQueue.global(qos: .utility).async { [weak self] in
-            self?.trimToCost(self?.costLimit ?? UInt.max)
+            if let weakSelf = self {
+                weakSelf.trimToCost(weakSelf.costLimit)
+            }
         }
     }
 
@@ -404,7 +408,9 @@ public final class LSMemoryCache: NSObject, @unchecked Sendable {
         guard ageLimit < TimeInterval.greatestFiniteMagnitude else { return }
 
         DispatchQueue.global(qos: .utility).async { [weak self] in
-            self?.trimToAge(self?.ageLimit ?? TimeInterval.greatestFiniteMagnitude)
+            if let weakSelf = self {
+                weakSelf.trimToAge(weakSelf.ageLimit)
+            }
         }
     }
 }
