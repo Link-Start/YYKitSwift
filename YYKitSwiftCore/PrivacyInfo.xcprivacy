@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- The Privacy Manifest for YYKitSwift SDK -->
+
+	<!-- Tracking Domains -->
+	<key>NSPrivacyTracking</key>
+	<false/>
+
+	<!-- Tracking Domains List -->
+	<key>NSPrivacyTrackingDomains</key>
+	<array/>
+
+	<!-- Collected Data Types -->
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array>
+		<!-- Performance Data - 用于缓存优化和性能监控 -->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypePerformanceDiagnostics</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAnalytics</string>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+	</array>
+
+	<!-- Accessed Data Types -->
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array>
+		<!-- UserDefaults - 用于配置存储 -->
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>CA92.1</string>
+				<!-- Store app settings and preferences required for the app to function -->
+			</array>
+		</dict>
+
+		<!-- File System - 用于缓存和磁盘存储 -->
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>C617.1</string>
+				<!-- Access file metadata to implement disk cache and file management -->
+			</array>
+		</dict>
+
+		<!-- Disk Space - 用于缓存管理 -->
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryDiskSpace</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>E174.1</string>
+				<!-- Check available disk space to manage cache size -->
+			</array>
+		</dict>
+
+		<!-- System Boot Time - 用于性能计时 -->
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategorySystemBootTime</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>35F9.1</string>
+				<!-- Measure time intervals for performance monitoring and animation timing -->
+			</array>
+		</dict>
+
+		<!-- Local Network - 用于网络图片加载 (WebImage) -->
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryLocalNetwork</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>6254.1</string>
+				<!-- Load remote images and data from network endpoints -->
+			</array>
+		</dict>
+	</array>
+
+	<!-- Required Reason API Usage -->
+	<key>NSPrivacyRequiredReasonAPIUsage</key>
+	<array>
+		<!-- Location Services - 如果使用了位置相关工具 -->
+		<dict>
+			<key>NSPrivacyRequiredReasonAPIType</key>
+			<string>NSPrivacyRequiredReasonAPITypeCoreLocation</string>
+			<key>NSPrivacyRequiredReasonAPIReasons</key>
+			<array>
+				<string>C577.1</string>
+				<!-- Location services used in LSLocationManager utility (optional module) -->
+			</array>
+		</dict>
+
+		<!-- Camera - 如果使用了图片选择器 -->
+		<dict>
+			<key>NSPrivacyRequiredReasonAPIType</key>
+			<string>NSPrivacyRequiredReasonAPITypeCamera</string>
+			<key>NSPrivacyRequiredReasonAPIReasons</key>
+			<array>
+				<string>3B52.1</string>
+				<!-- Camera access used in LSImagePicker utility (optional module) -->
+			</array>
+		</dict>
+
+		<!-- Photo Library - 如果使用了图片选择器 -->
+		<dict>
+			<key>NSPrivacyRequiredReasonAPIType</key>
+			<string>NSPrivacyRequiredReasonAPITypePhotoLibrary</string>
+			<key>NSPrivacyRequiredReasonAPIReasons</key>
+			<array>
+				<string>E5A1.1</string>
+				<!-- Photo library access used in LSImagePicker utility (optional module) -->
+			</array>
+		</dict>
+	</array>
+
+	<!-- Third-Party SDKs -->
+	<key>NSPrivacyThirdPartySDKs</key>
+	<array/>
+</dict>
+</plist>
