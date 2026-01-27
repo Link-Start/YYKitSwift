@@ -152,7 +152,10 @@ public final class LSThreadSafeDictionary<Key: Hashable, Value>: NSObject, @unch
     public func object(forKey key: Key, default defaultValue: Value) -> Value {
         lock.wait()
         defer { lock.signal() }
-        return dictionary.object(forKey: key as AnyObject) as? Value ?? defaultValue
+        if let value = dictionary.object(forKey: key as AnyObject) as? Value {
+            return value
+        }
+        return defaultValue
     }
 
     /// 弹出并移除指定键的值

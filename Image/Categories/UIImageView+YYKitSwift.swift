@@ -162,8 +162,10 @@ public extension YYKitSwift where Base: UIButton {
     /// 获取指定状态的操作
     private var stateOperations: [UInt: LSWebImageOperation] {
         get {
-            let dict = objc_getAssociatedObject(base, &Self.stateOperationsKey) as? [UInt: LSWebImageOperation]
-            return dict ?? [:]
+            if let dict = objc_getAssociatedObject(base, &Self.stateOperationsKey) as? [UInt: LSWebImageOperation] {
+                return dict
+            }
+            return [:]
         }
         set {
             objc_setAssociatedObject(base, &Self.stateOperationsKey, newValue as AnyObject?, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)

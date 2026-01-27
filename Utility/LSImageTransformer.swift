@@ -202,7 +202,11 @@ public class LSImageTransformer: NSObject {
         UIGraphicsEndImageContext()
 
         // 裁剪到目标尺寸
-        return crop(result ?? image, to: size)
+        if let res = result {
+            return crop(res, to: size)
+        } else {
+            return crop(image, to: size)
+        }
     }
 
     // MARK: - 旋转

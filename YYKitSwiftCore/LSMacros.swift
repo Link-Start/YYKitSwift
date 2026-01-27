@@ -45,7 +45,10 @@ public struct LSMacros {
     /// 系统版本浮点值
     @inlinable
     public static var systemVersionFloat: Float {
-        Float(systemVersion) ?? 0
+        if let sv = Float(systemVersion) {
+            return sv
+        }
+        return 0
     }
 
     // MARK: - 判断 iOS 版本
@@ -107,7 +110,9 @@ public struct LSMacros {
             }
         }
         if let window = UIApplication.shared.windows.first {
-            return window.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+            if let sbManager = window.windowScene?.statusBarManager {
+                return sbManager.statusBarFrame.height
+            }
         }
         return 0
     }

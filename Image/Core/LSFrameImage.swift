@@ -84,7 +84,12 @@ public class LSFrameImage: UIImage, LSAnimatedImage {
             return nil
         }
 
-        let loopCount = (json["loopCount"] as? UInt) ?? 0
+        let loopCount: UInt
+        if let lc = json["loopCount"] as? UInt {
+            loopCount = lc
+        } else {
+            loopCount = 0
+        }
 
         var frames: [UIImage] = []
         var durations: [TimeInterval] = []
@@ -96,7 +101,12 @@ public class LSFrameImage: UIImage, LSAnimatedImage {
             let fullPath = basePath.isEmpty ? framePath : "\(basePath)/\(framePath)"
 
             guard let image = UIImage(contentsOfFile: fullPath) else { continue }
-            let duration = (frameInfo["duration"] as? TimeInterval) ?? 0.1
+            let duration: TimeInterval
+            if let d = frameInfo["duration"] as? TimeInterval {
+                duration = d
+            } else {
+                duration = 0.1
+            }
 
             frames.append(image)
             durations.append(duration)
@@ -111,7 +121,12 @@ public class LSFrameImage: UIImage, LSAnimatedImage {
             return nil
         }
 
-        let durationsData = coder.decodeObject(forKey: "durationsData") as? [TimeInterval] ?? []
+        let durationsData: [TimeInterval]
+        if let dd = coder.decodeObject(forKey: "durationsData") as? [TimeInterval] {
+            durationsData = dd
+        } else {
+            durationsData = []
+        }
         _loopCount = UInt(coder.decodeInteger(forKey: "loopCount"))
 
         var frames: [UIImage] = []

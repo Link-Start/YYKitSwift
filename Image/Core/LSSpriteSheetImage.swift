@@ -117,7 +117,12 @@ public class LSSpriteSheetImage: UIImage, LSAnimatedImage {
             return nil
         }
 
-        let loopCount = (json["loopCount"] as? UInt) ?? 0
+        let loopCount: UInt
+        if let lc = json["loopCount"] as? UInt {
+            loopCount = lc
+        } else {
+            loopCount = 0
+        }
 
         var contentRects: [CGRect] = []
         for rectInfo in rectsArray {

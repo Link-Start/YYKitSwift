@@ -276,7 +276,10 @@ public class LSReachability: NSObject {
             }
         }
 
-        return radioMap[radioTech] ?? .none
+        if let networkType = radioMap[radioTech] {
+            return networkType
+        }
+        return .none
     }
 }
 

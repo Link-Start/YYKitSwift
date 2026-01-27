@@ -294,7 +294,13 @@ public class LSTextSimpleMarkdownParser: NSObject, LSTextParser {
             }
 
             // 背景边框
-            let border = LSTextBorder(fillColor: codeBackgroundColor ?? UIColor(white: 0.9, alpha: 1), cornerRadius: 4)
+            let fillColor: UIColor
+            if let color = codeBackgroundColor {
+                fillColor = color
+            } else {
+                fillColor = UIColor(white: 0.9, alpha: 1)
+            }
+            let border = LSTextBorder(fillColor: fillColor, cornerRadius: 4)
             border.insets = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 2)
             attrs[LSTextBackgroundBorderAttributeName] = border
 
