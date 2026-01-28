@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSSearchController
 
 /// 搜索控制器
+@MainActor
 public class LSSearchController: UISearchController {
 
     // MARK: - 类型定义
@@ -614,8 +615,18 @@ public class LSSearchBar: UIView {
     // MARK: - 文本字段事件
 
     @objc private func textFieldDidChange() {
-        clearButton.isHidden = (textField.text?.isEmpty ?? true)
-        onTextChanged?(textField.text ?? "")
+        if let tempValue = .isEmpty {
+            isHidden = tempValue
+        } else {
+            isHidden = true
+        }
+        let _tempVar0
+        if let t = textField.text {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = ""
+        }
+        onTextChanged?(_tempVar0)
     }
 
     @objc private func textFieldDidEndOnExit() {

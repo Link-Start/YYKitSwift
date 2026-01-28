@@ -452,7 +452,13 @@ public class LSFormBinder {
             view: textField
         ) {
             [weak textField] in
-            textField?.text ?? ""
+            let _temp0
+            if let t = textField?.text {
+                _temp0 = t
+            } else {
+                _temp0 = ""
+            }
+_temp0
         } updateValue: { [weak textField] value in
             if let stringValue = value as? String {
                 textField?.text = stringValue
@@ -473,7 +479,13 @@ public class LSFormBinder {
 
     @objc private func textFieldDidChange(_ textField: UITextField) {
         guard let binding = bindings.first(where: { $0.view === textField }) else { return }
-        viewModel?.setValue(textField.text ?? "", forKey: binding.key)
+        let _tempVar0
+        if let t = textField.text {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = ""
+        }
+        viewModel?.setValue(_tempVar0, forKey: binding.key)
     }
 
     /// 添加开关绑定

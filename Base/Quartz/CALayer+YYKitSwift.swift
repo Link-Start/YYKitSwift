@@ -129,67 +129,133 @@ public extension CALayer {
 
     /// 旋转角度
     var ls_transformRotation: CGFloat {
-        get { value(forKeyPath: "transform.rotation.z") as? CGFloat ?? 0 }
+        let _tempVar0
+        if let t = CGFloat {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = 0
+        }
+        get { value(forKeyPath: "transform.rotation.z") as? _tempVar0 }
         set { setValue(newValue, forKeyPath: "transform.rotation.z") }
     }
 
     /// X 轴旋转
     var ls_transformRotationX: CGFloat {
-        get { value(forKeyPath: "transform.rotation.x") as? CGFloat ?? 0 }
+        let _tempVar0
+        if let t = CGFloat {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = 0
+        }
+        get { value(forKeyPath: "transform.rotation.x") as? _tempVar0 }
         set { setValue(newValue, forKeyPath: "transform.rotation.x") }
     }
 
     /// Y 轴旋转
     var ls_transformRotationY: CGFloat {
-        get { value(forKeyPath: "transform.rotation.y") as? CGFloat ?? 0 }
+        let _tempVar0
+        if let t = CGFloat {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = 0
+        }
+        get { value(forKeyPath: "transform.rotation.y") as? _tempVar0 }
         set { setValue(newValue, forKeyPath: "transform.rotation.y") }
     }
 
     /// Z 轴旋转
     var ls_transformRotationZ: CGFloat {
-        get { value(forKeyPath: "transform.rotation.z") as? CGFloat ?? 0 }
+        let _tempVar0
+        if let t = CGFloat {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = 0
+        }
+        get { value(forKeyPath: "transform.rotation.z") as? _tempVar0 }
         set { setValue(newValue, forKeyPath: "transform.rotation.z") }
     }
 
     /// 缩放
     var ls_transformScale: CGFloat {
-        get { value(forKeyPath: "transform.scale") as? CGFloat ?? 1 }
+        let _tempVar0
+        if let t = CGFloat {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = 1
+        }
+        get { value(forKeyPath: "transform.scale") as? _tempVar0 }
         set { setValue(newValue, forKeyPath: "transform.scale") }
     }
 
     /// X 轴缩放
     var ls_transformScaleX: CGFloat {
-        get { value(forKeyPath: "transform.scale.x") as? CGFloat ?? 1 }
+        let _tempVar0
+        if let t = CGFloat {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = 1
+        }
+        get { value(forKeyPath: "transform.scale.x") as? _tempVar0 }
         set { setValue(newValue, forKeyPath: "transform.scale.x") }
     }
 
     /// Y 轴缩放
     var ls_transformScaleY: CGFloat {
-        get { value(forKeyPath: "transform.scale.y") as? CGFloat ?? 1 }
+        let _tempVar0
+        if let t = CGFloat {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = 1
+        }
+        get { value(forKeyPath: "transform.scale.y") as? _tempVar0 }
         set { setValue(newValue, forKeyPath: "transform.scale.y") }
     }
 
     /// Z 轴缩放
     var ls_transformScaleZ: CGFloat {
-        get { value(forKeyPath: "transform.scale.z") as? CGFloat ?? 1 }
+        let _tempVar0
+        if let t = CGFloat {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = 1
+        }
+        get { value(forKeyPath: "transform.scale.z") as? _tempVar0 }
         set { setValue(newValue, forKeyPath: "transform.scale.z") }
     }
 
     /// X 轴平移
     var ls_transformTranslationX: CGFloat {
-        get { value(forKeyPath: "transform.translation.x") as? CGFloat ?? 0 }
+        let _tempVar0
+        if let t = CGFloat {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = 0
+        }
+        get { value(forKeyPath: "transform.translation.x") as? _tempVar0 }
         set { setValue(newValue, forKeyPath: "transform.translation.x") }
     }
 
     /// Y 轴平移
     var ls_transformTranslationY: CGFloat {
-        get { value(forKeyPath: "transform.translation.y") as? CGFloat ?? 0 }
+        let _tempVar0
+        if let t = CGFloat {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = 0
+        }
+        get { value(forKeyPath: "transform.translation.y") as? _tempVar0 }
         set { setValue(newValue, forKeyPath: "transform.translation.y") }
     }
 
     /// Z 轴平移
     var ls_transformTranslationZ: CGFloat {
-        get { value(forKeyPath: "transform.translation.z") as? CGFloat ?? 0 }
+        let _tempVar0
+        if let t = CGFloat {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = 0
+        }
+        get { value(forKeyPath: "transform.translation.z") as? _tempVar0 }
         set { setValue(newValue, forKeyPath: "transform.translation.z") }
     }
 

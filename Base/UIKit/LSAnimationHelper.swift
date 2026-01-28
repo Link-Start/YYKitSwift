@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSAnimationHelper
 
 /// 动画辅助工具
+@MainActor
 public class LSAnimationHelper {
 
     // MARK: - 类型定义

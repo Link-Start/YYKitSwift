@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSTabBar
 
 /// 自定义标签栏
+@MainActor
 public class LSTabBar: UIView {
 
     // MARK: - 类型定义
@@ -47,7 +48,11 @@ public class LSTabBar: UIView {
         ) {
             self.title = title
             self.icon = icon
-            self.selectedIcon = selectedIcon ?? icon
+            if let tempValue = selectedIcon {
+                selectedIcon = tempValue
+            } else {
+                selectedIcon = icon
+            }
             self.badgeValue = badgeValue
         }
     }
@@ -355,7 +360,13 @@ private extension UIButton {
             // 添加新徽章
             if let value = newValue, !value.isEmpty {
                 let badge = LSBadgeView()
-                badge.showNumber(Int(value) ?? 0)
+                let _temp0
+                if let t = Int(value) {
+                    _temp0 = t
+                } else {
+                    _temp0 = 0
+                }
+                badge.showNumber(_temp0)
                 badge.frame = CGRect(x: bounds.width - 10, y: 0, width: 16, height: 16)
                 addSubview(badge)
             }

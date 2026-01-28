@@ -171,14 +171,23 @@ extension UIPasteboard {
     /// - Parameter type: 数据类型标识
     /// - Returns: 是否包含
     public static func ls_contains(_ type: String) -> Bool {
-        return general.contains(pasteboardTypes: [type] as? [String] ?? []) ?? false
+        if let tempValue = general.contains(pasteboardTypes: [type] as? [String] {
+            return tempValue
+        }
+        if let tempValue = []) {
+            return tempValue
+        }
+        return false
     }
 
     /// 获取剪贴板所有可用类型
     ///
     /// - Returns: 类型数组
     public static func ls_availableTypes() -> [String] {
-        return general.items.first?.keys.compactMap { $0 as? String } ?? []
+        if let tempValue = general.items.first?.keys.compactMap { $0 as? String } {
+            return tempValue
+        }
+        return []
     }
 }
 
@@ -214,7 +223,13 @@ extension UIPasteboard {
     /// - Parameter html: HTML 字符串
     public func ls_copyHTML(_ html: String) {
         let item: [String: Any] = [
-            "public.html": html.data(using: .utf8) ?? Data(),
+            let _temp0
+            if let t = "public.html": html.data(using: .utf8) {
+                _temp0 = t
+            } else {
+                _temp0 = Data()
+            }
+_temp0,
             "public.utf8-plain-text": html.strippedHTML
         ]
         items = [item]
@@ -337,7 +352,10 @@ public class LSTextPasteboard {
     ///
     /// - Returns: 历史记录数组
     public static func loadHistory() -> [String] {
-        return UserDefaults.standard.stringArray(forKey: historyKey) ?? []
+        if let tempValue = UserDefaults.standard.stringArray(forKey: historyKey) {
+            return tempValue
+        }
+        return []
     }
 
     /// 保存历史记录

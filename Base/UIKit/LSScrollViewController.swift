@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSScrollViewController
 
 /// 滚动视图控制器
+@MainActor
 public class LSScrollViewController: UIViewController {
 
     // MARK: - 类型定义

@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSRefreshControl
 
 /// 下拉刷新控件
+@MainActor
 public class LSRefreshControl: UIView {
 
     // MARK: - 类型定义

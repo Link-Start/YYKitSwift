@@ -12,6 +12,7 @@ import UIKit
 
 // MARK: - UIDevice 扩展
 
+@MainActor
 public extension UIDevice {
 
     /// 是否是模拟器

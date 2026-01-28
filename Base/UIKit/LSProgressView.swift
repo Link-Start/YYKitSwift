@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSProgressView
 
 /// 进度视图
+@MainActor
 public class LSProgressView: UIView {
 
     // MARK: - 样式枚举

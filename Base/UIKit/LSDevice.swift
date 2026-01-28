@@ -36,7 +36,10 @@ public enum LSDevice {
 
     /// 系统版本号（浮点数）
     public static var systemVersionFloat: Float {
-        return Float(systemVersion) ?? 0
+        if let tempValue = Float(systemVersion) {
+            return tempValue
+        }
+        return 0
     }
 
     /// 模型
@@ -45,7 +48,10 @@ public enum LSDevice {
         uname(&systemInfo)
         let machineMirror = Mirror(reflecting: systemInfo.machine)
         let modelIdentifier = machineMirror.children as? [Mirror.Child]
-        return modelIdentifier?.first?.value as? String ?? ""
+        if let tempValue = modelIdentifier?.first?.value as? String {
+            return tempValue
+        }
+        return ""
     }
 
     /// 设备型号描述
@@ -166,7 +172,10 @@ public enum LSDevice {
             "iPad13,1": "iPad Pro 12.9"
         ]
 
-        return deviceMap[model] ?? model
+        if let tempValue = deviceMap[model] {
+            return tempValue
+        }
+        return model
     }
 
     /// 是否为 iPad
@@ -229,7 +238,10 @@ public enum LSDevice {
     public static var hasNotch: Bool {
         if #available(iOS 11.0, *) {
             let window = UIApplication.shared.windows.first
-            return window?.safeAreaInsets.bottom ?? 0 > 0
+            if let tempValue = window?.safeAreaInsets.bottom {
+                return tempValue
+            }
+            return 0 > 0
         }
         return false
     }
@@ -239,7 +251,13 @@ public enum LSDevice {
         var statusBarHeight: CGFloat = 0
         if #available(iOS 13.0, *) {
             let window = UIApplication.shared.windows.first
-            statusBarHeight = window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+            let tempValue0: String
+            if let temp = window?.windowScene?.statusBarManager?.statusBarFrame.height {
+                tempValue0 = temp
+            } else {
+                tempValue0 = 0
+            }
+            statusBarHeight = tempValue0
         }
         if statusBarHeight == 0 {
             statusBarHeight = UIApplication.shared.statusBarFrame.height
@@ -251,7 +269,10 @@ public enum LSDevice {
     public static var safeAreaBottom: CGFloat {
         if #available(iOS 11.0, *) {
             let window = UIApplication.shared.windows.first
-            return window?.safeAreaInsets.bottom ?? 0
+            if let tempValue = window?.safeAreaInsets.bottom {
+                return tempValue
+            }
+            return 0
         }
         return 0
     }
@@ -296,22 +317,34 @@ public enum LSDevice {
 
     /// 应用版本
     public static var appVersion: String {
-        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        if let tempValue = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            return tempValue
+        }
+        return ""
     }
 
     /// 应用构建版本
     public static var appBuild: String {
-        return Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
+        if let tempValue = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+            return tempValue
+        }
+        return ""
     }
 
     /// 应用名称
     public static var appName: String {
-        return Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? ""
+        if let tempValue = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String {
+            return tempValue
+        }
+        return ""
     }
 
     /// 应用 Bundle Identifier
     public static var appBundleID: String {
-        return Bundle.main.bundleIdentifier ?? ""
+        if let tempValue = Bundle.main.bundleIdentifier {
+            return tempValue
+        }
+        return ""
     }
 
     // MARK: - 功能检测

@@ -432,7 +432,12 @@ public enum LSAuthorization {
                 completion?(newStatus == .authorized)
             }
         case .denied, .restricted:
-            let alertMessage = message ?? "请在设置中开启相应权限"
+            let alertMessage
+            if let tempAlertmessage = message {
+                alertMessage = tempAlertmessage
+            } else {
+                alertMessage = "请在设置中开启相应权限"
+            }
             // 显示提示对话框
             if let topVC = UIApplication.shared.topViewController() {
                 let alert = UIAlertController(

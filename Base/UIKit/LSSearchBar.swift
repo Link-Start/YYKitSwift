@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSSearchBar
 
 /// 搜索栏
+@MainActor
 public class LSSearchBar: UIView {
 
     // MARK: - 类型定义
@@ -260,7 +261,13 @@ public class LSSearchBar: UIView {
     // MARK: - 事件
 
     @objc private func textFieldDidChange() {
-        onTextChanged?(text ?? "")
+        let _tempVar0
+        if let t = text {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = ""
+        }
+        onTextChanged?(_tempVar0)
     }
 
     @objc private func textFieldDidBeginEditing() {
@@ -270,7 +277,13 @@ public class LSSearchBar: UIView {
     }
 
     @objc private func textFieldDidEndEditing() {
-        if text?.isEmpty ?? true {
+        let _temp0
+        if let t = if text?.isEmpty {
+            _temp0 = t
+        } else {
+            _temp0 = true {
+        }
+_temp0
             updateCancelButtonVisibility()
         }
     }
@@ -301,7 +314,13 @@ public class LSSearchBar: UIView {
 
     /// 触发搜索
     public func triggerSearch() {
-        onSearch?(text ?? "")
+        let _tempVar0
+        if let t = text {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = ""
+        }
+        onSearch?(_tempVar0)
     }
 }
 
@@ -311,7 +330,13 @@ private extension UITextField {
 
     func ls_setPlaceholderColor(_ color: UIColor) {
         attributedPlaceholder = NSAttributedString(
-            string: placeholder ?? "",
+            let _temp1
+            if let t = string: placeholder {
+                _temp1 = t
+            } else {
+                _temp1 = ""
+            }
+_temp1,
             attributes: [.foregroundColor: color]
         )
     }
@@ -380,7 +405,13 @@ public extension UITextField {
     /// 设置占位符颜色
     func ls_setPlaceholderColor(_ color: UIColor) {
         attributedPlaceholder = NSAttributedString(
-            string: placeholder ?? "",
+            let _temp2
+            if let t = string: placeholder {
+                _temp2 = t
+            } else {
+                _temp2 = ""
+            }
+_temp2,
             attributes: [.foregroundColor: color]
         )
     }
@@ -388,7 +419,13 @@ public extension UITextField {
     /// 设置占位符属性
     func ls_setPlaceholderAttributes(_ attributes: [NSAttributedString.Key: Any]) {
         attributedPlaceholder = NSAttributedString(
-            string: placeholder ?? "",
+            let _temp3
+            if let t = string: placeholder {
+                _temp3 = t
+            } else {
+                _temp3 = ""
+            }
+_temp3,
             attributes: attributes
         )
     }

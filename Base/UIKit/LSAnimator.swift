@@ -15,6 +15,7 @@ import Foundation
 // MARK: - LSAnimator
 
 /// 动画管理器
+@MainActor
 public class LSAnimator {
 
     // MARK: - 类型定义
@@ -214,7 +215,11 @@ public extension UIView {
             duration: duration,
             delay: delay,
             animations: { [weak self] in
-                self?.transform = (self?.transform ?? .identity).rotated(by: angle)
+                if let tempValue = .transform {
+                    transform = tempValue
+                } else {
+                    transform = .identity
+                }
             },
             completion: completion
         )

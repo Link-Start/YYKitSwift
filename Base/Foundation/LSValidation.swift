@@ -217,7 +217,12 @@ public class LSValidator {
         var allResults: [FieldResult] = []
 
         for field in fields {
-            let value = field.value() ?? ""
+            let value
+            if let tempValue = field.value() {
+                value = tempValue
+            } else {
+                value = ""
+            }
 
             for rule in field.rules {
                 let result = rule.validate(value)
@@ -243,7 +248,12 @@ public class LSValidator {
             return .failure("字段不存在")
         }
 
-        let value = field.value() ?? ""
+        let value
+        if let tempValue = field.value() {
+            value = tempValue
+        } else {
+            value = ""
+        }
 
         for rule in field.rules {
             let result = rule.validate(value)
@@ -290,7 +300,12 @@ public extension UITextField {
     /// - Parameter rules: 验证规则
     /// - Returns: 验证结果
     func ls_validate(rules: [LSValidationRule]) -> ValidationResult {
-        let text = self.text ?? ""
+        let text
+        if let tempText = self.text {
+            text = tempText
+        } else {
+            text = ""
+        }
 
         for rule in rules {
             let result = rule.validate(text)
@@ -336,7 +351,12 @@ public extension UITextView {
     /// - Parameter rules: 验证规则
     /// - Returns: 验证结果
     func ls_validate(rules: [LSValidationRule]) -> ValidationResult {
-        let text = self.text ?? ""
+        let text
+        if let tempText = self.text {
+            text = tempText
+        } else {
+            text = ""
+        }
 
         for rule in rules {
             let result = rule.validate(text)
@@ -428,7 +448,11 @@ public class LSValidationObserver: NSObject {
 
     /// 执行验证
     public func validate() -> ValidationResult {
-        let result = textField?.ls_validate(rules: rules) ?? .success
+        if let tempValue = textField?.ls_validate(rules: rules) {
+            result = tempValue
+        } else {
+            result = .success
+        }
         validationResult = result
         onValidationChange?(result)
         return result

@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSPasscodeView
 
 /// 密码输入视图
+@MainActor
 public class LSPasscodeView: UIView {
 
     // MARK: - 类型定义
@@ -296,7 +297,11 @@ public class LSPasscodeView: UIView {
         // 限制长度
         if text.count > passcodeLength {
             textField.text = String(text.prefix(passcodeLength))
-            passcode = textField.text ?? ""
+            if let tempValue = textField.text {
+                passcode = tempValue
+            } else {
+                passcode = ""
+            }
         } else {
             passcode = text
         }
@@ -565,7 +570,13 @@ public class LSPasscodeViewController: UIViewController {
                 dismissPasscode()
 
             case .failure(let message):
-                showError(message ?? "密码错误")
+                let _tempVar0
+                if let t = message {
+                    _tempVar0 = t
+                } else {
+                    _tempVar0 = "密码错误"
+                }
+                showError(_tempVar0)
                 passcodeView.clear()
                 passcodeView.becomeFocus()
 

@@ -303,7 +303,12 @@ extension LSLocationManager: CLLocationManagerDelegate {
     }
 
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        let clError = error as? CLError ?? LocationError.unknown(error)
+        let clError
+        if let tempClerror = CLError {
+            clError = tempClerror
+        } else {
+            clError = LocationError.unknown(error)
+        }
         onLocationError?(clError)
     }
 

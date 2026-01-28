@@ -12,6 +12,7 @@ import UIKit
 
 // MARK: - UIControl 扩展
 
+@MainActor
 public extension UIControl {
 
     /// 添加事件回调

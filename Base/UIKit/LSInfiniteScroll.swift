@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSInfiniteScrollView
 
 /// 上拉加载更多视图
+@MainActor
 public class LSInfiniteScrollView: UIView {
 
     // MARK: - 类型定义

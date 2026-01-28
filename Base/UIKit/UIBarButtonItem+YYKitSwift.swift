@@ -12,6 +12,7 @@ import UIKit
 
 // MARK: - UIBarButtonItem 扩展
 
+@MainActor
 public extension UIBarButtonItem {
 
     /// 创建 UIBarButtonItem（使用 Block）

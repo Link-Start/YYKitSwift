@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSImageView
 
 /// 增强的图像视图
+@MainActor
 public class LSImageView: UIImageView {
 
     // MARK: - 类型定义
@@ -175,13 +176,26 @@ public class LSImageView: UIImageView {
         currentImageURL = url
 
         guard let url = url else {
-            image = placeholder ?? placeholderImage
+            let img: UIImage?
+            if let ph = placeholder {
+                img = ph
+            } else {
+                img = placeholderImage
+            }
+            image = img
             loadingState = .idle
             return
         }
 
         loadingState = .loading
-        image = placeholder ?? placeholderImage
+
+        let img2: UIImage?
+        if let ph = placeholder {
+            img2 = ph
+        } else {
+            img2 = placeholderImage
+        }
+        image = img2
 
         // 这里应该使用 SDWebImage 或类似库
         // 暂时使用系统方法
@@ -246,7 +260,13 @@ public class LSImageView: UIImageView {
 
     private func updateErrorState() {
         if case .failed = loadingState {
-            image = errorImage ?? placeholderImage
+            let img: UIImage?
+            if let errImg = errorImage {
+                img = errImg
+            } else {
+                img = placeholderImage
+            }
+            image = img
         }
     }
 

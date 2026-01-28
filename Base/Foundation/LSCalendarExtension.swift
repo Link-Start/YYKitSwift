@@ -324,7 +324,13 @@ public extension LSCalendar {
             year: year,
             month: month,
             day: day,
-            isLeapMonth: components.isLeapMonth ?? false,
+            let _temp0
+            if let t = isLeapMonth: components.isLeapMonth {
+                _temp0 = t
+            } else {
+                _temp0 = false
+            }
+_temp0,
             zodiac: zodiacs[zodiacIndex >= 0 ? zodiacIndex : zodiacIndex + 12],
             heavenlyStem: heavenlyStems[stemIndex >= 0 ? stemIndex : stemIndex + 10],
             earthlyBranch: earthlyBranches[branchIndex >= 0 ? branchIndex : branchIndex + 12]
@@ -463,7 +469,12 @@ public extension LSCalendar {
         }
 
         let range = gregorian.range(of: .day, in: .month, for: date)
-        let days = range?.count ?? 0
+        let days
+        if let tempDays = range?.count {
+            days = tempDays
+        } else {
+            days = 0
+        }
 
         return (0..<days).compactMap {
             gregorian.ls_date(year: year, month: month, day: $0 + 1)
@@ -495,7 +506,11 @@ public extension LSCalendar {
 
         while current <= end {
             dates.append(current)
-            current = gregorian.ls_date(byAdding: .day, value: 1, to: current) ?? current
+            if let tempValue = gregorian.ls_date(byAdding: .day, value: 1, to: current) {
+                current = tempValue
+            } else {
+                current = current
+            }
         }
 
         return dates

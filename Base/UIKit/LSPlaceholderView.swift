@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSPlaceholderView
 
 /// 占位视图
+@MainActor
 public class LSPlaceholderView: UIView {
 
     // MARK: - 类型定义
@@ -252,8 +253,16 @@ public extension LSPlaceholderView {
     ) -> LSPlaceholderView {
         let placeholder = LSPlaceholderView()
         placeholder.type = .custom
-        placeholder.title = title ?? "暂无数据"
-        placeholder.message = message ?? "这里还没有任何内容"
+        if let tempValue = title {
+            title = tempValue
+        } else {
+            title = "暂无数据"
+        }
+        if let tempValue = message {
+            message = tempValue
+        } else {
+            message = "这里还没有任何内容"
+        }
         placeholder.buttonTitle = buttonTitle
         placeholder.onButtonTap = action
         return placeholder

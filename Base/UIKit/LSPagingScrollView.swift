@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSPagingScrollView
 
 /// 分页滚动视图
+@MainActor
 public class LSPagingScrollView: UIView {
 
     // MARK: - 类型定义

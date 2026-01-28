@@ -443,7 +443,13 @@ public extension UIViewController {
     /// 打印控制器信息
     func ls_printInfo() {
         LSDebug.log("🎮 控制器信息: \(type(of: self))")
-        LSDebug.log("  title: \(title ?? "nil")")
+        let _tempVar0
+        if let t = title {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = "nil"
+        }
+        LSDebug.log("  title: \(_tempVar0)")
         LSDebug.log("  view.frame: \(view.frame)")
         LSDebug.log("  isMovingToParent: \(isMovingToParent)")
     }

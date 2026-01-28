@@ -212,7 +212,10 @@ public class LSTextInputUtilities: NSObject {
         formatter.numberStyle = .decimal
         formatter.minimumFractionDigits = decimals
         formatter.maximumFractionDigits = decimals
-        return formatter.string(from: NSNumber(value: amount)) ?? ""
+        if let tempValue = formatter.string(from: NSNumber(value: amount)) {
+            return tempValue
+        }
+        return ""
     }
 
     // MARK: - 文本清理

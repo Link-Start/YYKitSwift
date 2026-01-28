@@ -226,7 +226,10 @@ public enum LSFileManager {
         guard let attrs = try? default.attributesOfItem(atPath: path) else {
             return 0
         }
-        return attrs[.size] as? Int64 ?? 0
+        if let tempValue = attrs[.size] as? Int64 {
+            return tempValue
+        }
+        return 0
     }
 
     /// 获取文件大小（格式化字符串）

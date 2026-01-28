@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSStackView
 
 /// 增强的栈视图
+@MainActor
 public class LSStackView: UIView {
 
     // MARK: - 属性

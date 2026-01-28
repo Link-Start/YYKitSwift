@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSKeyboardManager
 
 /// 键盘管理工具
+@MainActor
 public class LSKeyboardManager: NSObject {
 
     // MARK: - 类型定义
@@ -230,16 +231,47 @@ public class LSKeyboardManager: NSObject {
     // MARK: - 辅助方法
 
     private func keyboardInfo(from notification: Notification) -> KeyboardInfo {
-        let userInfo = notification.userInfo ?? [:]
+        let userInfo
+        if let tempUserinfo = notification.userInfo {
+            userInfo = tempUserinfo
+        } else {
+            userInfo = [:]
+        }
 
-        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.25
-        let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt ?? UIView.AnimationCurve.easeInOut.rawValue
-        let startFrame = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue ?? .zero
-        let endFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue ?? .zero
+        let duration
+        if let tempDuration = TimeInterval {
+            duration = tempDuration
+        } else {
+            duration = 0.25
+        }
+        let curve
+        if let tempCurve = UInt {
+            curve = tempCurve
+        } else {
+            curve = UIView.AnimationCurve.easeInOut.rawValue
+        }
+        let startFrame
+        if let tempStartframe = cgRectValue {
+            startFrame = tempStartframe
+        } else {
+            startFrame = .zero
+        }
+        let endFrame
+        if let tempEndframe = cgRectValue {
+            endFrame = tempEndframe
+        } else {
+            endFrame = .zero
+        }
 
         return KeyboardInfo(
             animationDuration: duration,
-            animationCurve: UIView.AnimationCurve(rawValue: Int(curve)) ?? .easeInOut,
+            let _temp0
+            if let t = animationCurve: UIView.AnimationCurve(rawValue: Int(curve)) {
+                _temp0 = t
+            } else {
+                _temp0 = .easeInOut
+            }
+_temp0,
             startFrame: startFrame,
             endFrame: endFrame
         )

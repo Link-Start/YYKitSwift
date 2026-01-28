@@ -114,7 +114,12 @@ private class DispatchContext {
 
         self.queueCount = queueCount
 
-        let queueLabel = name ?? "com.xiaoyueyun.yykitswift"
+        let queueLabel: String
+        if let n = name {
+            queueLabel = n
+        } else {
+            queueLabel = "com.xiaoyueyun.yykitswift"
+        }
 
         // 创建队列
         for i in 0..<queueCount {

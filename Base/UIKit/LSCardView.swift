@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSCardView
 
 /// 卡片视图
+@MainActor
 public class LSCardView: UIView {
 
     // MARK: - 属性

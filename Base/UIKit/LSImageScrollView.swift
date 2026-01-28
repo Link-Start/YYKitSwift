@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSImageScrollView
 
 /// 图片滚动视图
+@MainActor
 public class LSImageScrollView: UIScrollView {
 
     // MARK: - 类型定义

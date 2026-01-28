@@ -14,6 +14,7 @@ import Accelerate
 
 // MARK: - UIImage 扩展
 
+@MainActor
 public extension UIImage {
 
     // MARK: - 创建图片

@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSStepper
 
 /// 增强的步进器
+@MainActor
 public class LSStepper: UIView {
 
     // MARK: - 类型定义
@@ -345,7 +346,13 @@ public class LSStepper: UIView {
                 withTimeInterval: 0.1,
                 repeats: true
             ) { [weak self] _ in
-                if self?.isContinuous ?? true {
+                let _temp0
+                if let t = if self?.isContinuous {
+                    _temp0 = t
+                } else {
+                    _temp0 = true {
+                }
+_temp0
                     action()
                 }
             }

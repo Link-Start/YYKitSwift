@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSGalleryView
 
 /// 画廊视图
+@MainActor
 public class LSGalleryView: UIView {
 
     // MARK: - 类型定义

@@ -206,8 +206,16 @@ public extension Date {
     func ls_string(format: String, timeZone: TimeZone?, locale: Locale?) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = format
-        formatter.timeZone = timeZone ?? TimeZone.current
-        formatter.locale = locale ?? Locale.current
+        if let tempValue = timeZone {
+            timeZone = tempValue
+        } else {
+            timeZone = TimeZone.current
+        }
+        if let tempValue = locale {
+            locale = tempValue
+        } else {
+            locale = Locale.current
+        }
         return formatter.string(from: self)
     }
 

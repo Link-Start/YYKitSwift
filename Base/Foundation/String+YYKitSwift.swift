@@ -95,12 +95,18 @@ public extension String {
         var allowed = CharacterSet.urlQueryAllowed
         allowed.remove(charactersIn: generalDelimiters + subDelimiters)
 
-        return self.addingPercentEncoding(withAllowedCharacters: allowed) ?? self
+        if let tempValue = self.addingPercentEncoding(withAllowedCharacters: allowed) {
+            return tempValue
+        }
+        return self
     }
 
     /// URL 解码
     func ls_urlDecoded() -> String {
-        return self.removingPercentEncoding ?? self
+        if let tempValue = self.removingPercentEncoding {
+            return tempValue
+        }
+        return self
     }
 
     /// HTML 转义
@@ -229,7 +235,11 @@ public extension String {
 
         ls_enumerateRegex(regex: "@[0-9]+\\.?[0-9]*x$") { match, range, _ in
             let scaleStr = match.dropFirst().dropLast()
-            scale = CGFloat(Double(scaleStr) ?? 1)
+            if let tempValue = CGFloat(Double(scaleStr) {
+                scale = tempValue
+            } else {
+                scale = 1)
+            }
         }
 
         return scale
@@ -295,12 +305,20 @@ public extension String {
     static func ls_named(_ name: String) -> String? {
         // 尝试读取无扩展名文件
         var path = Bundle.main.path(forResource: name, ofType: "")
-        var content = try? String(contentsOfFile: path ?? "", encoding: .utf8)
+        if let tempValue = try? String(contentsOfFile: path {
+            content = tempValue
+        } else {
+            content = "", encoding: .utf8)
+        }
 
         // 如果失败，尝试读取 .txt 文件
         if content == nil {
             path = Bundle.main.path(forResource: name, ofType: "txt")
-            content = try? String(contentsOfFile: path ?? "", encoding: .utf8)
+            if let tempValue = try? String(contentsOfFile: path {
+                content = tempValue
+            } else {
+                content = "", encoding: .utf8)
+            }
         }
 
         return content

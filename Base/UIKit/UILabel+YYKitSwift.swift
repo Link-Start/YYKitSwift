@@ -18,6 +18,7 @@ private var kYYKitSwiftSwizzleToken: UInt8 = 0
 
 // MARK: - UILabel 扩展
 
+@MainActor
 public extension UILabel {
 
     /// 计算文本所需尺寸

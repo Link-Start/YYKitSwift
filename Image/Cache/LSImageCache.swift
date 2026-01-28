@@ -287,7 +287,16 @@ public final class LSImageCache, @unchecked Sendable {
                 if let img = image {
                     // 存入内存缓存
                     if type.contains(.memory) {
-                        let cost = UInt((img.cgImage?.height ?? 0) * (img.cgImage?.width ?? 0) * 4)
+                        let cost
+                        if let tempCost = img.cgImage?.height {
+                            cost = tempCost
+                        } else {
+                            if let tempValue = .width {
+                                cost = tempValue
+                            } else {
+                                cost = 0
+                            }
+                        }
                         memoryCache.setObject(img, forKey: key as NSString, withCost: cost)
                     }
                     return img
@@ -340,7 +349,16 @@ public final class LSImageCache, @unchecked Sendable {
                     if let img = image {
                         // 存入内存缓存
                         if type.contains(.memory) {
-                            let cost = UInt((img.cgImage?.height ?? 0) * (img.cgImage?.width ?? 0) * 4)
+                            let cost
+                            if let tempCost = img.cgImage?.height {
+                                cost = tempCost
+                            } else {
+                                if let tempValue = .width {
+                                    cost = tempValue
+                                } else {
+                                    cost = 0
+                                }
+                            }
                             self.memoryCache.setObject(img, forKey: key as NSString, withCost: cost)
                         }
                         fromType = .disk

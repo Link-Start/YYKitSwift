@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSStackView
 
 /// 堆栈视图（类似 UIStackView 但更灵活）
+@MainActor
 public class LSStackView: UIView {
 
     // MARK: - 轴类型
@@ -662,7 +663,12 @@ public class LSEmptyView: UIView {
         guard let descriptionLabel = descriptionLabel else { return }
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        let topAnchor = titleLabel != nil ? titleLabel!.bottomAnchor : (iconView?.bottomAnchor ?? topAnchor)
+        let topAnchor
+        if let tempTopanchor = iconView?.bottomAnchor {
+            topAnchor = tempTopanchor
+        } else {
+            topAnchor = topAnchor)
+        }
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: topAnchor, constant: verticalSpacing),
             descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
@@ -674,7 +680,16 @@ public class LSEmptyView: UIView {
         guard let actionButton = actionButton else { return }
         actionButton.translatesAutoresizingMaskIntoConstraints = false
 
-        let topAnchor = descriptionLabel != nil ? descriptionLabel!.bottomAnchor : (titleLabel?.bottomAnchor ?? (iconView?.bottomAnchor ?? topAnchor))
+        let topAnchor
+        if let tempTopanchor = titleLabel?.bottomAnchor {
+            topAnchor = tempTopanchor
+        } else {
+            if let tempValue = .bottomAnchor {
+                topAnchor = tempValue
+            } else {
+                topAnchor = topAnchor
+            }
+        }
         NSLayoutConstraint.activate([
             actionButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             actionButton.topAnchor.constraint(equalTo: topAnchor, constant: verticalSpacing + 8),

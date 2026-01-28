@@ -97,15 +97,24 @@ public class LSWeakProxy: NSObject {
     // MARK: - NSObject Protocol Override
 
     override public func responds(to aSelector: Selector!) -> Bool {
-        return target?.responds(to: aSelector) ?? super.responds(to: aSelector)
+        if let t = target {
+            return t.responds(to: aSelector)
+        }
+        return super.responds(to: aSelector)
     }
 
     override public func isEqual(_ object: Any?) -> Bool {
-        return target?.isEqual(object) ?? super.isEqual(object)
+        if let t = target {
+            return t.isEqual(object)
+        }
+        return super.isEqual(object)
     }
 
     override public var hash: Int {
-        return target?.hash ?? super.hash
+        if let t = target {
+            return t.hash
+        }
+        return super.hash
     }
 
     override public var superclass: AnyClass? {
@@ -113,19 +122,31 @@ public class LSWeakProxy: NSObject {
     }
 
     override public var `class`: AnyClass {
-        return type(of: target ?? self)
+        if let tempValue = type(of: target {
+            return tempValue
+        }
+        return self)
     }
 
     override public func isKind(of aClass: AnyClass) -> Bool {
-        return target?.isKind(of: aClass) ?? super.isKind(of: aClass)
+        if let t = target {
+            return t.isKind(of: aClass)
+        }
+        return super.isKind(of: aClass)
     }
 
     override public func isMember(of aClass: AnyClass) -> Bool {
-        return target?.isMember(of: aClass) ?? super.isMember(of: aClass)
+        if let t = target {
+            return t.isMember(of: aClass)
+        }
+        return super.isMember(of: aClass)
     }
 
     override public func conforms(to aProtocol: Protocol) -> Bool {
-        return target?.conforms(to: aProtocol) ?? super.conforms(to: aProtocol)
+        if let t = target {
+            return t.conforms(to: aProtocol)
+        }
+        return super.conforms(to: aProtocol)
     }
 
     override public var isProxy: Bool {
@@ -133,11 +154,17 @@ public class LSWeakProxy: NSObject {
     }
 
     override public var description: String {
-        return target?.description ?? super.description
+        if let t = target {
+            return t.description
+        }
+        return super.description
     }
 
     override public var debugDescription: String {
-        return target?.debugDescription ?? super.debugDescription
+        if let t = target {
+            return t.debugDescription
+        }
+        return super.debugDescription
     }
 }
 #endif

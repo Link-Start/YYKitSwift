@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSCollectionViewFlowLayout
 
 /// 增强的集合流式布局
+@MainActor
 public class LSCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - 属性
@@ -233,7 +234,11 @@ public class LSWaterfallLayout: UICollectionViewLayout {
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             cache.append(attributes)
 
-            let itemHeight = delegate?.waterfallLayout(self, heightForItemAt: indexPath) ?? 100
+            if let tempValue = delegate?.waterfallLayout(self, heightForItemAt: indexPath) {
+                itemHeight = tempValue
+            } else {
+                itemHeight = 100
+            }
 
             // 找到最短的列
             var shortestColumn = 0
@@ -433,7 +438,11 @@ public class LSTagLayout: UICollectionViewLayout {
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             cache.append(attributes)
 
-            let itemSize = delegate?.tagLayout(self, sizeForItemAt: indexPath) ?? CGSize(width: 50, height: 30)
+            if let tempValue = delegate?.tagLayout(self, sizeForItemAt: indexPath) {
+                itemSize = tempValue
+            } else {
+                itemSize = CGSize(width: 50, height: 30)
+            }
 
             if xOffset + itemSize.width > availableWidth && xOffset > contentInsets.left {
                 // 换行
@@ -533,7 +542,11 @@ public class LSStaggeredGridLayout: UICollectionViewLayout {
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             cache.append(attributes)
 
-            let itemHeight = delegate?.staggeredLayout(self, heightForItemAt: indexPath) ?? 100
+            if let tempValue = delegate?.staggeredLayout(self, heightForItemAt: indexPath) {
+                itemHeight = tempValue
+            } else {
+                itemHeight = 100
+            }
 
             // 找到最短的列
             var shortestColumn = 0

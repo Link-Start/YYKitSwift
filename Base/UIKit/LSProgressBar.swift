@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSProgressBar
 
 /// 线性进度条
+@MainActor
 public class LSProgressBar: UIView {
 
     // MARK: - 类型定义
@@ -892,7 +893,12 @@ public extension UIView {
         message: String? = nil,
         in view: UIView? = nil
     ) -> LSProgressView {
-        let targetView = view ?? self
+        let targetView
+        if let tempTargetview = view {
+            targetView = tempTargetview
+        } else {
+            targetView = self
+        }
         let progressView = LSProgressView(frame: targetView.bounds)
         progressView.label.text = message
         targetView.addSubview(progressView)

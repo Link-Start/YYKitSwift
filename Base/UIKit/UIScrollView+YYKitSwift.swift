@@ -12,6 +12,7 @@ import UIKit
 
 // MARK: - UIScrollView 扩展
 
+@MainActor
 public extension UIScrollView {
 
     /// 滚动到顶部

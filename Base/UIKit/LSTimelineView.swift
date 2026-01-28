@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSTimelineView
 
 /// 时间线视图
+@MainActor
 public class LSTimelineView: UIScrollView {
 
     // MARK: - 类型定义

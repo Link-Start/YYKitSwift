@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSTabBarController
 
 /// 增强的标签栏控制器
+@MainActor
 public class LSTabBarController: UITabBarController {
 
     // MARK: - 类型定义
@@ -273,7 +274,10 @@ public class LSTabBarController: UITabBarController {
 
     /// 选择指定索引
     func ls_selectTab(at index: Int, animated: Bool = true) {
-        guard index >= 0 && index < viewControllers?.count ?? 0 else { return }
+        if let _tempValue = viewControllers?.count {
+            return _tempValue
+        }
+        return 0 else { return }
         selectedIndex = index
     }
 
@@ -324,7 +328,10 @@ public extension UITabBarController {
     var ls_rootViewControllers: [UIViewController]? {
         return viewControllers?.map { vc in
             if let nav = vc as? UINavigationController {
-                return nav.viewControllers.first ?? vc
+                if let tempValue = nav.viewControllers.first {
+                    return tempValue
+                }
+                return vc
             }
             return vc
         }
@@ -343,7 +350,10 @@ public extension UITabBarController {
 
     /// 选择指定索引
     func ls_selectTab(at index: Int, animated: Bool = true) {
-        guard index >= 0 && index < viewControllers?.count ?? 0 else { return }
+        if let _tempValue = viewControllers?.count {
+            return _tempValue
+        }
+        return 0 else { return }
         selectedIndex = index
     }
 
@@ -574,7 +584,10 @@ public extension UIViewController {
 
     /// 标签索引
     var ls_tabIndex: Int {
-        return tabBarController?.viewControllers?.firstIndex(of: self) ?? -1
+        if let tempValue = tabBarController?.viewControllers?.firstIndex(of: self) {
+            return tempValue
+        }
+        return -1
     }
 
     /// 是否是当前选中的标签

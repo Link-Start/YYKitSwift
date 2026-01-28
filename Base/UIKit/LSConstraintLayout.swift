@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSLayout
 
 /// 约束构建器
+@MainActor
 public class LSLayout {
 
     /// 视图

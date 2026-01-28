@@ -38,6 +38,7 @@ public protocol LSTextLinePositionModifier: NSObjectProtocol, NSCopying {
 /// 简单的行位置修饰器实现
 ///
 /// 将每行的位置固定为指定值，使每行具有相同的高度
+@MainActor
 public class LSTextLinePositionSimpleModifier: NSObject, LSTextLinePositionModifier {
 
     /// 固定行高（两条基线之间的距离）
@@ -208,7 +209,14 @@ public class LSTextContainer: NSObject, NSCoding, NSCopying {
         pathFillEvenOdd = coder.decodeBool(forKey: "pathFillEvenOdd")
         isVerticalForm = coder.decodeBool(forKey: "isVerticalForm")
         maximumNumberOfRows = coder.decodeInteger(forKey: "maximumNumberOfRows").asUInt()
-        truncationType = LSTextTruncationType(rawValue: coder.decodeInteger(forKey: "truncationType")) ?? .none
+        let rawTruncationType = coder.decodeInteger(forKey: "truncationType")
+        let decodedTruncationType: LSTextTruncationType
+        if let type = LSTextTruncationType(rawValue: rawTruncationType) {
+            decodedTruncationType = type
+        } else {
+            decodedTruncationType = .none
+        }
+        truncationType = decodedTruncationType
         if let tokenData = coder.decodeObject(forKey: "truncationToken") as? Data {
             truncationToken = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSAttributedString.self, from: tokenData)
         }

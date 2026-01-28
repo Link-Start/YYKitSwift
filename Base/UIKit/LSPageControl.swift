@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSPageControl
 
 /// 页面指示器
+@MainActor
 public class LSPageControl: UIView {
 
     // MARK: - 类型定义

@@ -245,6 +245,7 @@ private extension UIGestureRecognizer {
 // MARK: - 组合手势
 
 /// 组合手势管理器
+@MainActor
 public class LSCompositeGestureManager: NSObject {
 
     // MARK: - 类型定义

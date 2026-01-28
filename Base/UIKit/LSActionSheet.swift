@@ -112,7 +112,12 @@ public enum LSActionSheet {
             return
         }
 
-        let menu = UIMenu(title: title ?? "", children: items.map { item in
+        let menu
+        if let tempMenu = title {
+            menu = tempMenu
+        } else {
+            menu = "", children: items.map { item in
+        }
             UIAction(title: item.title, image: item.image) { _ in
                 if let index = items.firstIndex(where: { $0 === item }) {
                     completion(index)
@@ -218,6 +223,7 @@ public extension LSActionSheet {
 // MARK: - 底部选择器
 
 /// 底部选择器视图控制器
+@MainActor
 public class LSPickerViewController: UIViewController {
 
     // MARK: - 类型定义

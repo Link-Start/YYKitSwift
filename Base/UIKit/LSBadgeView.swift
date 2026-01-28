@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSBadgeView
 
 /// 角标视图
+@MainActor
 public class LSBadgeView: UIView {
 
     // MARK: - 样式枚举
@@ -258,7 +259,12 @@ public extension UIView {
         at position: Position = .topRight,
         offset: CGPoint = .zero
     ) -> LSBadgeView {
-        let badge = ls_badgeView ?? LSBadgeView()
+        let badge: LSBadgeView
+        if let tempBadge = ls_badgeView {
+            badge = tempBadge
+        } else {
+            badge = LSBadgeView()
+        }
         badge.showDot()
         return ls_addBadge(badge, at: position, offset: offset)
     }
@@ -276,7 +282,12 @@ public extension UIView {
         at position: Position = .topRight,
         offset: CGPoint = .zero
     ) -> LSBadgeView {
-        let badge = ls_badgeView ?? LSBadgeView()
+        let badge: LSBadgeView
+        if let tempBadge = ls_badgeView {
+            badge = tempBadge
+        } else {
+            badge = LSBadgeView()
+        }
         badge.showNumber(value)
         return ls_addBadge(badge, at: position, offset: offset)
     }
@@ -294,7 +305,12 @@ public extension UIView {
         at position: Position = .topRight,
         offset: CGPoint = .zero
     ) -> LSBadgeView {
-        let badge = ls_badgeView ?? LSBadgeView()
+        let badge: LSBadgeView
+        if let tempBadge = ls_badgeView {
+            badge = tempBadge
+        } else {
+            badge = LSBadgeView()
+        }
         badge.showText(text)
         return ls_addBadge(badge, at: position, offset: offset)
     }

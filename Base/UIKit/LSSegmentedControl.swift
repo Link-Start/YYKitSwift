@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSSegmentedControl
 
 /// 增强的分段控制器
+@MainActor
 public class LSSegmentedControl: UIView {
 
     // MARK: - 类型定义

@@ -28,47 +28,74 @@ public extension Date {
 
     /// 年份
     var ls_year: Int {
-        return ls_components([.year]).year ?? 0
+        if let tempValue = ls_components([.year]).year {
+            return tempValue
+        }
+        return 0
     }
 
     /// 月份
     var ls_month: Int {
-        return ls_components([.month]).month ?? 0
+        if let tempValue = ls_components([.month]).month {
+            return tempValue
+        }
+        return 0
     }
 
     /// 日
     var ls_day: Int {
-        return ls_components([.day]).day ?? 0
+        if let tempValue = ls_components([.day]).day {
+            return tempValue
+        }
+        return 0
     }
 
     /// 小时
     var ls_hour: Int {
-        return ls_components([.hour]).hour ?? 0
+        if let tempValue = ls_components([.hour]).hour {
+            return tempValue
+        }
+        return 0
     }
 
     /// 分钟
     var ls_minute: Int {
-        return ls_components([.minute]).minute ?? 0
+        if let tempValue = ls_components([.minute]).minute {
+            return tempValue
+        }
+        return 0
     }
 
     /// 秒
     var ls_second: Int {
-        return ls_components([.second]).second ?? 0
+        if let tempValue = ls_components([.second]).second {
+            return tempValue
+        }
+        return 0
     }
 
     /// 星期几
     var ls_weekday: Int {
-        return ls_components([.weekday]).weekday ?? 0
+        if let tempValue = ls_components([.weekday]).weekday {
+            return tempValue
+        }
+        return 0
     }
 
     /// 本月第几周
     var ls_weekOfMonth: Int {
-        return ls_components([.weekOfMonth]).weekOfMonth ?? 0
+        if let tempValue = ls_components([.weekOfMonth]).weekOfMonth {
+            return tempValue
+        }
+        return 0
     }
 
     /// 本年第几周
     var ls_weekOfYear: Int {
-        return ls_components([.weekOfYear]).weekOfYear ?? 0
+        if let tempValue = ls_components([.weekOfYear]).weekOfYear {
+            return tempValue
+        }
+        return 0
     }
 
     /// 季度
@@ -147,13 +174,19 @@ public extension Date {
         var components = DateComponents()
         components.day = 1
         components.second = -1
-        return Calendar.current.date(byAdding: components, to: ls_startOfDay) ?? self
+        if let tempValue = Calendar.current.date(byAdding: components, to: ls_startOfDay) {
+            return tempValue
+        }
+        return self
     }
 
     /// 本周开始时间
     var ls_startOfWeek: Date {
         let components = Calendar.current.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)
-        return Calendar.current.date(from: components) ?? self
+        if let tempValue = Calendar.current.date(from: components) {
+            return tempValue
+        }
+        return self
     }
 
     /// 本周结束时间
@@ -161,13 +194,19 @@ public extension Date {
         let components = DateComponents()
         components.weekOfYear = 1
         components.second = -1
-        return Calendar.current.date(byAdding: components, to: ls_startOfWeek) ?? self
+        if let tempValue = Calendar.current.date(byAdding: components, to: ls_startOfWeek) {
+            return tempValue
+        }
+        return self
     }
 
     /// 本月开始时间
     var ls_startOfMonth: Date {
         let components = ls_components([.year, .month])
-        return Calendar.current.date(from: components) ?? self
+        if let tempValue = Calendar.current.date(from: components) {
+            return tempValue
+        }
+        return self
     }
 
     /// 本月结束时间
@@ -175,13 +214,19 @@ public extension Date {
         var components = DateComponents()
         components.month = 1
         components.second = -1
-        return Calendar.current.date(byAdding: components, to: ls_startOfMonth) ?? self
+        if let tempValue = Calendar.current.date(byAdding: components, to: ls_startOfMonth) {
+            return tempValue
+        }
+        return self
     }
 
     /// 本年开始时间
     var ls_startOfYear: Date {
         let components = ls_components([.year])
-        return Calendar.current.date(from: components) ?? self
+        if let tempValue = Calendar.current.date(from: components) {
+            return tempValue
+        }
+        return self
     }
 
     /// 本年结束时间
@@ -189,7 +234,10 @@ public extension Date {
         var components = DateComponents()
         components.year = 1
         components.second = -1
-        return Calendar.current.date(byAdding: components, to: ls_startOfYear) ?? self
+        if let tempValue = Calendar.current.date(byAdding: components, to: ls_startOfYear) {
+            return tempValue
+        }
+        return self
     }
 
     // MARK: - 日期比较
@@ -257,7 +305,10 @@ public extension Date {
     func ls_daysBetween(_ date: Date) -> Int {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.day], from: ls_startOfDay, to: date.ls_startOfDay)
-        return abs(components.day ?? 0)
+        if let tempValue = abs(components.day {
+            return tempValue
+        }
+        return 0)
     }
 
     // MARK: - 格式化
@@ -338,7 +389,12 @@ public extension Date {
             return "\(minutes)分钟前"
         }
 
-        if let seconds = calendar.dateComponents([.second], from: self, to: now).second, seconds ?? 0 < 60 {
+        let seconds
+        if let tempSeconds = seconds {
+            seconds = tempSeconds
+        } else {
+            seconds = 0 < 60 {
+        }
             return "刚刚"
         }
 
@@ -454,7 +510,10 @@ public extension Date {
         let calendar = Calendar.current
         let now = Date()
         let ageComponents = calendar.dateComponents([.year], from: self, to: now)
-        return ageComponents.year ?? 0
+        if let tempValue = ageComponents.year {
+            return tempValue
+        }
+        return 0
     }
 }
 
@@ -469,12 +528,18 @@ public extension Date {
 
     /// 明天
     static var ls_tomorrow: Date {
-        return Date().ls_addingDays(1) ?? Date()
+        if let tempValue = Date().ls_addingDays(1) {
+            return tempValue
+        }
+        return Date()
     }
 
     /// 昨天
     static var ls_yesterday: Date {
-        return Date().ls_addingDays(-1) ?? Date()
+        if let tempValue = Date().ls_addingDays(-1) {
+            return tempValue
+        }
+        return Date()
     }
 
     /// 本周开始

@@ -15,6 +15,7 @@ import Foundation
 // MARK: - LSBadgeView
 
 /// 角标视图
+@MainActor
 public class LSBadgeView: UIView {
 
     // MARK: - 样式
@@ -459,7 +460,13 @@ public extension UIView {
 
     /// 角标值
     var ls_badgeValue: Int {
-        get { return ls_badge?.value ?? 0 }
+        get {
+            if let badge = ls_badge {
+                return badge.value
+            } else {
+                return 0
+            }
+        }
         set { ls_setBadge(newValue) }
     }
 }

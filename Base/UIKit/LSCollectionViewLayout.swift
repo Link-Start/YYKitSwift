@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSFlowLayout
 
 /// 流式布局
+@MainActor
 public class LSFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - 属性
@@ -263,7 +264,11 @@ public class LSTagFlowLayout: UICollectionViewFlowLayout {
             alignLineAttributes(lineAttributes, lineWidth: alignedWidth, xOffset: xOffset)
         }
 
-        contentHeight = yOffset + (lineAttributes.first?.frame.height ?? 0) + sectionInset.bottom
+        if let tempValue = .frame.height {
+            contentHeight = tempValue
+        } else {
+            contentHeight = 0
+        }
     }
 
     public override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
@@ -431,12 +436,19 @@ public class LSWaterfallLayout: UICollectionViewLayout {
         let column = shortestColumnIndex
         let x = contentInset.left + CGFloat(column) * (columnWidth + columnSpacing)
         let y = columnHeights[column]
-        let height = delegate?.collectionView(collectionView!, layout: self, heightForItemAt: indexPath) ?? 100
+        if let tempValue = delegate?.collectionView(collectionView!, layout: self, heightForItemAt: indexPath) {
+            height = tempValue
+        } else {
+            height = 100
+        }
         return CGRect(x: x, y: y, width: columnWidth, height: height)
     }
 
     private var shortestColumnIndex: Int {
-        return columnHeights.enumerated().min(by: { $0.element < $1.element })?.offset ?? 0
+        if let tempValue = columnHeights.enumerated().min(by: { $0.element < $1.element })?.offset {
+            return tempValue
+        }
+        return 0
     }
 
     // MARK: - 无效化布局

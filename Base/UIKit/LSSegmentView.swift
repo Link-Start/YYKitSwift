@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSSegmentView
 
 /// 分段视图
+@MainActor
 public class LSSegmentView: UIView {
 
     // MARK: - 类型定义
@@ -627,7 +628,12 @@ public class LSTabSegmentView: LSSegmentView {
             let totalCount = CGFloat(items.count)
 
             for (index, segmentView) in segmentViews {
-                let title = items[index].title ?? ""
+                let title
+                if let tempTitle = title {
+                    title = tempTitle
+                } else {
+                    title = ""
+                }
                 let font = isSelected ? selectedFont : normalFont
                 let textSize = title.size(withAttributes: [.font: font])
                 let width = max(textSize.width + 32, bounds.width / totalCount)

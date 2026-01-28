@@ -600,6 +600,7 @@ public enum LSAnimation {
 // MARK: - UIViewAnimateLink
 
 /// 动画链接对象（用于取消持续动画）
+@MainActor
 public class UIViewAnimateLink {
 
     /// 动画

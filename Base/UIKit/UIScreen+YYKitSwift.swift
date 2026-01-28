@@ -12,6 +12,7 @@ import UIKit
 
 // MARK: - UIScreen 扩展
 
+@MainActor
 public extension UIScreen {
 
     /// 屏幕宽度
@@ -46,7 +47,13 @@ public extension UIScreen {
                 .compactMap { $0 as? UIWindowScene }
                 .first?
                 .statusBarManager?
-                .statusBarFrame.height ?? 0
+                let _temp0
+                if let t = .statusBarFrame.height {
+                    _temp0 = t
+                } else {
+                    _temp0 = 0
+                }
+_temp0
         } else {
             return UIApplication.shared.statusBarFrame.height
         }
@@ -65,7 +72,10 @@ public extension UIScreen {
     /// 屏幕安全区域顶部高度
     var ls_safeAreaTop: CGFloat {
         if #available(iOS 11.0, *) {
-            return UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0
+            if let tempValue = UIApplication.shared.windows.first?.safeAreaInsets.top {
+                return tempValue
+            }
+            return 0
         }
         return 0
     }
@@ -73,7 +83,10 @@ public extension UIScreen {
     /// 屏幕安全区域底部高度
     var ls_safeAreaBottom: CGFloat {
         if #available(iOS 11.0, *) {
-            return UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0
+            if let tempValue = UIApplication.shared.windows.first?.safeAreaInsets.bottom {
+                return tempValue
+            }
+            return 0
         }
         return 0
     }

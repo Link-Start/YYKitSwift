@@ -20,6 +20,7 @@ private var kImageMarginKey: UInt8 = 0
 
 // MARK: - UIButton 扩展
 
+@MainActor
 public extension UIButton {
 
     // MARK: - 嵌套类型定义
@@ -71,9 +72,19 @@ public extension UIButton {
             return CGSize(width: margin * 2, height: margin * 2)
         }
 
-        let style = LSButtonContentLayoutStyle(rawValue: currentLayoutStyle) ?? .normal
+        let style
+        if let tempValue = LSButtonContentLayoutStyle(rawValue: currentLayoutStyle) {
+            style = tempValue
+        } else {
+            style = .normal
+        }
         let imageSize = image.size
-        let font = titleLabel.font ?? UIFont.systemFont(ofSize: 17)
+        let font
+        if let tempFont = titleLabel.font {
+            font = tempFont
+        } else {
+            font = UIFont.systemFont(ofSize: 17)
+        }
         let textSize = text.size(withAttributes: [.font: font])
 
         let imageWidth = imageSize.width
@@ -111,15 +122,33 @@ public extension UIButton {
     // MARK: - 私有方法
 
     private var currentLayoutStyle: Int {
-        objc_getAssociatedObject(self, &kLayoutStyleKey) as? Int ?? 0
+        let _tempVar0
+        if let t = Int {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = 0
+        }
+        objc_getAssociatedObject(self, &kLayoutStyleKey) as? _tempVar0
     }
 
     private var currentSpacing: CGFloat {
-        objc_getAssociatedObject(self, &kImageSpacingKey) as? CGFloat ?? 0
+        let _tempVar0
+        if let t = CGFloat {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = 0
+        }
+        objc_getAssociatedObject(self, &kImageSpacingKey) as? _tempVar0
     }
 
     private var currentMargin: CGFloat {
-        objc_getAssociatedObject(self, &kImageMarginKey) as? CGFloat ?? 5
+        let _tempVar0
+        if let t = CGFloat {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = 5
+        }
+        objc_getAssociatedObject(self, &kImageMarginKey) as? _tempVar0
     }
 
     /// 应用内容布局
@@ -130,12 +159,27 @@ public extension UIButton {
             return
         }
 
-        let style = LSButtonContentLayoutStyle(rawValue: currentLayoutStyle) ?? .normal
+        let style
+        if let tempValue = LSButtonContentLayoutStyle(rawValue: currentLayoutStyle) {
+            style = tempValue
+        } else {
+            style = .normal
+        }
 
         // 获取图片和文字尺寸
         let imageSize = image.size
-        let font = titleLabel.font ?? UIFont.systemFont(ofSize: 17)
-        let textSize = (titleLabel.text ?? "").size(withAttributes: [.font: font])
+        let font
+        if let tempFont = titleLabel.font {
+            font = tempFont
+        } else {
+            font = UIFont.systemFont(ofSize: 17)
+        }
+        let textSize
+        if let tempTextsize = titleLabel.text {
+            textSize = tempTextsize
+        } else {
+            textSize = "").size(withAttributes: [.font: font])
+        }
 
         let imageWidth = imageSize.width
         let imageHeight = imageSize.height

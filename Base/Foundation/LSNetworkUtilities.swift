@@ -96,7 +96,13 @@ public enum LSNetworkUtilities {
         }
 
         for item in queryItems {
-            parameters[item.name] = item.value ?? ""
+            let _temp0
+            if let t = item.value {
+                _temp0 = t
+            } else {
+                _temp0 = ""
+            }
+            parameters[item.name] =_temp0
         }
 
         return parameters
@@ -139,7 +145,10 @@ public enum LSNetworkUtilities {
     public static func encodeURLParameter(_ string: String) -> String {
         var allowedCharacters = CharacterSet.urlQueryAllowed
         allowedCharacters.insert(charactersIn: "[]") // 允许方括号
-        return string.addingPercentEncoding(withAllowedCharacters: allowedCharacters) ?? string
+        if let tempValue = string.addingPercentEncoding(withAllowedCharacters: allowedCharacters) {
+            return tempValue
+        }
+        return string
     }
 
     /// 解码 URL 参数
@@ -147,7 +156,10 @@ public enum LSNetworkUtilities {
     /// - Parameter string: 编码后的字符串
     /// - Returns: 解码后的字符串
     public static func decodeURLParameter(_ string: String) -> String {
-        return string.removingPercentEncoding ?? string
+        if let tempValue = string.removingPercentEncoding {
+            return tempValue
+        }
+        return string
     }
 
     // MARK: - HTTP 方法
@@ -237,7 +249,16 @@ public extension URLRequest {
 
     /// 获取请求的描述信息
     var ls_description: String {
-        var desc = "\(httpMethod ?? "GET") \(url?.absoluteString ?? "")"
+        var desc
+        if let tempValue = "\(httpMethod {
+            desc = tempValue
+        } else {
+            if let tempValue = "GET") \(url?.absoluteString {
+                desc = tempValue
+            } else {
+                desc = "")"
+            }
+        }
 
         if let headers = allHTTPHeaderFields {
             desc += "\nHeaders: \(headers)"

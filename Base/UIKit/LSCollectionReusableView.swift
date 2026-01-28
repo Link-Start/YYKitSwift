@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSCollectionReusableView
 
 /// 可复用集合视图基类
+@MainActor
 public class LSCollectionReusableView: UICollectionReusableView {
 
     // MARK: - 属性

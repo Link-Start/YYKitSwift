@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSPullToRefreshView
 
 /// 下拉刷新视图
+@MainActor
 public class LSPullToRefreshView: UIView {
 
     // MARK: - 类型定义

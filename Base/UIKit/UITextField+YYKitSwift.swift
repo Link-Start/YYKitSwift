@@ -12,6 +12,7 @@ import UIKit
 
 // MARK: - UITextField 扩展
 
+@MainActor
 public extension UITextField {
 
     /// 关联对象 key
@@ -73,6 +74,12 @@ private class TextChangeWrapper: NSObject {
     }
 
     @objc func textChanged(_ sender: UITextField) {
-        callback(sender.text ?? "")
+        let _tempVar0
+        if let t = sender.text {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = ""
+        }
+        callback(_tempVar0)
     }
 }

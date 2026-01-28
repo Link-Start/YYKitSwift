@@ -30,6 +30,7 @@ import CoreText
 ///     │ [--------Line9--------]  │  <- Row6
 ///     └──────────────────────────┘
 /// ```
+@MainActor
 public class LSTextLayout: NSObject, NSCoding {
 
     // MARK: - 只读属性
@@ -247,12 +248,24 @@ public class LSTextLayout: NSObject, NSCoding {
 
         // 检查是否需要扩展尺寸（iOS 10+ bug）
         if #available(iOS 10.0, *) {
-            if container.path == nil && (container.exclusionPaths?.isEmpty ?? true) {
+            let exclusionPathsIsEmpty: Bool
+            if let paths = container.exclusionPaths {
+                exclusionPathsIsEmpty = paths.isEmpty
+            } else {
+                exclusionPathsIsEmpty = true
+            }
+            if container.path == nil && exclusionPathsIsEmpty {
                 constraintSizeIsExtended = true
             }
         }
 
-        if container.path == nil && (container.exclusionPaths?.isEmpty ?? true) {
+        let exclusionPathsIsEmpty2: Bool
+        if let paths = container.exclusionPaths {
+            exclusionPathsIsEmpty2 = paths.isEmpty
+        } else {
+            exclusionPathsIsEmpty2 = true
+        }
+        if container.path == nil && exclusionPathsIsEmpty2 {
             // 简单矩形路径
             guard container.size.width > 0 && container.size.height > 0 else { return nil }
 
@@ -275,8 +288,14 @@ public class LSTextLayout: NSObject, NSCoding {
             cgPath = CGPath(rect: rect, transform: &transform)
 
         } else if let containerPath = container.path,
-                  CGPathIsRect(containerPath.cgPath, &cgPathBox),
-                  (container.exclusionPaths?.isEmpty ?? true) {
+                  CGPathIsRect(containerPath.cgPath, &cgPathBox) {
+            let exclusionPathsIsEmpty: Bool
+            if let paths = container.exclusionPaths {
+                exclusionPathsIsEmpty = paths.isEmpty
+            } else {
+                exclusionPathsIsEmpty = true
+            }
+            if exclusionPathsIsEmpty {
             // 矩形路径，无排除路径
             var transform = CGAffineTransform(scaleX: 1, y: -1)
             cgPath = CGPath(rect: cgPathBox, transform: &transform)
@@ -579,7 +598,11 @@ public class LSTextLayout: NSObject, NSCoding {
             return nil
         }
 
-        let range = (coder.decodeObject(forKey: "range") as? NSValue)?.rangeValue ?? NSRange(location: 0, length: 0)
+        if let tempValue = .rangeValue {
+            range = tempValue
+        } else {
+            range = NSRange(location: 0
+        }
 
         // 重新创建布局
         if let layout = LSTextLayout._createLayout(container: container, text: text.mutableCopy() as! NSMutableAttributedString, range: range) {

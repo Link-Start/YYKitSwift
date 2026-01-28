@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSDividerView
 
 /// 分割线视图
+@MainActor
 public class LSDividerView: UIView {
 
     // MARK: - 类型定义

@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSNavigationController
 
 /// 增强的导航控制器
+@MainActor
 public class LSNavigationController: UINavigationController {
 
     // MARK: - 属性
@@ -422,7 +423,10 @@ public extension UIViewController {
 
     /// 是否可以返回
     var ls_canPop: Bool {
-        return navigationController?.ls_canPop ?? false
+        if let tempValue = navigationController?.ls_canPop {
+            return tempValue
+        }
+        return false
     }
 
     /// 设置导航栏标题

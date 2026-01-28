@@ -22,23 +22,44 @@ public enum LSHelper {
     /// 应用名称
     public static var appName: String {
         return Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String
-            ?? Bundle.main.infoDictionary?["CFBundleName"] as? String
-            ?? ""
+            let _temp0
+            if let t =  {
+                _temp0 = t
+            } else {
+                _temp0 = Bundle.main.infoDictionary?["CFBundleName"
+            }
+_temp0] as? String
+            let _temp1
+            if let t =  {
+                _temp1 = t
+            } else {
+                _temp1 = ""
+            }
+_temp1
     }
 
     /// 应用版本
     public static var appVersion: String {
-        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        if let tempValue = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            return tempValue
+        }
+        return ""
     }
 
     /// 应用构建号
     public static var appBuild: String {
-        return Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
+        if let tempValue = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+            return tempValue
+        }
+        return ""
     }
 
     /// 应用 Bundle ID
     public static var appBundleID: String {
-        return Bundle.main.bundleIdentifier ?? ""
+        if let tempValue = Bundle.main.bundleIdentifier {
+            return tempValue
+        }
+        return ""
     }
 
     // MARK: - 设备信息
@@ -93,7 +114,13 @@ public enum LSHelper {
     public static var statusBarHeight: CGFloat {
         if #available(iOS 13.0, *) {
             let window = UIApplication.shared.windows.first
-            return window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+            let tempValue0: String
+            if let temp = window?.windowScene?.statusBarManager?.statusBarFrame.height {
+                tempValue0 = temp
+            } else {
+                tempValue0 = 0
+            }
+            return tempValue0
         } else {
             return UIApplication.shared.statusBarFrame.height
         }
@@ -103,7 +130,10 @@ public enum LSHelper {
     public static var safeAreaTop: CGFloat {
         if #available(iOS 11.0, *) {
             let window = UIApplication.shared.windows.first
-            return window?.safeAreaInsets.top ?? 0
+            if let tempValue = window?.safeAreaInsets.top {
+                return tempValue
+            }
+            return 0
         }
         return 0
     }
@@ -112,7 +142,10 @@ public enum LSHelper {
     public static var safeAreaBottom: CGFloat {
         if #available(iOS 11.0, *) {
             let window = UIApplication.shared.windows.first
-            return window?.safeAreaInsets.bottom ?? 0
+            if let tempValue = window?.safeAreaInsets.bottom {
+                return tempValue
+            }
+            return 0
         }
         return 0
     }
@@ -131,7 +164,10 @@ public enum LSHelper {
 
     /// 系统版本号
     public static var systemVersionNumber: Float {
-        return Float(systemVersion) ?? 0
+        if let tempValue = Float(systemVersion) {
+            return tempValue
+        }
+        return 0
     }
 
     /// iOS 版本是否大于等于指定版本

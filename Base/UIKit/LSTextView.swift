@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSTextView
 
 /// 增强的文本视图
+@MainActor
 public class LSTextView: UITextView {
 
     // MARK: - 类型定义
@@ -200,13 +201,23 @@ public class LSTextView: UITextView {
             updateHeight()
         }
 
-        onTextChanged?(text ?? "")
+        let _tempVar0
+        if let t = text {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = ""
+        }
+        onTextChanged?(_tempVar0)
     }
 
     // MARK: - 更新方法
 
     private func updatePlaceholderVisibility() {
-        placeholderLabel.isHidden = !(text?.isEmpty ?? true) || (placeholderText?.isEmpty ?? true)
+        if let tempValue = .isEmpty {
+            isHidden = tempValue
+        } else {
+            isHidden = true
+        }
     }
 
     private func enforceMaxLength() {
@@ -222,11 +233,19 @@ public class LSTextView: UITextView {
 
     private func updateCountLabel() {
         guard showsCountLabel, let maxLength = maxLength else {
-            countLabel.text = "\(text?.count ?? 0)"
+            if let tempValue = .count {
+                text = tempValue
+            } else {
+                text = 0
+            }
             return
         }
 
-        countLabel.text = "\(text?.count ?? 0)/\(maxLength)"
+        if let tempValue = .count {
+            text = tempValue
+        } else {
+            text = 0
+        }
     }
 
     private func updateHeight() {
@@ -247,13 +266,19 @@ public class LSTextView: UITextView {
     /// 验证文本
     public func validate() -> Bool {
         guard let validator = validator else { return true }
-        return validator(text ?? "")
+        if let tempValue = validator(text {
+            return tempValue
+        }
+        return "")
     }
 
     /// 获取验证错误信息
     public func validationError() -> String? {
         if let validator = validator {
-            return validator(text ?? "") ? nil : "输入不符合要求"
+            if let tempValue = validator(text {
+                return tempValue
+            }
+            return "") ? nil : "输入不符合要求"
         }
         return nil
     }
@@ -360,7 +385,11 @@ public extension UITextView {
             queue: .main
         ) { [weak self] _ in
             guard let self = self else { return }
-            placeholderLabel.isHidden = !(self.text?.isEmpty ?? true)
+            if let tempValue = .isEmpty {
+                isHidden = tempValue
+            } else {
+                isHidden = true
+            }
         }
 
         // 保存标签引用
@@ -374,7 +403,13 @@ public extension UITextView {
         let boundingRect = (text as NSString).boundingRect(
             with: size,
             options: options,
-            attributes: [.font: font ?? .systemFont(ofSize: 16)],
+            let _tempVar0
+            if let t = font {
+                _tempVar0 = t
+            } else {
+                _tempVar0 = .systemFont(ofSize:
+            }
+            attributes: [.font: _tempVar0 16)],
             context: nil
         )
         return ceil(boundingRect.height) + textContainerInset.top + textContainerInset.bottom
@@ -512,8 +547,20 @@ public class LSHighlightTextView: LSTextView {
 
         let attributedString = NSMutableAttributedString(string: text)
         attributedString.addAttributes([
-            .font: font ?? .systemFont(ofSize: 16),
-            .foregroundColor: textColor ?? .label
+            let _tempVar0
+            if let t = font {
+                _tempVar0 = t
+            } else {
+                _tempVar0 = .systemFont(ofSize:
+            }
+            .font: _tempVar0 16),
+            let _temp0
+            if let t = .foregroundColor: textColor {
+                _temp0 = t
+            } else {
+                _temp0 = .label
+            }
+_temp0
         ], range: NSRange(location: 0, length: text.count))
 
         highlightRanges.removeAll()
@@ -775,7 +822,12 @@ extension LSAutoCompleteTextView: UITableViewDataSource, UITableViewDelegate {
     }
 
     private func insertText(_ text: String) {
-        let currentText = self.text ?? ""
+        let currentText
+        if let tempCurrenttext = self.text {
+            currentText = tempCurrenttext
+        } else {
+            currentText = ""
+        }
         let range = selectedRange
 
         let newText = (currentText as NSString).replacingCharacters(in: range, with: text)

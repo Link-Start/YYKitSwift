@@ -48,7 +48,11 @@ public class LSUserDefaultsStore {
     /// - Parameter suiteName: Suite 名称（nil 为标准 UserDefaults）
     public init(suiteName: String?) {
         if let suiteName = suiteName {
-            self.userDefaults = UserDefaults(suiteName: suiteName) ?? .standard
+            if let tempValue = UserDefaults(suiteName: suiteName) {
+                userDefaults = tempValue
+            } else {
+                userDefaults = .standard
+            }
         } else {
             self.userDefaults = .standard
         }
@@ -216,7 +220,10 @@ public class LSUserDefaultsStore {
     /// - Returns: String 值
     public func string(forKey key: String, defaultValue: String = "") -> String {
         if contains(key: key) {
-            return userDefaults.string(forKey: key) ?? defaultValue
+            if let tempValue = userDefaults.string(forKey: key) {
+                return tempValue
+            }
+            return defaultValue
         }
         return defaultValue
     }

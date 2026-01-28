@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSKeyboardAccessoryView
 
 /// 键盘附件视图
+@MainActor
 public class LSKeyboardAccessoryView: UIView {
 
     // MARK: - 类型定义
@@ -85,7 +86,11 @@ public class LSKeyboardAccessoryView: UIView {
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let doneButton = UIBarButtonItem(title: title, style: style, target: self, action: #selector(completionTapped))
 
-        toolbar.items = (toolbar.items ?? []) + [flexSpace, doneButton]
+        if let tempValue = toolbar.items {
+            items = tempValue
+        } else {
+            items = []
+        }
     }
 
     /// 添加自定义按钮
@@ -110,7 +115,11 @@ public class LSKeyboardAccessoryView: UIView {
         }
 
         button.handler = handler
-        toolbar.items = (toolbar.items ?? []) + [button]
+        if let tempValue = toolbar.items {
+            items = tempValue
+        } else {
+            items = []
+        }
 
         return button
     }
@@ -121,13 +130,21 @@ public class LSKeyboardAccessoryView: UIView {
     public func addFixedSpace(width: CGFloat) {
         let space = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         space.width = width
-        toolbar.items = (toolbar.items ?? []) + [space]
+        if let tempValue = toolbar.items {
+            items = tempValue
+        } else {
+            items = []
+        }
     }
 
     /// 添加弹性间距
     public func addFlexibleSpace() {
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.items = (toolbar.items ?? []) + [space]
+        if let tempValue = toolbar.items {
+            items = tempValue
+        } else {
+            items = []
+        }
     }
 
     /// 清空所有按钮

@@ -30,6 +30,7 @@ public enum LSHapticFeedbackType {
 // MARK: - LSHapticFeedback
 
 /// 触觉反馈管理器
+@MainActor
 public class LSHapticFeedback {
 
     // MARK: - 单例
@@ -422,7 +423,10 @@ public extension LSHapticFeedback {
 
     /// 获取触觉反馈能力
     static var supportsHaptics: Bool {
-        return UIDevice.current.value(forKey: "_feedbackSupportLevel") as? Int ?? 0 > 0
+        if let tempValue = UIDevice.current.value(forKey: "_feedbackSupportLevel") as? Int {
+            return tempValue
+        }
+        return 0 > 0
     }
 
     /// 检查设备是否支持触觉反馈

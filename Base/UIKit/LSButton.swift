@@ -13,6 +13,7 @@ import UIKit
 
 // MARK: - LSButton
 
+@MainActor
 /// 增强的按钮
 public class LSButton: UIButton {
 

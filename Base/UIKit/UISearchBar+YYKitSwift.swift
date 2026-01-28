@@ -13,6 +13,7 @@ import UIKit
 
 // MARK: - UISearchBar Extension
 
+@MainActor
 public extension UISearchBar {
 
     // MARK: - 样式定制
@@ -349,7 +350,12 @@ extension LSSearchBarDelegateHelper: UISearchBarDelegate {
         // 取消延迟搜索
         searchWorkItem?.cancel()
 
-        let searchText = searchBar.text ?? ""
+        let searchText
+        if let tempSearchtext = searchBar.text {
+            searchText = tempSearchtext
+        } else {
+            searchText = ""
+        }
         if searchText.count >= minimumSearchLength {
             onSearch?(searchText)
         }
@@ -427,7 +433,13 @@ public extension UISearchBar {
             setSearchFieldBackgroundImage(backgroundImage, for: .normal)
         }
         if let searchIcon = configuration.searchIcon {
-            ls_setSearchIcon(searchIcon, mode: configuration.iconRenderingMode ?? .alwaysTemplate)
+            let _tempVar0
+            if let t = configuration.iconRenderingMode {
+                _tempVar0 = t
+            } else {
+                _tempVar0 = .alwaysTemplate
+            }
+            ls_setSearchIcon(searchIcon, mode: _tempVar0)
         }
     }
 }

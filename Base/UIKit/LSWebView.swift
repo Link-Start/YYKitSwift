@@ -14,6 +14,7 @@ import WebKit
 // MARK: - LSWebView
 
 /// 增强的 WebView
+@MainActor
 public class LSWebView: WKWebView {
 
     // MARK: - 类型定义
@@ -283,7 +284,12 @@ public class LSWebView: WKWebView {
     /// 滚动到顶部
     public func ls_scrollToTop(animated: Bool = true) {
         let scrollView = subviews.first(where: { $0 is UIScrollView }) as? UIScrollView
-        let contentOffset = scrollView?.contentOffset ?? .zero
+        let contentOffset
+        if let tempContentoffset = scrollView?.contentOffset {
+            contentOffset = tempContentoffset
+        } else {
+            contentOffset = .zero
+        }
 
         if animated {
             scrollView?.setContentOffset(.zero, animated: true)
@@ -701,8 +707,18 @@ public extension String {
 
     /// 基础 HTML 模板
     func ls_htmlTemplate(title: String? = nil, style: String? = nil) -> String {
-        let htmlTitle = title ?? "网页"
-        let css = style ?? ""
+        let htmlTitle
+        if let tempHtmltitle = title {
+            htmlTitle = tempHtmltitle
+        } else {
+            htmlTitle = "网页"
+        }
+        let css
+        if let tempCss = style {
+            css = tempCss
+        } else {
+            css = ""
+        }
 
         return """
         <!DOCTYPE html>

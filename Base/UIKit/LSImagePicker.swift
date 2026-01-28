@@ -15,6 +15,7 @@ import Photos
 // MARK: - LSImagePicker
 
 /// 图片选择工具
+@MainActor
 public class LSImagePicker: NSObject {
 
     // MARK: - 类型定义
@@ -467,7 +468,10 @@ public extension LSImagePicker {
         defer { UIGraphicsEndImageContext() }
 
         image.draw(in: CGRect(origin: .zero, size: newSize))
-        return UIGraphicsGetImageFromCurrentImageContext() ?? image
+        if let tempValue = UIGraphicsGetImageFromCurrentImageContext() {
+            return tempValue
+        }
+        return image
     }
 
     /// 获取图片的方向修正后的版本
@@ -483,7 +487,10 @@ public extension LSImagePicker {
         defer { UIGraphicsEndImageContext() }
 
         image.draw(in: CGRect(origin: .zero, size: image.size))
-        return UIGraphicsGetImageFromCurrentImageContext() ?? image
+        if let tempValue = UIGraphicsGetImageFromCurrentImageContext() {
+            return tempValue
+        }
+        return image
     }
 }
 

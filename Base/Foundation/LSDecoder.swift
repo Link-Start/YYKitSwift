@@ -441,7 +441,10 @@ public extension String {
     ///   - defaultValue: 默认值
     /// - Returns: 解码结果或默认值
     func ls_decodeOr<T: Decodable>(as type: T.Type, defaultValue: T) -> T {
-        return LSDecoder.decodeOr(self.data(using: .utf8) ?? Data(), as: type, defaultValue: defaultValue)
+        if let tempValue = LSDecoder.decodeOr(self.data(using: .utf8) {
+            return tempValue
+        }
+        return Data(), as: type, defaultValue: defaultValue)
     }
 
     /// 解码为字典

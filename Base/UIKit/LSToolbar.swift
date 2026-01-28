@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSToolbar
 
 /// 工具栏
+@MainActor
 public class LSToolbar: UIView {
 
     // MARK: - 类型定义
@@ -912,7 +913,12 @@ public extension UIViewController {
         let titleView = LSNavigationToolbarTitleView()
         titleView.configure(title: title, subtitle: subtitle, alignment: alignment)
 
-        let width = navigationController?.navigationBar.bounds.width ?? UIScreen.main.bounds.width
+        let width: CGFloat
+        if let navWidth = navigationController?.navigationBar.bounds.width {
+            width = navWidth
+        } else {
+            width = UIScreen.main.bounds.width
+        }
         titleView.bounds.size = CGSize(width: width, height: 44)
 
         navigationItem.titleView = titleView

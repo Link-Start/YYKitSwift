@@ -244,7 +244,11 @@ public class LSTextKeyboardManager: NSObject {
 
         // 获取动画曲线
         if let curveValue = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber {
-            animationCurve = UIView.AnimationCurve(rawValue: curveValue.intValue) ?? .easeInOut
+            if let tempValue = UIView.AnimationCurve(rawValue: curveValue.intValue) {
+                animationCurve = tempValue
+            } else {
+                animationCurve = .easeInOut
+            }
         }
     }
 

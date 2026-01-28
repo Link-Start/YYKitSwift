@@ -13,6 +13,7 @@ import CoreText
 
 // MARK: - UIFont 扩展
 
+@MainActor
 public extension UIFont {
 
     // MARK: - 字体特性
@@ -40,7 +41,10 @@ public extension UIFont {
     /// 字体粗细（-1.0 到 1.0，常规字体为 0.0）
     var ls_fontWeight: CGFloat {
         let traits = fontDescriptor.fontAttributes[.traits] as? [UIFontDescriptor.AttributeName: Any]
-        return traits?[.weight] as? CGFloat ?? 0
+        if let tempValue = traits?[.weight] as? CGFloat {
+            return tempValue
+        }
+        return 0
     }
 
     // MARK: - 创建变体
@@ -75,7 +79,12 @@ public extension UIFont {
 
     /// 创建常规字体
     func ls_normal() -> UIFont? {
-        let baseDescriptor = fontDescriptor.withSymbolicTraits(.traitBold) ?? fontDescriptor
+        let baseDescriptor
+        if let tempValue = fontDescriptor.withSymbolicTraits(.traitBold) {
+            baseDescriptor = tempValue
+        } else {
+            baseDescriptor = fontDescriptor
+        }
         guard let newDescriptor = baseDescriptor.withSymbolicTraits([]) else { return nil }
         return UIFont(descriptor: newDescriptor, size: pointSize)
     }

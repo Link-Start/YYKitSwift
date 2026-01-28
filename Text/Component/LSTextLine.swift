@@ -27,6 +27,7 @@ public enum LSTextRunGlyphDrawMode: UInt {
 // MARK: - LSTextRunGlyphRange
 
 /// CTRun 中的范围，用于垂直排版
+@MainActor
 public class LSTextRunGlyphRange: NSObject, NSCopying {
 
     /// Run 中的字形范围
@@ -156,7 +157,10 @@ public class LSTextLine: NSObject {
             return cached
         }
         _calculateLineMetrics()
-        return _lineInfo?.ascent ?? 0
+        if let tempValue = _lineInfo?.ascent {
+            return tempValue
+        }
+        return 0
     }
 
     /// 行下降部
@@ -165,7 +169,10 @@ public class LSTextLine: NSObject {
             return cached
         }
         _calculateLineMetrics()
-        return _lineInfo?.descent ?? 0
+        if let tempValue = _lineInfo?.descent {
+            return tempValue
+        }
+        return 0
     }
 
     /// 行间距
@@ -174,7 +181,10 @@ public class LSTextLine: NSObject {
             return cached
         }
         _calculateLineMetrics()
-        return _lineInfo?.leading ?? 0
+        if let tempValue = _lineInfo?.leading {
+            return tempValue
+        }
+        return 0
     }
 
     /// 行宽度
@@ -183,7 +193,10 @@ public class LSTextLine: NSObject {
             return cached
         }
         _calculateLineMetrics()
-        return _lineInfo?.lineWidth ?? 0
+        if let tempValue = _lineInfo?.lineWidth {
+            return tempValue
+        }
+        return 0
     }
 
     /// 尾随空白宽度
@@ -192,7 +205,10 @@ public class LSTextLine: NSObject {
             return cached
         }
         _calculateLineMetrics()
-        return _lineInfo?.trailingWhitespaceWidth ?? 0
+        if let tempValue = _lineInfo?.trailingWhitespaceWidth {
+            return tempValue
+        }
+        return 0
     }
 
     /// 附件数组

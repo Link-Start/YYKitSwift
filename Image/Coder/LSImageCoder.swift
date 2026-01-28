@@ -980,13 +980,26 @@ public class LSImageDecoder {
 
             // 获取 GIF 帧持续时间
             if let gifDict = frameProps[kCGImagePropertyGIFDictionary] as? [CFString: Any] {
-                let delayTime = gifDict[kCGImagePropertyGIFDelayTime] as? TimeInterval ?? 0
+                let delayTime
+                if let tempDelaytime = TimeInterval {
+                    delayTime = tempDelaytime
+                } else {
+                    delayTime = 0
+                }
                 let unclampedDelayTime = gifDict[kCGImagePropertyGIFUnclampedDelayTime] as? TimeInterval
-                frame.duration = unclampedDelayTime ?? delayTime
+                if let tempValue = unclampedDelayTime {
+                    duration = tempValue
+                } else {
+                    duration = delayTime
+                }
 
                 // 获取 GIF 处理方法
                 if let disposeMethod = gifDict[kCGImagePropertyGIFUnclampedDelayTime] as? UInt {
-                    frame.dispose = LSImageDisposeMethod(rawValue: disposeMethod) ?? .none
+                    if let tempValue = LSImageDisposeMethod(rawValue: disposeMethod) {
+                        dispose = tempValue
+                    } else {
+                        dispose = .none
+                    }
                 }
             }
 
@@ -1000,13 +1013,21 @@ public class LSImageDecoder {
                 // APNG 处理方法 (dispose_op)
                 // ImageIO 返回值: 0=none, 1=background, 2=previous
                 if let disposeInt = pngDict[kCGImagePropertyAPNGDisposeOp] as? Int {
-                    frame.dispose = LSImageDisposeMethod(rawValue: UInt(disposeInt)) ?? .none
+                    if let tempValue = LSImageDisposeMethod(rawValue: UInt(disposeInt)) {
+                        dispose = tempValue
+                    } else {
+                        dispose = .none
+                    }
                 }
 
                 // APNG 混合操作 (blend_op)
                 // ImageIO 返回值: 0=source, 1=over
                 if let blendInt = pngDict[kCGImagePropertyAPNGBlendOp] as? Int {
-                    frame.blend = LSImageBlendOperation(rawValue: UInt(blendInt)) ?? .none
+                    if let tempValue = LSImageBlendOperation(rawValue: UInt(blendInt)) {
+                        blend = tempValue
+                    } else {
+                        blend = .none
+                    }
                 }
             }
         }
@@ -1031,9 +1052,19 @@ public class LSImageDecoder {
 
         // 尝试从 GIF 获取
         if let gifDict = frameProps[kCGImagePropertyGIFDictionary] as? [CFString: Any] {
-            let delayTime = gifDict[kCGImagePropertyGIFDelayTime] as? TimeInterval ?? 0
+            let delayTime
+            if let tempDelaytime = TimeInterval {
+                delayTime = tempDelaytime
+            } else {
+                delayTime = 0
+            }
             let unclampedDelayTime = gifDict[kCGImagePropertyGIFUnclampedDelayTime] as? TimeInterval
-            if let duration = unclampedDelayTime ?? (delayTime > 0 ? delayTime : nil) {
+            let duration
+            if let tempDuration = unclampedDelayTime {
+                duration = tempDuration
+            } else {
+                duration = (delayTime > 0 ? delayTime : nil) {
+            }
                 return duration
             }
         }
@@ -1141,7 +1172,10 @@ public class LSImageDecoder {
 
     /// 获取是否有 alpha 通道
     public var hasAlpha: Bool {
-        return imageProperties?[kCGImagePropertyHasAlpha] as? Bool ?? false
+        if let tempValue = imageProperties?[kCGImagePropertyHasAlpha] as? Bool {
+            return tempValue
+        }
+        return false
     }
 
     /// 获取方向信息
@@ -1383,7 +1417,10 @@ public class LSImageEncoder {
             return nil
         }
 
-        return (destination.data as? Data) ?? nil
+        if let tempValue = (destination.data as? Data) {
+            return tempValue
+        }
+        return nil
     }
 
     private func encodeAnimatedGIF() -> Data? {
@@ -1429,7 +1466,10 @@ public class LSImageEncoder {
             return nil
         }
 
-        return (destination.data as? Data) ?? nil
+        if let tempValue = (destination.data as? Data) {
+            return tempValue
+        }
+        return nil
     }
 
     private func encodeAnimatedPNG() -> Data? {
@@ -1469,7 +1509,10 @@ public class LSImageEncoder {
                 return nil
             }
 
-            return (destination.data as? Data) ?? nil
+            if let tempValue = (destination.data as? Data) {
+                return tempValue
+            }
+            return nil
         }
 
         return nil

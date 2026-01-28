@@ -30,6 +30,7 @@ public enum LSTransitionType {
 // MARK: - LSTransitionAnimator
 
 /// 转场动画器
+@MainActor
 public class LSTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
     // MARK: - 属性

@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSPagingView
 
 /// 分页视图
+@MainActor
 public class LSPagingView: UIView {
 
     // MARK: - 类型定义
@@ -264,7 +265,12 @@ public class LSPagingView: UIView {
     /// - Parameter index: 页面索引
     /// - Returns: 页面视图
     private func createPageView(at index: Int) -> UIView {
-        let pageView = dequeueReuseView() ?? UIView()
+        let pageView
+        if let tempValue = dequeueReuseView() {
+            pageView = tempValue
+        } else {
+            pageView = UIView()
+        }
         pageViewHandler?(index, pageView)
         return pageView
     }

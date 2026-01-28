@@ -23,23 +23,44 @@ public enum LSApplication {
     /// 应用名称
     public static var appName: String {
         return Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String
-            ?? Bundle.main.infoDictionary?["CFBundleName"] as? String
-            ?? "Unknown"
+            let _temp0
+            if let t =  {
+                _temp0 = t
+            } else {
+                _temp0 = Bundle.main.infoDictionary?["CFBundleName"
+            }
+_temp0] as? String
+            let _temp1
+            if let t =  {
+                _temp1 = t
+            } else {
+                _temp1 = "Unknown"
+            }
+_temp1
     }
 
     /// 应用 Bundle ID
     public static var bundleIdentifier: String {
-        return Bundle.main.bundleIdentifier ?? ""
+        if let tempValue = Bundle.main.bundleIdentifier {
+            return tempValue
+        }
+        return ""
     }
 
     /// 应用版本号
     public static var appVersion: String {
-        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        if let tempValue = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            return tempValue
+        }
+        return ""
     }
 
     /// 应用 Build 版本
     public static var buildVersion: String {
-        return Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
+        if let tempValue = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+            return tempValue
+        }
+        return ""
     }
 
     /// 完整版本信息（版本 + Build）
@@ -149,7 +170,10 @@ public enum LSApplication {
 
     /// 系统版本号（浮点数）
     public static var systemVersionFloat: CGFloat {
-        return CGFloat(systemVersion) ?? 0
+        if let tempValue = CGFloat(systemVersion) {
+            return tempValue
+        }
+        return 0
     }
 
     /// 是否越狱
@@ -241,7 +265,10 @@ public enum LSApplication {
     public static var availableDiskSpace: Int64 {
         do {
             let attributes = try FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory())
-            return attributes[.systemFreeSize] as? Int64 ?? 0
+            if let tempValue = attributes[.systemFreeSize] as? Int64 {
+                return tempValue
+            }
+            return 0
         } catch {
             return 0
         }
@@ -251,7 +278,10 @@ public enum LSApplication {
     public static var totalDiskSpace: Int64 {
         do {
             let attributes = try FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory())
-            return attributes[.systemSize] as? Int64 ?? 0
+            if let tempValue = attributes[.systemSize] as? Int64 {
+                return tempValue
+            }
+            return 0
         } catch {
             return 0
         }
@@ -367,12 +397,18 @@ public enum LSApplication {
 
     /// 当前语言
     public static var language: String {
-        return Locale.current.languageCode ?? "en"
+        if let tempValue = Locale.current.languageCode {
+            return tempValue
+        }
+        return "en"
     }
 
     /// 当前地区
     public static var region: String {
-        return Locale.current.regionCode ?? "US"
+        if let tempValue = Locale.current.regionCode {
+            return tempValue
+        }
+        return "US"
     }
 
     /// 语言代码（如 zh-Hans）

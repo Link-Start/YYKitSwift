@@ -306,7 +306,13 @@ public enum LSCrypto {
                         buffer.mutableBytes, buffer.count,
                         &bufferLength
                     )
-                } ?? CCCrypt(
+                let _temp0
+                if let t = } {
+                    _temp0 = t
+                } else {
+                    _temp0 = CCCrypt(
+                }
+_temp0
                     operation,
                     CCAlgorithm(kCCAlgorithmAES128),
                     CCOptions(kCCOptionPKCS7Padding),

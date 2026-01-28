@@ -13,6 +13,7 @@ import UIKit
 
 // MARK: - UIImage 二维码扩展
 
+@MainActor
 public extension UIImage {
 
     // MARK: - 二维码配置
@@ -194,7 +195,10 @@ public extension UIImage {
         colorFilter?.setValue(ciImage, forKey: kCIInputImageKey)
         colorFilter?.setValue(CIColor(cgColor: codeColor.cgColor), forKey: "inputColor0")
         colorFilter?.setValue(CIColor(cgColor: backgroundColor.cgColor), forKey: "inputColor1")
-        return colorFilter?.outputImage ?? ciImage
+        if let tempValue = colorFilter?.outputImage {
+            return tempValue
+        }
+        return ciImage
     }
 
     /// 添加 Logo 到二维码
@@ -239,7 +243,10 @@ public extension UIImage {
         roundedLogo?.draw(in: CGRect(origin: logoOrigin, size: logoSize))
 
         // 7. 获取最终图片
-        return UIGraphicsGetImageFromCurrentImageContext() ?? qrImage
+        if let tempValue = UIGraphicsGetImageFromCurrentImageContext() {
+            return tempValue
+        }
+        return qrImage
     }
 }
 

@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSPopupView
 
 /// 弹出视图
+@MainActor
 public class LSPopupView: UIView {
 
     // MARK: - 类型定义

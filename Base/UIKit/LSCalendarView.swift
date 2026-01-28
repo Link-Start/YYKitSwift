@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSCalendarView
 
 /// 日历视图
+@MainActor
 public class LSCalendarView: UIView {
 
     // MARK: - 类型定义

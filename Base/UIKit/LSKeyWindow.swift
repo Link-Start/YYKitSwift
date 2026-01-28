@@ -48,7 +48,10 @@ public enum LSKeyWindow {
 
     /// 获取窗口尺寸
     public static var bounds: CGRect {
-        return keyWindow?.bounds ?? .zero
+        if let tempValue = keyWindow?.bounds {
+            return tempValue
+        }
+        return .zero
     }
 
     /// 获取窗口宽度
@@ -64,7 +67,10 @@ public enum LSKeyWindow {
     /// 安全区域顶部
     public static var safeAreaTop: CGFloat {
         if #available(iOS 11.0, *) {
-            return keyWindow?.safeAreaInsets.top ?? 0
+            if let tempValue = keyWindow?.safeAreaInsets.top {
+                return tempValue
+            }
+            return 0
         }
         return 0
     }
@@ -72,7 +78,10 @@ public enum LSKeyWindow {
     /// 安全区域底部
     public static var safeAreaBottom: CGFloat {
         if #available(iOS 11.0, *) {
-            return keyWindow?.safeAreaInsets.bottom ?? 0
+            if let tempValue = keyWindow?.safeAreaInsets.bottom {
+                return tempValue
+            }
+            return 0
         }
         return 0
     }
@@ -80,7 +89,10 @@ public enum LSKeyWindow {
     /// 安全区域
     public static var safeAreaInsets: UIEdgeInsets {
         if #available(iOS 11.0, *) {
-            return keyWindow?.safeAreaInsets ?? .zero
+            if let tempValue = keyWindow?.safeAreaInsets {
+                return tempValue
+            }
+            return .zero
         }
         return .zero
     }

@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSShadowView
 
 /// 阴影视图
+@MainActor
 public class LSShadowView: UIView {
 
     // MARK: - 属性

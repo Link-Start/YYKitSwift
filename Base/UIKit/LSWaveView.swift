@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSWaveView
 
 /// 波浪视图
+@MainActor
 public class LSWaveView: UIView {
 
     // MARK: - 类型定义

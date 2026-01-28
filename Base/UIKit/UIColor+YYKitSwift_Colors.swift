@@ -13,6 +13,7 @@ import UIKit
 
 // MARK: - UIColor Extension
 
+@MainActor
 public extension UIColor {
 
     // MARK: - 初始化方法

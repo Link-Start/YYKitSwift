@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSTextField
 
 /// 增强的文本输入框
+@MainActor
 public class LSTextField: UITextField {
 
     // MARK: - 类型定义
@@ -134,7 +135,13 @@ public class LSTextField: UITextField {
 
     @objc private func textDidChange() {
         // 更新清除按钮
-        clearButton.isHidden = text?.isEmpty ?? true
+        let isHidden: Bool
+        if let textValue = text {
+            isHidden = textValue.isEmpty
+        } else {
+            isHidden = true
+        }
+        clearButton.isHidden = isHidden
 
         // 限制最大长度
         if let maxLength = maxLength,
@@ -147,11 +154,23 @@ public class LSTextField: UITextField {
         validate()
 
         // 回调
-        onTextChanged?(text ?? "")
+        let textValue: String
+        if let txt = text {
+            textValue = txt
+        } else {
+            textValue = ""
+        }
+        onTextChanged?(textValue)
     }
 
     @objc private func textDidEnd() {
-        onTextEnd?(text ?? "")
+        let textValue: String
+        if let txt = text {
+            textValue = txt
+        } else {
+            textValue = ""
+        }
+        onTextEnd?(textValue)
     }
 
     // MARK: - 验证
@@ -160,7 +179,13 @@ public class LSTextField: UITextField {
     public func validate() -> Bool {
         guard let validator = validator else { return true }
 
-        let result = validator(text ?? "")
+        let textValue: String
+        if let txt = text {
+            textValue = txt
+        } else {
+            textValue = ""
+        }
+        let result = validator(textValue)
         validationResult = result
 
         return result == .valid
@@ -188,9 +213,18 @@ public class LSTextField: UITextField {
     private func updatePlaceholder() {
         guard let placeholder = placeholder else { return }
 
+        let fontValue: UIFont
+        if let pf = placeholderFont {
+            fontValue = pf
+        } else if let f = font {
+            fontValue = f
+        } else {
+            fontValue = .systemFont(ofSize: 16)
+        }
+
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: placeholderColor,
-            .font: placeholderFont ?? font ?? .systemFont(ofSize: 16)
+            .font: fontValue
         ]
 
         attributedPlaceholder = NSAttributedString(string: placeholder, attributes: attributes)
@@ -244,9 +278,16 @@ public extension UITextField {
     func ls_setPlaceholderColor(_ color: UIColor) {
         guard let placeholder = placeholder else { return }
 
+        let fontValue: UIFont
+        if let f = font {
+            fontValue = f
+        } else {
+            fontValue = .systemFont(ofSize: 16)
+        }
+
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: color,
-            .font: font ?? .systemFont(ofSize: 16)
+            .font: fontValue
         ]
 
         attributedPlaceholder = NSAttributedString(string: placeholder, attributes: attributes)
@@ -416,7 +457,11 @@ public extension UITextField {
 
     /// 是否为空
     var ls_isEmpty: Bool {
-        return text?.isEmpty ?? true
+        if let textValue = text {
+            return textValue.isEmpty
+        } else {
+            return true
+        }
     }
 
     /// 去除空格后的文本
@@ -575,7 +620,13 @@ public extension LSTextField {
             if text.count >= length {
                 return .valid
             } else {
-                return .invalid(message ?? "至少需要 \(length) 个字符")
+                let errorMessage: String
+                if let msg = message {
+                    errorMessage = msg
+                } else {
+                    errorMessage = "至少需要 \(length) 个字符"
+                }
+                return .invalid(errorMessage)
             }
         }
     }
@@ -586,7 +637,13 @@ public extension LSTextField {
             if text.count <= length {
                 return .valid
             } else {
-                return .invalid(message ?? "最多 \(length) 个字符")
+                let errorMessage: String
+                if let msg = message {
+                    errorMessage = msg
+                } else {
+                    errorMessage = "最多 \(length) 个字符"
+                }
+                return .invalid(errorMessage)
             }
         }
     }
@@ -613,7 +670,17 @@ public extension UITextView {
         let placeholderLabel = UILabel()
         placeholderLabel.text = text
         placeholderLabel.textColor = color
-        placeholderLabel.font = font ?? self.font
+
+        let fontValue: UIFont
+        if let f = font {
+            fontValue = f
+        } else if let selfFont = self.font {
+            fontValue = selfFont
+        } else {
+            fontValue = .systemFont(ofSize: 17)
+        }
+        placeholderLabel.font = fontValue
+
         placeholderLabel.numberOfLines = 0
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
 

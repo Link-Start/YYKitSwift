@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSRatingView
 
 /// 评分视图
+@MainActor
 public class LSRatingView: UIView {
 
     // MARK: - 类型定义
@@ -373,11 +374,20 @@ public class LSRatingView: UIView {
     private var iconImage: UIImage {
         switch iconStyle {
         case .star:
-            return UIImage(systemName: "star.fill") ?? UIImage()
+            if let tempValue = UIImage(systemName: "star.fill") {
+                return tempValue
+            }
+            return UIImage()
         case .heart:
-            return UIImage(systemName: "heart.fill") ?? UIImage()
+            if let tempValue = UIImage(systemName: "heart.fill") {
+                return tempValue
+            }
+            return UIImage()
         case .circle:
-            return UIImage(systemName: "circle.fill") ?? UIImage()
+            if let tempValue = UIImage(systemName: "circle.fill") {
+                return tempValue
+            }
+            return UIImage()
         case .custom(let image):
             return image
         }

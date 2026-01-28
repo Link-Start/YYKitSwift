@@ -12,6 +12,7 @@ import UIKit
 
 // MARK: - UIApplication 扩展
 
+@MainActor
 public extension UIApplication {
 
     /// 应用程序版本号
@@ -27,7 +28,13 @@ public extension UIApplication {
     /// 应用程序名称
     var ls_appName: String? {
         return Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String
-            ?? Bundle.main.infoDictionary?["CFBundleName"] as? String
+            let _temp0
+            if let t =  {
+                _temp0 = t
+            } else {
+                _temp0 = Bundle.main.infoDictionary?["CFBundleName"
+            }
+_temp0] as? String
     }
 
     /// 应用程序 Bundle ID

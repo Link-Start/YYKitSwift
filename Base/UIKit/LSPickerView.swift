@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSPickerView
 
 /// 增强的选择器视图
+@MainActor
 public class LSPickerView: UIView {
 
     // MARK: - 类型定义
@@ -318,7 +319,13 @@ public extension UITextField {
         let handlerKey = AssociatedKey.datePickerHandlerKey
         let handler = objc_getAssociatedObject(self, handlerKey) as? ((Date) -> Void)
 
-        handler?(datePicker?.date ?? Date())
+        let _tempVar0
+        if let t = .date {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = Date(
+        }
+        handler?(datePicker?_tempVar0))
         resignFirstResponder()
     }
 
@@ -394,7 +401,13 @@ public extension UITextField {
         let handlerKey = AssociatedKey.countDownPickerHandlerKey
         let handler = objc_getAssociatedObject(self, handlerKey) as? ((TimeInterval) -> Void)
 
-        handler?(datePicker?.countDownDuration ?? 0)
+        let _tempVar0
+        if let t = .countDownDuration {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = 0
+        }
+        handler?(datePicker?_tempVar0)
         resignFirstResponder()
     }
 

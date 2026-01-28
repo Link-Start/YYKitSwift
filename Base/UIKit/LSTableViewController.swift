@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSTableViewDataSource
 
 /// TableView 数据源简化
+@MainActor
 public class LSTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
 
     // MARK: - 类型定义
@@ -187,7 +188,10 @@ public class LSTableViewDataSource: NSObject, UITableViewDataSource, UITableView
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return cellHeight?(indexPath) ?? rowHeight
+        if let tempValue = cellHeight?(indexPath) {
+            return tempValue
+        }
+        return rowHeight
     }
 
     public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -199,7 +203,12 @@ public class LSTableViewDataSource: NSObject, UITableViewDataSource, UITableView
             return nil
         }
 
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "Header") ?? UITableViewHeaderFooterView(reuseIdentifier: "Header")
+        let header
+        if let tempValue = tableView.dequeueReusableHeaderFooterView(withIdentifier: "Header") {
+            header = tempValue
+        } else {
+            header = UITableViewHeaderFooterView(reuseIdentifier: "Header")
+        }
         configureHeader(header, section)
         return header
     }
@@ -209,17 +218,28 @@ public class LSTableViewDataSource: NSObject, UITableViewDataSource, UITableView
             return nil
         }
 
-        let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: "Footer") ?? UITableViewHeaderFooterView(reuseIdentifier: "Footer")
+        let footer
+        if let tempValue = tableView.dequeueReusableHeaderFooterView(withIdentifier: "Footer") {
+            footer = tempValue
+        } else {
+            footer = UITableViewHeaderFooterView(reuseIdentifier: "Footer")
+        }
         configureFooter(footer, section)
         return footer
     }
 
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return heightForHeaderInSection?(section) ?? UITableView.automaticDimension
+        if let tempValue = heightForHeaderInSection?(section) {
+            return tempValue
+        }
+        return UITableView.automaticDimension
     }
 
     public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return heightForFooterInSection?(section) ?? UITableView.automaticDimension
+        if let tempValue = heightForFooterInSection?(section) {
+            return tempValue
+        }
+        return UITableView.automaticDimension
     }
 
     // MARK: - 刷新

@@ -320,7 +320,11 @@ public enum LSAlertController {
         })
 
         alert.addAction(UIAlertAction(title: confirmTitle, style: .default) { _ in
-            let texts = alert.textFields?.map { $0.text } ?? []
+            if let tempValue = alert.textFields?.map { $0.text } {
+                texts = tempValue
+            } else {
+                texts = []
+            }
             confirm(texts)
         })
 
@@ -424,7 +428,12 @@ public enum LSAlertController {
             completion?(nil)
         }
 
-        let menu = UIMenu(title: title ?? "", children: menuActions + [cancelAction])
+        let menu
+        if let tempMenu = title {
+            menu = tempMenu
+        } else {
+            menu = "", children: menuActions + [cancelAction])
+        }
 
         if let button = rootVC.view {
             button.showMenu(menu)
@@ -447,7 +456,11 @@ public enum LSAlertController {
 
         // 对于 iPad 的 Action Sheet，需要设置 source
         if alert.preferredStyle == .actionSheet, UIDevice.current.userInterfaceIdiom == .pad {
-            alert.popoverPresentationController?.sourceView = sourceView ?? topVC.view
+            if let tempValue = sourceView {
+                sourceView = tempValue
+            } else {
+                sourceView = topVC.view
+            }
             alert.popoverPresentationController?.sourceRect = CGRect(
                 x: topVC.view.bounds.midX,
                 y: topVC.view.bounds.midY,
@@ -499,18 +512,25 @@ private extension UIView {
 // MARK: - LSProgressHUD (简化版)
 
 /// 简化的 Progress HUD
+@MainActor
 public class LSProgressHUD: UIView {
 
     // MARK: - 静态图片
 
     public static var successImage: UIImage {
         let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .medium)
-        return UIImage(systemName: "checkmark.circle.fill", withConfiguration: config) ?? UIImage()
+        if let tempValue = UIImage(systemName: "checkmark.circle.fill", withConfiguration: config) {
+            return tempValue
+        }
+        return UIImage()
     }
 
     public static var errorImage: UIImage {
         let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .medium)
-        return UIImage(systemName: "xmark.circle.fill", withConfiguration: config) ?? UIImage()
+        if let tempValue = UIImage(systemName: "xmark.circle.fill", withConfiguration: config) {
+            return tempValue
+        }
+        return UIImage()
     }
 
     // MARK: - 属性

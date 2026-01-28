@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSTableView
 
 /// 增强的表格视图
+@MainActor
 public class LSTableView: UITableView {
 
     // MARK: - 类型定义
@@ -151,7 +152,10 @@ public class LSTableView: UITableView {
         // 如果cell未注册，返回占位cell
         guard let cell = super.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? UITableViewCell,
               !type(of: cell).isPlaceholder else {
-            return placeholderCell ?? UITableViewCell(style: .default, reuseIdentifier: identifier)
+            if let tempValue = placeholderCell {
+                return tempValue
+            }
+            return UITableViewCell(style: .default, reuseIdentifier: identifier)
         }
 
         return cell
@@ -416,7 +420,10 @@ public extension UITableView {
 
     /// 获取可见的 indexPaths
     var ls_visibleIndexPaths: [IndexPath] {
-        return indexPathsForVisibleRows ?? []
+        if let tempValue = indexPathsForVisibleRows {
+            return tempValue
+        }
+        return []
     }
 
     /// 获取第一个可见的 indexPath

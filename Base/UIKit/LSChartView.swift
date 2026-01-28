@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSChartView
 
 /// 图表视图基类
+@MainActor
 public class LSChartView: UIView {
 
     // MARK: - 类型定义
@@ -251,8 +252,18 @@ public class LSLineChartView: LSChartView {
     private func drawDataSeries(_ series: DataSeries, in rect: CGRect) {
         guard !series.data.isEmpty else { return }
 
-        let maxValue = series.data.map { $0.value }.max() ?? 1
-        let minValue = series.data.map { $0.value }.min() ?? 0
+        let maxValue
+        if let tempValue = series.data.map { $0.value }.max() {
+            maxValue = tempValue
+        } else {
+            maxValue = 1
+        }
+        let minValue
+        if let tempValue = series.data.map { $0.value }.min() {
+            minValue = tempValue
+        } else {
+            minValue = 0
+        }
         let valueRange = maxValue - minValue
 
         let path = UIBezierPath()
@@ -390,7 +401,12 @@ public class LSBarChartView: LSChartView {
         guard !dataSeries.isEmpty else { return }
 
         let allData = dataSeries.flatMap { $0.data }
-        let maxValue = allData.map { $0.value }.max() ?? 1
+        let maxValue
+        if let tempValue = allData.map { $0.value }.max() {
+            maxValue = tempValue
+        } else {
+            maxValue = 1
+        }
 
         let totalBars = allData.count
         let barWidth = (rect.width - CGFloat(totalBars - 1) * barSpacing) / CGFloat(totalBars)
@@ -412,7 +428,12 @@ public class LSBarChartView: LSChartView {
                     cornerRadii: CGSize(width: barCornerRadius, height: barCornerRadius)
                 )
 
-                let color = dataPoint.color ?? series.color
+                let color
+                if let tempColor = dataPoint.color {
+                    color = tempColor
+                } else {
+                    color = series.color
+                }
                 color.setFill()
                 path.fill()
 
@@ -445,7 +466,12 @@ public class LSBarChartView: LSChartView {
         guard !dataSeries.isEmpty else { return }
 
         let allData = dataSeries.flatMap { $0.data }
-        let maxValue = allData.map { $0.value }.max() ?? 1
+        let maxValue
+        if let tempValue = allData.map { $0.value }.max() {
+            maxValue = tempValue
+        } else {
+            maxValue = 1
+        }
 
         let totalBars = allData.count
         let barHeight = (rect.height - CGFloat(totalBars - 1) * barSpacing) / CGFloat(totalBars)
@@ -466,7 +492,12 @@ public class LSBarChartView: LSChartView {
                     cornerRadii: CGSize(width: barCornerRadius, height: barCornerRadius)
                 )
 
-                let color = dataPoint.color ?? series.color
+                let color
+                if let tempColor = dataPoint.color {
+                    color = tempColor
+                } else {
+                    color = series.color
+                }
                 color.setFill()
                 path.fill()
 
@@ -546,7 +577,12 @@ public class LSPieChartView: LSChartView {
             let sliceAngle = CGFloat(dataPoint.value / totalValue) * 2 * .pi
             let endAngle = startAngle + sliceAngle
 
-            let color = dataPoint.color ?? defaultColors[index % defaultColors.count]
+            let color
+            if let tempColor = dataPoint.color {
+                color = tempColor
+            } else {
+                color = defaultColors[index % defaultColors.count]
+            }
 
             // 绘制扇形
             let path = UIBezierPath()

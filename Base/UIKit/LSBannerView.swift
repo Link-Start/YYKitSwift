@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSBannerView
 
 /// 横幅视图
+@MainActor
 public class LSBannerView: UIView {
 
     // MARK: - 类型定义

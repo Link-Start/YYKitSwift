@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSSwitch
 
 /// 增强的开关
+@MainActor
 public class LSSwitch: UIView {
 
     // MARK: - 类型定义

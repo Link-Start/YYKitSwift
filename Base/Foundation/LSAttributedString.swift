@@ -126,7 +126,12 @@ public class LSAttributedString {
     /// - Returns: self
     @discardableResult
     public func alignment(_ alignment: NSTextAlignment) -> Self {
-        let paragraphStyle = attributes[.paragraphStyle] as? NSMutableParagraphStyle ?? NSMutableParagraphStyle()
+        let paragraphStyle
+        if let tempParagraphstyle = NSMutableParagraphStyle {
+            paragraphStyle = tempParagraphstyle
+        } else {
+            paragraphStyle = NSMutableParagraphStyle()
+        }
         paragraphStyle.alignment = alignment
         attributes[.paragraphStyle] = paragraphStyle
         return self
@@ -138,7 +143,12 @@ public class LSAttributedString {
     /// - Returns: self
     @discardableResult
     public func lineSpacing(_ spacing: CGFloat) -> Self {
-        let paragraphStyle = attributes[.paragraphStyle] as? NSMutableParagraphStyle ?? NSMutableParagraphStyle()
+        let paragraphStyle
+        if let tempParagraphstyle = NSMutableParagraphStyle {
+            paragraphStyle = tempParagraphstyle
+        } else {
+            paragraphStyle = NSMutableParagraphStyle()
+        }
         paragraphStyle.lineSpacing = spacing
         attributes[.paragraphStyle] = paragraphStyle
         return self

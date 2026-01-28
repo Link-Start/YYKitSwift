@@ -123,7 +123,10 @@ public enum LSPreservedNumber {
         case .double(let value, _):
             return NSNumber(value: value)
         case .string(let value):
-            return Double(value).map { NSNumber(value: $0) } ?? NSNumber(value: 0)
+            if let tempValue = Double(value).map { NSNumber(value: $0) } {
+                return tempValue
+            }
+            return NSNumber(value: 0)
         }
     }
 }
@@ -163,7 +166,10 @@ public enum LSNumberFormatter {
         formatter.maximumFractionDigits = decimals
         formatter.numberStyle = .currency
         formatter.currencySymbol = symbol
-        return formatter.string(from: NSNumber(value: value)) ?? "\(symbol)\(value)"
+        if let tempValue = formatter.string(from: NSNumber(value: value)) {
+            return tempValue
+        }
+        return "\(symbol)\(value)"
     }
 
     /// 格式化价格（去除尾随零）
@@ -181,7 +187,10 @@ public enum LSNumberFormatter {
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = maxDecimals
-        return symbol + (formatter.string(from: NSNumber(value: value)) ?? "\(value)")
+        if let tempValue = symbol + (formatter.string(from: NSNumber(value: value)) {
+            return tempValue
+        }
+        return "\(value)")
     }
 
     // MARK: - 数字格式化
@@ -208,7 +217,10 @@ public enum LSNumberFormatter {
         formatter.numberStyle = .decimal
         formatter.minimumFractionDigits = decimals
         formatter.maximumFractionDigits = decimals
-        return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
+        if let tempValue = formatter.string(from: NSNumber(value: value)) {
+            return tempValue
+        }
+        return "\(value)"
     }
 
     /// 格式化百分比
@@ -225,7 +237,10 @@ public enum LSNumberFormatter {
         formatter.numberStyle = .percent
         formatter.minimumFractionDigits = decimals
         formatter.maximumFractionDigits = decimals
-        return formatter.string(from: NSNumber(value: value)) ?? "\(Int(value * 100))%"
+        if let tempValue = formatter.string(from: NSNumber(value: value)) {
+            return tempValue
+        }
+        return "\(Int(value * 100))%"
     }
 
     /// 格式化为 K/M/B 单位
@@ -253,7 +268,10 @@ public enum LSNumberFormatter {
     public static func formatInteger(_ value: Int) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
+        if let tempValue = formatter.string(from: NSNumber(value: value)) {
+            return tempValue
+        }
+        return "\(value)"
     }
 }
 

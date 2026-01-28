@@ -218,7 +218,13 @@ public class LSImage: UIImage, LSAnimatedImage {
         if let data = coder.decodeObject(forKey: "animatedImageData") as? Data {
             animatedImageData = data
             let typeValue = LSImageType(rawValue: coder.decodeInteger(forKey: "animatedImageType"))
-            animatedImageType = typeValue ?? .unknown
+            let decodedType: LSImageType
+            if let tv = typeValue {
+                decodedType = tv
+            } else {
+                decodedType = .unknown
+            }
+            animatedImageType = decodedType
             _frameCount = UInt(coder.decodeInteger(forKey: "frameCount"))
             _loopCount = UInt(coder.decodeInteger(forKey: "loopCount"))
 

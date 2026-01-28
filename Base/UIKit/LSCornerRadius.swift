@@ -45,7 +45,11 @@ public extension UIView {
             let borderLayer = CAShapeLayer()
             borderLayer.path = maskLayer.path
             borderLayer.fillColor = UIColor.clear.cgColor
-            borderLayer.strokeColor = borderColor?.cgColor ?? UIColor.clear.cgColor
+            if let tempValue = .cgColor {
+                strokeColor = tempValue
+            } else {
+                strokeColor = UIColor.clear.cgColor
+            }
             borderLayer.lineWidth = borderWidth
             borderLayer.frame = bounds
             layer.insertSublayer(borderLayer, at: 0)
@@ -442,6 +446,7 @@ public extension UIView {
 // MARK: - 带圆角的容器视图
 
 /// 圆角容器视图
+@MainActor
 public class LSRoundedView: UIView {
 
     /// 圆角半径

@@ -26,7 +26,10 @@ public enum LSPredicate {
     ///   - value: 值
     /// - Returns: NSPredicate
     public static func equal(key: String, value: Any) -> NSPredicate {
-        return NSPredicate(format: "\(key) == %@", value as? CVarArg ?? "")
+        if let tempValue = NSPredicate(format: "\(key) == %@", value as? CVarArg {
+            return tempValue
+        }
+        return "")
     }
 
     /// 不等于
@@ -36,7 +39,10 @@ public enum LSPredicate {
     ///   - value: 值
     /// - Returns: NSPredicate
     public static func notEqual(key: String, value: Any) -> NSPredicate {
-        return NSPredicate(format: "\(key) != %@", value as? CVarArg ?? "")
+        if let tempValue = NSPredicate(format: "\(key) != %@", value as? CVarArg {
+            return tempValue
+        }
+        return "")
     }
 
     /// 大于
@@ -46,7 +52,10 @@ public enum LSPredicate {
     ///   - value: 值
     /// - Returns: NSPredicate
     public static func greaterThan(key: String, value: Any) -> NSPredicate {
-        return NSPredicate(format: "\(key) > %@", value as? CVarArg ?? "")
+        if let tempValue = NSPredicate(format: "\(key) > %@", value as? CVarArg {
+            return tempValue
+        }
+        return "")
     }
 
     /// 大于等于
@@ -56,7 +65,10 @@ public enum LSPredicate {
     ///   - value: 值
     /// - Returns: NSPredicate
     public static func greaterThanOrEqualTo(key: String, value: Any) -> NSPredicate {
-        return NSPredicate(format: "\(key) >= %@", value as? CVarArg ?? "")
+        if let tempValue = NSPredicate(format: "\(key) >= %@", value as? CVarArg {
+            return tempValue
+        }
+        return "")
     }
 
     /// 小于
@@ -66,7 +78,10 @@ public enum LSPredicate {
     ///   - value: 值
     /// - Returns: NSPredicate
     public static func lessThan(key: String, value: Any) -> NSPredicate {
-        return NSPredicate(format: "\(key) < %@", value as? CVarArg ?? "")
+        if let tempValue = NSPredicate(format: "\(key) < %@", value as? CVarArg {
+            return tempValue
+        }
+        return "")
     }
 
     /// 小于等于
@@ -76,7 +91,10 @@ public enum LSPredicate {
     ///   - value: 值
     /// - Returns: NSPredicate
     public static func lessThanOrEqualTo(key: String, value: Any) -> NSPredicate {
-        return NSPredicate(format: "\(key) <= %@", value as? CVarArg ?? "")
+        if let tempValue = NSPredicate(format: "\(key) <= %@", value as? CVarArg {
+            return tempValue
+        }
+        return "")
     }
 
     // MARK: - 范围查询
@@ -333,7 +351,10 @@ public enum LSPredicate {
         /// - Returns: NSPredicate
         public func build() -> NSPredicate {
             guard predicates.count > 1 else {
-                return predicates.first ?? NSPredicate(value: true)
+                if let tempValue = predicates.first {
+                    return tempValue
+                }
+                return NSPredicate(value: true)
             }
 
             switch combineType {

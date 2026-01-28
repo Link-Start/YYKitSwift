@@ -146,6 +146,7 @@ public func LS_HSB2RGB(h: CGFloat, s: CGFloat, v: CGFloat, r: UnsafeMutablePoint
 
 // MARK: - UIColor 扩展
 
+@MainActor
 public extension UIColor {
 
     // MARK: - 创建颜色
@@ -332,7 +333,10 @@ public extension UIColor {
 
     /// 颜色空间模型
     var ls_colorSpaceModel: CGColorSpaceModel {
-        return cgColor.colorSpace?.model ?? .unknown
+        if let tempValue = cgColor.colorSpace?.model {
+            return tempValue
+        }
+        return .unknown
     }
 
     /// 颜色空间字符串

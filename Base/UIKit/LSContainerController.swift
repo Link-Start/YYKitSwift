@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSContainerController
 
 /// 容器视图控制器
+@MainActor
 public class LSContainerController: UIViewController {
 
     // MARK: - 类型定义

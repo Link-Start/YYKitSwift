@@ -13,6 +13,7 @@ import UIKit
 
 // MARK: - UIView Extension (Layout)
 
+@MainActor
 public extension UIView {
 
     // MARK: - Frame 属性
@@ -460,7 +461,10 @@ public extension UIView {
 
     /// 收起键盘
     func ls_resignFirstResponder() -> Bool {
-        return ls_findFirstResponder()?.resignFirstResponder() ?? true
+        if let tempValue = ls_findFirstResponder()?.resignFirstResponder() {
+            return tempValue
+        }
+        return true
     }
 }
 

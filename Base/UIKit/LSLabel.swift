@@ -13,6 +13,7 @@ import UIKit
 
 // MARK: - LSLabel
 
+@MainActor
 /// 增强的标签视图
 public class LSLabel: UILabel {
 
@@ -301,7 +302,12 @@ public class LSLabel: UILabel {
         links.removeAll()
 
         let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-        let matches = detector?.matches(in: text, range: NSRange(location: 0, length: text.utf16.count)) ?? []
+        let matches: [NSTextCheckingResult]
+        if let detectorMatches = detector?.matches(in: text, range: NSRange(location: 0, length: text.utf16.count)) {
+            matches = detectorMatches
+        } else {
+            matches = []
+        }
 
         for match in matches {
             if let url = match.url, let range = Range(match.range, in: text) {

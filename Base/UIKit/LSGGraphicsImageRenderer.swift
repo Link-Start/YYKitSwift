@@ -17,6 +17,7 @@ import Accelerate
 /// LSGraphicsImageRenderer 是一个高性能的图像渲染器
 ///
 /// 类似 UIGraphicsImageRenderer，但提供更多功能和更好的性能
+@MainActor
 public class LSGraphicsImageRenderer: NSObject {
 
     // MARK: - 属性

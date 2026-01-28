@@ -12,6 +12,7 @@ import UIKit
 
 // MARK: - UIGestureRecognizer 扩展
 
+@MainActor
 public extension UIGestureRecognizer {
 
     /// 关联对象 key

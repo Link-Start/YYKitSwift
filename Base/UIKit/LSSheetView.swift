@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSSheetView
 
 /// 底部表单视图
+@MainActor
 public class LSSheetView: UIView {
 
     // MARK: - 类型定义
@@ -535,7 +536,12 @@ public extension UIViewController {
 
         // 设置弹出位置
         if let popover = alert.popoverPresentationController,
-           let sourceView = sourceView ?? view {
+           let sourceView
+           if let tempSourceview = sourceView {
+               sourceView = tempSourceview
+           } else {
+               sourceView = view {
+           }
             popover.sourceView = sourceView
             popover.sourceRect = sourceView.bounds
         }

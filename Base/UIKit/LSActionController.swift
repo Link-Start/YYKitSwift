@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSActionController
 
 /// 动作控制器基类
+@MainActor
 public class LSActionController: UIViewController {
 
     // MARK: - 类型定义

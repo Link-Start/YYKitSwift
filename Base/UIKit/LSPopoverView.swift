@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSPopoverView
 
 /// 弹出视图
+@MainActor
 public class LSPopoverView: UIView {
 
     // MARK: - 类型定义
@@ -567,7 +568,13 @@ public extension UIViewController {
     ) {
         let popover = LSPopoverView()
         popover.onItemSelected = completion
-        popover.show(items: items, from: view, in: view.window ?? view)
+        let _tempVar0
+        if let t = view.window {
+            _tempVar0 = t
+        } else {
+            _tempVar0 = view
+        }
+        popover.show(items: items, from: view, in: _tempVar0)
     }
 }
 

@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSActivityIndicatorView
 
 /// 活动指示器
+@MainActor
 public class LSActivityIndicatorView: UIView {
 
     // MARK: - 样式枚举
@@ -464,8 +465,15 @@ public extension UIViewController {
         style: LSActivityIndicatorView.Style = .system,
         color: UIColor = .gray
     ) {
-        guard let view = view ?? navigationController?.view else { return }
-        view.ls_showLoading(style: style, color: color)
+        let viewToUse: UIView
+        if let tempView = view {
+            viewToUse = tempView
+        } else if let navView = navigationController?.view {
+            viewToUse = navView
+        } else {
+            return
+        }
+        viewToUse.ls_showLoading(style: style, color: color)
     }
 
     /// 隐藏加载指示器

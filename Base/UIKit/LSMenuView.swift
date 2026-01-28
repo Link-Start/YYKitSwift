@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSMenuView
 
 /// 菜单视图
+@MainActor
 public class LSMenuView: UIView {
 
     // MARK: - 类型定义

@@ -19,6 +19,7 @@ private var kCurrentImageOperationKey: UInt8 = 0
 
 // MARK: - UIImageView 扩展
 
+@MainActor
 public extension YYKitSwift where Base: UIImageView {
 
     // MARK: - 属性

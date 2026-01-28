@@ -12,6 +12,7 @@ import UIKit
 
 // MARK: - UIView 扩展
 
+@MainActor
 public extension UIView {
 
     // MARK: - 截图

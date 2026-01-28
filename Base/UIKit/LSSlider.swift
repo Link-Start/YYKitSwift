@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSSlider
 
 /// 增强的滑块
+@MainActor
 public class LSSlider: UIView {
 
     // MARK: - 类型定义

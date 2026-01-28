@@ -283,7 +283,11 @@ public class LSTextView: UITextView {
     private func _updatePlaceholderLabel() {
         guard let placeholderLabel = _placeholderLabel else { return }
 
-        placeholderLabel.font = placeholderFont ?? textFont
+        if let tempValue = placeholderFont {
+            font = tempValue
+        } else {
+            font = textFont
+        }
         placeholderLabel.textColor = placeholderColor
         placeholderLabel.text = placeholder
         placeholderLabel.textAlignment = textAlignment
@@ -524,11 +528,17 @@ public class LSTextView: UITextView {
     // MARK: - UITextViewDelegate
 
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        return lsDelegate?.textViewShouldBeginEditing?(textView) ?? true
+        if let tempValue = lsDelegate?.textViewShouldBeginEditing?(textView) {
+            return tempValue
+        }
+        return true
     }
 
     public func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        return lsDelegate?.textViewShouldEndEditing?(textView) ?? true
+        if let tempValue = lsDelegate?.textViewShouldEndEditing?(textView) {
+            return tempValue
+        }
+        return true
     }
 
     public func textViewDidBeginEditing(_ textView: UITextView) {
@@ -555,11 +565,17 @@ public class LSTextView: UITextView {
     }
 
     public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in range: NSRange) -> Bool {
-        return lsDelegate?.textView?(textView, shouldInteractWith: textAttachment, in: range) ?? true
+        if let tempValue = lsDelegate?.textView?(textView, shouldInteractWith: textAttachment, in: range) {
+            return tempValue
+        }
+        return true
     }
 
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in range: NSRange) -> Bool {
-        return lsDelegate?.textView?(textView, shouldInteractWith: URL, in: range) ?? true
+        if let tempValue = lsDelegate?.textView?(textView, shouldInteractWith: URL, in: range) {
+            return tempValue
+        }
+        return true
     }
 
     // MARK: - 析构
@@ -581,7 +597,12 @@ extension LSTextView {
     public func ls_showMenu(at rect: CGRect? = nil, animated: Bool = true) {
         guard allowsMenu, becomesFirstResponder else { return }
 
-        var menuRect = rect ?? rectForSelection()
+        var menuRect
+        if let tempValue = rect {
+            menuRect = tempValue
+        } else {
+            menuRect = rectForSelection()
+        }
 
         // 确保菜单在视图范围内
         menuRect = bounds.intersection(menuRect)
@@ -633,7 +654,12 @@ extension LSTextView {
         attachment.content = image
         attachment.contentMode = .scaleToFill
 
-        let finalSize = size ?? image.size
+        let finalSize
+        if let tempFinalsize = size {
+            finalSize = tempFinalsize
+        } else {
+            finalSize = image.size
+        }
         attachment.contentSize = finalSize
 
         // 使用现有的 NSAttributedString.ls_attributedString(with:) 创建

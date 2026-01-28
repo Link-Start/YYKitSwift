@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSCollectionView
 
 /// 增强的集合视图
+@MainActor
 public class LSCollectionView: UICollectionView {
 
     // MARK: - 类型定义
@@ -405,7 +406,10 @@ public extension UICollectionViewLayout {
 
     /// 获取指定位置的所有布局属性
     func ls_layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes] {
-        return super.layoutAttributesForElements(in: rect) ?? []
+        if let tempValue = super.layoutAttributesForElements(in: rect) {
+            return tempValue
+        }
+        return []
     }
 
     /// 获取指定位置的布局属性

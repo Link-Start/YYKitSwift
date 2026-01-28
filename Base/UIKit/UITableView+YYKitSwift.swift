@@ -12,6 +12,7 @@ import UIKit
 
 // MARK: - UITableView 扩展
 
+@MainActor
 public extension UITableView {
 
     /// 关联对象 key

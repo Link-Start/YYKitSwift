@@ -186,6 +186,7 @@ public typealias LSTextAction = (UIView, NSAttributedString, NSRange, CGRect) ->
 ///
 /// 可能用于从属性字符串复制/粘贴纯文本
 /// 示例：如果 :) 被自定义 emoji（如😊）替换，支持字符串可以设置为 ":)"
+@MainActor
 public class LSTextBackedString: NSObject, NSCoding, NSCopying {
 
     /// 支持字符串
@@ -306,8 +307,20 @@ public class LSTextShadow: NSObject, NSCoding, NSCopying {
     public static func shadow(nsShadow: NSShadow?) -> LSTextShadow {
         let shadow = LSTextShadow()
         shadow.color = nsShadow?.shadowColor
-        shadow.offset = nsShadow?.shadowOffset ?? .zero
-        shadow.radius = nsShadow?.shadowBlurRadius ?? 0
+        let shadowOffset: CGSize
+        if let offset = nsShadow?.shadowOffset {
+            shadowOffset = offset
+        } else {
+            shadowOffset = .zero
+        }
+        shadow.offset = shadowOffset
+        let shadowRadius: CGFloat
+        if let radius = nsShadow?.shadowBlurRadius {
+            shadowRadius = radius
+        } else {
+            shadowRadius = 0
+        }
+        shadow.radius = shadowRadius
         return shadow
     }
 
@@ -327,7 +340,14 @@ public class LSTextShadow: NSObject, NSCoding, NSCopying {
         color = coder.decodeObject(forKey: "color") as? UIColor
         offset = coder.decodeCGSize(forKey: "offset")
         radius = coder.decodeCGFloat(forKey: "radius")
-        blendMode = CGBlendMode(rawValue: coder.decodeInteger(forKey: "blendMode")) ?? .normal
+        let blendModeRawValue = coder.decodeInteger(forKey: "blendMode")
+        let decodedBlendMode: CGBlendMode
+        if let mode = CGBlendMode(rawValue: blendModeRawValue) {
+            decodedBlendMode = mode
+        } else {
+            decodedBlendMode = .normal
+        }
+        blendMode = decodedBlendMode
         subShadow = coder.decodeObject(forKey: "subShadow") as? LSTextShadow
     }
 
@@ -401,7 +421,14 @@ public class LSTextDecoration: NSObject, NSCoding, NSCopying {
 
     required public init?(coder: NSCoder) {
         super.init()
-        style = LSTextLineStyle(rawValue: coder.decodeInteger(forKey: "style")) ?? .none
+        let styleRawValue = coder.decodeInteger(forKey: "style")
+        let decodedStyle: LSTextLineStyle
+        if let decoded = LSTextLineStyle(rawValue: styleRawValue) {
+            decodedStyle = decoded
+        } else {
+            decodedStyle = .none
+        }
+        style = decodedStyle
         width = coder.decodeObject(forKey: "width") as? NSNumber
         color = coder.decodeObject(forKey: "color") as? UIColor
         shadow = coder.decodeObject(forKey: "shadow") as? LSTextShadow
@@ -494,10 +521,24 @@ public class LSTextBorder: NSObject, NSCoding, NSCopying {
 
     required public init?(coder: NSCoder) {
         super.init()
-        lineStyle = LSTextLineStyle(rawValue: coder.decodeInteger(forKey: "lineStyle")) ?? .none
+        let lineStyleRawValue = coder.decodeInteger(forKey: "lineStyle")
+        let decodedLineStyle: LSTextLineStyle
+        if let decoded = LSTextLineStyle(rawValue: lineStyleRawValue) {
+            decodedLineStyle = decoded
+        } else {
+            decodedLineStyle = .none
+        }
+        lineStyle = decodedLineStyle
         strokeWidth = coder.decodeCGFloat(forKey: "strokeWidth")
         strokeColor = coder.decodeObject(forKey: "strokeColor") as? UIColor
-        lineJoin = CGLineJoin(rawValue: coder.decodeInteger(forKey: "lineJoin")) ?? .miter
+        let lineJoinRawValue = coder.decodeInteger(forKey: "lineJoin")
+        let decodedLineJoin: CGLineJoin
+        if let join = CGLineJoin(rawValue: lineJoinRawValue) {
+            decodedLineJoin = join
+        } else {
+            decodedLineJoin = .miter
+        }
+        lineJoin = decodedLineJoin
         insets = coder.decodeUIEdgeInsets(forKey: "insets")
         cornerRadius = coder.decodeCGFloat(forKey: "cornerRadius")
         shadow = coder.decodeObject(forKey: "shadow") as? LSTextShadow
@@ -572,7 +613,14 @@ public class LSTextAttachment: NSObject, NSCoding, NSCopying {
         // 对于 content，这里需要更复杂的序列化逻辑
         content = coder.decodeObject(forKey: "content") as AnyObject
         contentSize = coder.decodeCGSize(forKey: "contentSize")
-        contentMode = UIView.ContentMode(rawValue: coder.decodeInteger(forKey: "contentMode")) ?? .scaleToFill
+        let contentModeRawValue = coder.decodeInteger(forKey: "contentMode")
+        let decodedContentMode: UIView.ContentMode
+        if let mode = UIView.ContentMode(rawValue: contentModeRawValue) {
+            decodedContentMode = mode
+        } else {
+            decodedContentMode = .scaleToFill
+        }
+        contentMode = decodedContentMode
         contentInsets = coder.decodeUIEdgeInsets(forKey: "contentInsets")
         userInfo = coder.decodeObject(forKey: "userInfo") as? [AnyHashable: Any]
     }
@@ -648,7 +696,12 @@ public class LSTextHighlight: NSObject, NSCoding, NSCopying {
 
     /// 设置字体
     public func setFont(_ font: UIFont?) {
-        var attrs = attributes ?? [:]
+        var attrs
+        if let tempValue = attributes {
+            attrs = tempValue
+        } else {
+            attrs = [:]
+        }
         if let font = font {
             attrs[kCTFontAttributeName as String] = font
         } else {
@@ -659,7 +712,12 @@ public class LSTextHighlight: NSObject, NSCoding, NSCopying {
 
     /// 设置颜色
     public func setColor(_ color: UIColor?) {
-        var attrs = attributes ?? [:]
+        var attrs
+        if let tempValue = attributes {
+            attrs = tempValue
+        } else {
+            attrs = [:]
+        }
         if let color = color {
             attrs[kCTForegroundColorAttributeName as String] = color
         } else {
@@ -670,7 +728,12 @@ public class LSTextHighlight: NSObject, NSCoding, NSCopying {
 
     /// 设置描边宽度
     public func setStrokeWidth(_ width: NSNumber?) {
-        var attrs = attributes ?? [:]
+        var attrs
+        if let tempValue = attributes {
+            attrs = tempValue
+        } else {
+            attrs = [:]
+        }
         if let width = width {
             attrs[kCTStrokeWidthAttributeName as String] = width
         } else {
@@ -681,7 +744,12 @@ public class LSTextHighlight: NSObject, NSCoding, NSCopying {
 
     /// 设置描边颜色
     public func setStrokeColor(_ color: UIColor?) {
-        var attrs = attributes ?? [:]
+        var attrs
+        if let tempValue = attributes {
+            attrs = tempValue
+        } else {
+            attrs = [:]
+        }
         if let color = color {
             attrs[kCTStrokeColorAttributeName as String] = color
         } else {
@@ -692,7 +760,12 @@ public class LSTextHighlight: NSObject, NSCoding, NSCopying {
 
     /// 设置阴影
     public func setShadow(_ shadow: LSTextShadow?) {
-        var attrs = attributes ?? [:]
+        var attrs
+        if let tempValue = attributes {
+            attrs = tempValue
+        } else {
+            attrs = [:]
+        }
         if let shadow = shadow {
             attrs[LSTextShadowAttributeName] = shadow
         } else {
@@ -703,7 +776,12 @@ public class LSTextHighlight: NSObject, NSCoding, NSCopying {
 
     /// 设置内阴影
     public func setInnerShadow(_ shadow: LSTextShadow?) {
-        var attrs = attributes ?? [:]
+        var attrs
+        if let tempValue = attributes {
+            attrs = tempValue
+        } else {
+            attrs = [:]
+        }
         if let shadow = shadow {
             attrs[LSTextInnerShadowAttributeName] = shadow
         } else {
@@ -714,7 +792,12 @@ public class LSTextHighlight: NSObject, NSCoding, NSCopying {
 
     /// 设置下划线
     public func setUnderline(_ underline: LSTextDecoration?) {
-        var attrs = attributes ?? [:]
+        var attrs
+        if let tempValue = attributes {
+            attrs = tempValue
+        } else {
+            attrs = [:]
+        }
         if let underline = underline {
             attrs[LSTextUnderlineAttributeName] = underline
         } else {
@@ -725,7 +808,12 @@ public class LSTextHighlight: NSObject, NSCoding, NSCopying {
 
     /// 设置删除线
     public func setStrikethrough(_ strikethrough: LSTextDecoration?) {
-        var attrs = attributes ?? [:]
+        var attrs
+        if let tempValue = attributes {
+            attrs = tempValue
+        } else {
+            attrs = [:]
+        }
         if let strikethrough = strikethrough {
             attrs[LSTextStrikethroughAttributeName] = strikethrough
         } else {
@@ -736,7 +824,12 @@ public class LSTextHighlight: NSObject, NSCoding, NSCopying {
 
     /// 设置背景边框
     public func setBackgroundBorder(_ border: LSTextBorder?) {
-        var attrs = attributes ?? [:]
+        var attrs
+        if let tempValue = attributes {
+            attrs = tempValue
+        } else {
+            attrs = [:]
+        }
         if let border = border {
             attrs[LSTextBackgroundBorderAttributeName] = border
         } else {
@@ -747,7 +840,12 @@ public class LSTextHighlight: NSObject, NSCoding, NSCopying {
 
     /// 设置边框
     public func setBorder(_ border: LSTextBorder?) {
-        var attrs = attributes ?? [:]
+        var attrs
+        if let tempValue = attributes {
+            attrs = tempValue
+        } else {
+            attrs = [:]
+        }
         if let border = border {
             attrs[LSTextBorderAttributeName] = border
         } else {
@@ -758,7 +856,12 @@ public class LSTextHighlight: NSObject, NSCoding, NSCopying {
 
     /// 设置附件
     public func setAttachment(_ attachment: LSTextAttachment?) {
-        var attrs = attributes ?? [:]
+        var attrs
+        if let tempValue = attributes {
+            attrs = tempValue
+        } else {
+            attrs = [:]
+        }
         if let attachment = attachment {
             attrs[LSTextAttachmentAttributeName] = attachment
         } else {

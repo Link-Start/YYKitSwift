@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSButtonGroup
 
 /// 按钮组
+@MainActor
 public class LSButtonGroup: UIView {
 
     // MARK: - 类型定义
@@ -282,7 +283,11 @@ public class LSButtonGroup: UIView {
                 button.setImage(selectedImage, for: .selected)
             }
             button.isEnabled = config.isEnabled
-            button.tag = config.tag ?? index
+            if let tempValue = config.tag {
+                tag = tempValue
+            } else {
+                tag = index
+            }
             button.translatesAutoresizingMaskIntoConstraints = false
 
             // 设置样式

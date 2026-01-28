@@ -14,6 +14,7 @@ import UIKit
 // MARK: - LSScrollView
 
 /// 增强的滚动视图
+@MainActor
 public class LSScrollView: UIView {
 
     // MARK: - 类型定义

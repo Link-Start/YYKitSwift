@@ -12,6 +12,7 @@ import UIKit
 
 // MARK: - UIBezierPath 扩展
 
+@MainActor
 public extension UIBezierPath {
 
     /// 创建矩形路径

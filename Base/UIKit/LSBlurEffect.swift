@@ -28,6 +28,7 @@ public enum LSBlurEffectStyle {
 // MARK: - LSBlurView
 
 /// 模糊视图
+@MainActor
 public class LSBlurView: UIView {
 
     // MARK: - 属性
@@ -151,7 +152,12 @@ public class LSBlurView: UIView {
         ])
 
         // 应用色调
-        if let tint = tint ?? tintColor {
+        let tint
+        if let tempTint = tint {
+            tint = tempTint
+        } else {
+            tint = tintColor {
+        }
             blurView.backgroundColor = tint.withAlphaComponent(0.3)
         }
 

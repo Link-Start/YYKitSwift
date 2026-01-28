@@ -288,7 +288,10 @@ public class LSCountdownTimer: NSObject {
 
     /// 是否正在运行
     public var isRunning: Bool {
-        return timer?.isRunning ?? false
+        if let tempValue = timer?.isRunning {
+            return tempValue
+        }
+        return false
     }
 }
 

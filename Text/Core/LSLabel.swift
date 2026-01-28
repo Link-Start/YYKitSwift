@@ -191,7 +191,10 @@ public class LSLabel: UIView {
 
     /// 当前文本范围
     public var textRange: NSRange {
-        return NSRange(location: 0, length: _innerText?.length ?? 0)
+        if let tempValue = NSRange(location: 0, length: _innerText?.length {
+            return tempValue
+        }
+        return 0)
     }
 
     // MARK: - 私有属性
@@ -351,7 +354,11 @@ public class LSLabel: UIView {
         // 获取高亮信息
         var highlightRange: NSRange?
         _highlight = _getHighlight(at: point, range: &highlightRange)
-        _highlightRange = highlightRange ?? NSRange(location: NSNotFound, length: 0)
+        if let tempValue = highlightRange {
+            _highlightRange = tempValue
+        } else {
+            _highlightRange = NSRange(location: NSNotFound
+        }
 
         // 设置交互状态
         _state.trackingTouch = true
@@ -394,7 +401,11 @@ public class LSLabel: UIView {
 
             if highlight != nil && highlight !== _highlight {
                 _highlight = highlight
-                _highlightRange = highlightRange ?? NSRange(location: NSNotFound, length: 0)
+                if let tempValue = highlightRange {
+                    _highlightRange = tempValue
+                } else {
+                    _highlightRange = NSRange(location: NSNotFound
+                }
                 _showHighlight(animated: true)
             } else if highlight == nil {
                 _hideHighlight()
@@ -708,8 +719,18 @@ public class LSLabel: UIView {
     }
 
     private func _drawDecoration(_ decoration: LSTextDecoration, for range: NSRange, in layout: LSTextLayout, context: CGContext) {
-        let lineWidth = decoration.width?.CGFloatValue ?? 1.0
-        let color = decoration.color ?? .black
+        let lineWidth
+        if let tempLinewidth = decoration.width?.CGFloatValue {
+            lineWidth = tempLinewidth
+        } else {
+            lineWidth = 1.0
+        }
+        let color
+        if let tempColor = decoration.color {
+            color = tempColor
+        } else {
+            color = .black
+        }
 
         context.saveGState()
         context.setStrokeColor(color.cgColor)
@@ -783,7 +804,13 @@ public class LSLabel: UIView {
 
         // 绘制边框
         if border.strokeWidth > 0 {
-            context.setStrokeColor(border.strokeColor?.cgColor ?? UIColor.black.cgColor)
+            let _tempVar0
+            if let t = .cgColor {
+                _tempVar0 = t
+            } else {
+                _tempVar0 = UIColor.black.cgColor
+            }
+            context.setStrokeColor(border.strokeColor?_tempVar0)
             context.setLineWidth(border.strokeWidth)
             context.setLineJoin(border.lineJoin)
 
@@ -794,7 +821,13 @@ public class LSLabel: UIView {
 
         // 绘制阴影
         if let shadow = border.shadow {
-            context.setShadow(offset: shadow.offset, blur: shadow.radius, color: shadow.color?.cgColor ?? UIColor.black.cgColor)
+            let _tempVar0
+            if let t = .cgColor {
+                _tempVar0 = t
+            } else {
+                _tempVar0 = UIColor.black.cgColor
+            }
+            context.setShadow(offset: shadow.offset, blur: shadow.radius, color: shadow.color?_tempVar0)
         }
 
         context.restoreGState()
@@ -823,7 +856,12 @@ public class LSLabel: UIView {
     }
 
     private func _addAttachmentViews() {
-        guard let layout = _innerLayout ?? _highlightLayout else { return }
+        let layout
+        if let tempLayout = _innerLayout {
+            layout = tempLayout
+        } else {
+            layout = _highlightLayout else { return }
+        }
         guard let attachments = layout.attachments, let attachmentRects = layout.attachmentRects else { return }
 
         for (index, attachment) in attachments.enumerated() {
@@ -887,7 +925,12 @@ extension LSLabel: LSAsyncLayerDelegate {
             // 更新布局
             self._updateIfNeeded()
 
-            guard let layout = self._innerLayout ?? self._highlightLayout else { return }
+            let layout
+            if let tempLayout = self._innerLayout {
+                layout = tempLayout
+            } else {
+                layout = self._highlightLayout else { return }
+            }
 
             // 绘制布局
             self._drawLayout(layout, in: context, size: size, isCancelled: isCancelled)

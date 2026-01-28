@@ -457,13 +457,31 @@ public enum LSModelHelper {
         guard let modelType = type(of: model) as? LSModel.Type else { return }
 
         // 获取自定义映射
-        let customMapper = (modelType.ls_modelCustomPropertyMapper?() ?? [:])
+        let customMapperValue: [String: String]
+        if let mapper = modelType.ls_modelCustomPropertyMapper?() {
+            customMapperValue = mapper
+        } else {
+            customMapperValue = [:]
+        }
+        let customMapper = customMapperValue
 
         // 获取容器泛型映射
-        let containerGeneric = (modelType.ls_modelContainerPropertyGenericClass?() ?? [:])
+        let containerGenericValue: [String: AnyClass]
+        if let generic = modelType.ls_modelContainerPropertyGenericClass?() {
+            containerGenericValue = generic
+        } else {
+            containerGenericValue = [:]
+        }
+        let containerGeneric = containerGenericValue
 
         // 获取忽略列表
-        let ignoredList = (modelType.ls_modelPropertyIgnoredList?() ?? [])
+        let ignoredListValue: [String]
+        if let ignored = modelType.ls_modelPropertyIgnoredList?() {
+            ignoredListValue = ignored
+        } else {
+            ignoredListValue = []
+        }
+        let ignoredList = ignoredListValue
 
         // 获取白名单
         let whitelist = (modelType.ls_modelPropertyWhitelist?())
@@ -471,7 +489,12 @@ public enum LSModelHelper {
         // 遍历字典设置属性
         for (key, value) in dictionary {
             // 获取映射后的属性名
-            let propertyName = customMapper[key] ?? key
+            let propertyName: String
+            if let mappedName = customMapper[key] {
+                propertyName = mappedName
+            } else {
+                propertyName = key
+            }
 
             // 检查是否在忽略列表中
             if ignoredList.contains(propertyName) {
@@ -646,7 +669,13 @@ public enum LSModelHelper {
                 }
                 dict[key] = jsonArray
             } else {
-                dict[key] = value ?? NSNull()
+                let dictValue: Any
+                if let v = value {
+                    dictValue = v
+                } else {
+                    dictValue = NSNull()
+                }
+                dict[key] = dictValue
             }
         }
 
@@ -668,7 +697,12 @@ public enum LSModelHelper {
         // 如果已经是驼峰，直接返回
         if key.contains("_") {
             let components = key.split(separator: "_")
-            var result = components.first ?? ""
+            let result: String
+            if let first = components.first {
+                result = first
+            } else {
+                result = ""
+            }
             for component in components.dropFirst() {
                 result += component.capitalized
             }
