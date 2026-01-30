@@ -91,3 +91,16 @@ iOSInjectionProject/
 
 # Mac
 .DS_Store
+
+# Claude Code 配置文件
+.claude/
+CLAUDE.md
+
+# 开发进度和工具脚本
+SWIFT6_*.md
+*.py
+fix_*.swift
+
+# Temporary files
+.ralph/
+

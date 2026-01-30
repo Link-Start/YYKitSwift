@@ -327,17 +327,16 @@ public class LSPagingScrollView: UIView {
 
 public extension UIViewController {
 
-    /// 关联的分页滚动视图
-    private static var pagingScrollViewKey: UInt8 = 0
-
-    var ls_pagingScrollView: LSPagingScrollView? {
+    private enum AssociatedKeys {
+        static var pagingScrollViewKey: UInt8 = 0
+    }var ls_pagingScrollView: LSPagingScrollView? {
         get {
-            return objc_getAssociatedObject(self, &UIViewController.pagingScrollViewKey) as? LSPagingScrollView
+            return objc_getAssociatedObject(self, &AssociatedKeys.pagingScrollViewKey) as? LSPagingScrollView
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIViewController.pagingScrollViewKey,
+                &AssociatedKeys.pagingScrollViewKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

@@ -298,16 +298,16 @@ public class LSPullToRefreshView: UIView {
 
 public extension UIScrollView {
 
-    /// 关联的下拉刷新视图
-    private static var pullToRefreshViewKey: UInt8 = 0
-
+    private enum AssociatedKeys {
+        static var pullToRefreshViewKey: UInt8 = 0
+    }
     /// 下拉刷新视图
     var ls_pullToRefreshView: LSPullToRefreshView? {
         get {
-            return objc_getAssociatedObject(self, &UIScrollView.pullToRefreshViewKey) as? LSPullToRefreshView
+            return objc_getAssociatedObject(self, &AssociatedKeys.pullToRefreshViewKey) as? LSPullToRefreshView
         }
         set {
-            objc_setAssociatedObject(self, &UIScrollView.pullToRefreshViewKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.pullToRefreshViewKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 

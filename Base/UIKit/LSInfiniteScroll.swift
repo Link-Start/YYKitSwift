@@ -256,16 +256,16 @@ public class LSInfiniteScrollView: UIView {
 
 public extension UIScrollView {
 
-    /// 关联的上拉加载视图
-    private static var infiniteScrollViewKey: UInt8 = 0
-
+    private enum AssociatedKeys {
+        static var infiniteScrollViewKey: UInt8 = 0
+    }
     /// 上拉加载视图
     var ls_infiniteScrollView: LSInfiniteScrollView? {
         get {
-            return objc_getAssociatedObject(self, &UIScrollView.infiniteScrollViewKey) as? LSInfiniteScrollView
+            return objc_getAssociatedObject(self, &AssociatedKeys.infiniteScrollViewKey) as? LSInfiniteScrollView
         }
         set {
-            objc_setAssociatedObject(self, &UIScrollView.infiniteScrollViewKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.infiniteScrollViewKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 

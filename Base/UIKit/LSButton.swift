@@ -235,16 +235,16 @@ public extension LSButton {
 
 public extension UIButton {
 
-    /// 关联的原始标题
-    private static var originalTitleKey: UInt8 = 0
-
+    private enum AssociatedKeys {
+        static var originalTitleKey: UInt8 = 0
+    }
     /// 原始标题
     var ls_originalTitle: String? {
         get {
-            return objc_getAssociatedObject(self, &UIButton.originalTitleKey) as? String
+            return objc_getAssociatedObject(self, &AssociatedKeys.originalTitleKey) as? String
         }
         set {
-            objc_setAssociatedObject(self, &UIButton.originalTitleKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMATIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.originalTitleKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMATIC)
         }
     }
 

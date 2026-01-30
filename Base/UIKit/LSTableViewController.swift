@@ -293,16 +293,16 @@ public class LSTableViewDataSource: NSObject, UITableViewDataSource, UITableView
 
 public extension UITableView {
 
-    /// 关联的数据源
-    private static var dataSourceKey: UInt8 = 0
-
+    private enum AssociatedKeys {
+        static var dataSourceKey: UInt8 = 0
+    }
     /// LS 数据源
     var ls_dataSource: LSTableViewDataSource? {
         get {
-            return objc_getAssociatedObject(self, &UITableView.dataSourceKey) as? LSTableViewDataSource
+            return objc_getAssociatedObject(self, &AssociatedKeys.dataSourceKey) as? LSTableViewDataSource
         }
         set {
-            objc_setAssociatedObject(self, &UITableView.dataSourceKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.dataSourceKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             newValue?.tableView = self
         }
     }

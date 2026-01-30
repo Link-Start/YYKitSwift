@@ -929,17 +929,16 @@ public class LSSplitViewController: UIViewController {
 
 public extension UIViewController {
 
-    /// 关联的容器控制器
-    private static var containerControllerKey: UInt8 = 0
-
-    var ls_containerController: LSContainerController? {
+    private enum AssociatedKeys {
+        static var containerControllerKey: UInt8 = 0
+    }var ls_containerController: LSContainerController? {
         get {
-            return objc_getAssociatedObject(self, &UIViewController.containerControllerKey) as? LSContainerController
+            return objc_getAssociatedObject(self, &AssociatedKeys.containerControllerKey) as? LSContainerController
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIViewController.containerControllerKey,
+                &AssociatedKeys.containerControllerKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

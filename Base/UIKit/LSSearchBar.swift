@@ -277,13 +277,11 @@ public class LSSearchBar: UIView {
     }
 
     @objc private func textFieldDidEndEditing() {
-        let _temp0
-        if let t = if text?.isEmpty {
-            _temp0 = t
+        if let isEmpty = text?.isEmpty {
+            if !isEmpty {
+                updateCancelButtonVisibility()
+            }
         } else {
-            _temp0 = true {
-        }
-_temp0
             updateCancelButtonVisibility()
         }
     }
@@ -329,14 +327,14 @@ _temp0
 private extension UITextField {
 
     func ls_setPlaceholderColor(_ color: UIColor) {
+        let placeholderText: String
+        if let temp = placeholder {
+            placeholderText = temp
+        } else {
+            placeholderText = ""
+        }
         attributedPlaceholder = NSAttributedString(
-            let _temp1
-            if let t = string: placeholder {
-                _temp1 = t
-            } else {
-                _temp1 = ""
-            }
-_temp1,
+            string: placeholderText,
             attributes: [.foregroundColor: color]
         )
     }
@@ -404,28 +402,28 @@ public extension UITextField {
 
     /// 设置占位符颜色
     func ls_setPlaceholderColor(_ color: UIColor) {
+        let placeholderText: String
+        if let temp = placeholder {
+            placeholderText = temp
+        } else {
+            placeholderText = ""
+        }
         attributedPlaceholder = NSAttributedString(
-            let _temp2
-            if let t = string: placeholder {
-                _temp2 = t
-            } else {
-                _temp2 = ""
-            }
-_temp2,
+            string: placeholderText,
             attributes: [.foregroundColor: color]
         )
     }
 
     /// 设置占位符属性
     func ls_setPlaceholderAttributes(_ attributes: [NSAttributedString.Key: Any]) {
+        let placeholderText: String
+        if let temp = placeholder {
+            placeholderText = temp
+        } else {
+            placeholderText = ""
+        }
         attributedPlaceholder = NSAttributedString(
-            let _temp3
-            if let t = string: placeholder {
-                _temp3 = t
-            } else {
-                _temp3 = ""
-            }
-_temp3,
+            string: placeholderText,
             attributes: attributes
         )
     }

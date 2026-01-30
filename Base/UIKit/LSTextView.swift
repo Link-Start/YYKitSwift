@@ -213,10 +213,10 @@ public class LSTextView: UITextView {
     // MARK: - 更新方法
 
     private func updatePlaceholderVisibility() {
-        if let tempValue = .isEmpty {
-            isHidden = tempValue
+        if let isEmpty = text?.isEmpty {
+            placeholderLabel.isHidden = isEmpty
         } else {
-            isHidden = true
+            placeholderLabel.isHidden = true
         }
     }
 
@@ -233,19 +233,23 @@ public class LSTextView: UITextView {
 
     private func updateCountLabel() {
         guard showsCountLabel, let maxLength = maxLength else {
-            if let tempValue = .count {
-                text = tempValue
+            let currentCount: Int
+            if let txt = text {
+                currentCount = txt.count
             } else {
-                text = 0
+                currentCount = 0
             }
+            countLabel.text = "\(currentCount)"
             return
         }
 
-        if let tempValue = .count {
-            text = tempValue
+        let currentCount: Int
+        if let txt = text {
+            currentCount = txt.count
         } else {
-            text = 0
+            currentCount = 0
         }
+        countLabel.text = "\(currentCount)/\(maxLength)"
     }
 
     private func updateHeight() {
@@ -266,19 +270,26 @@ public class LSTextView: UITextView {
     /// 验证文本
     public func validate() -> Bool {
         guard let validator = validator else { return true }
-        if let tempValue = validator(text {
-            return tempValue
+        let textValue: String
+        if let txt = text {
+            textValue = txt
+        } else {
+            textValue = ""
         }
-        return "")
+        return validator(textValue)
     }
 
     /// 获取验证错误信息
     public func validationError() -> String? {
         if let validator = validator {
-            if let tempValue = validator(text {
-                return tempValue
+            let textValue: String
+            if let txt = text {
+                textValue = txt
+            } else {
+                textValue = ""
             }
-            return "") ? nil : "输入不符合要求"
+            let isValid = validator(textValue)
+            return isValid ? nil : "输入不符合要求"
         }
         return nil
     }
@@ -385,11 +396,13 @@ public extension UITextView {
             queue: .main
         ) { [weak self] _ in
             guard let self = self else { return }
-            if let tempValue = .isEmpty {
-                isHidden = tempValue
+            let isEmpty: Bool
+            if let txt = self.text {
+                isEmpty = txt.isEmpty
             } else {
-                isHidden = true
+                isEmpty = true
             }
+            placeholderLabel.isHidden = !isEmpty
         }
 
         // 保存标签引用
@@ -400,16 +413,16 @@ public extension UITextView {
     var ls_textHeight: CGFloat {
         let size = CGSize(width: bounds.width, height: .greatestFiniteMagnitude)
         let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
+        let fontToUse: UIFont
+        if let tempFont = font {
+            fontToUse = tempFont
+        } else {
+            fontToUse = .systemFont(ofSize: 16)
+        }
         let boundingRect = (text as NSString).boundingRect(
             with: size,
             options: options,
-            let _tempVar0
-            if let t = font {
-                _tempVar0 = t
-            } else {
-                _tempVar0 = .systemFont(ofSize:
-            }
-            attributes: [.font: _tempVar0 16)],
+            attributes: [.font: fontToUse],
             context: nil
         )
         return ceil(boundingRect.height) + textContainerInset.top + textContainerInset.bottom
@@ -545,22 +558,22 @@ public class LSHighlightTextView: LSTextView {
     private func applyHighlights() {
         guard let text = text else { return }
 
+        let fontToUse: UIFont
+        if let tempFont = font {
+            fontToUse = tempFont
+        } else {
+            fontToUse = .systemFont(ofSize: 16)
+        }
+        let colorToUse: UIColor
+        if let tempColor = textColor {
+            colorToUse = tempColor
+        } else {
+            colorToUse = .label
+        }
         let attributedString = NSMutableAttributedString(string: text)
         attributedString.addAttributes([
-            let _tempVar0
-            if let t = font {
-                _tempVar0 = t
-            } else {
-                _tempVar0 = .systemFont(ofSize:
-            }
-            .font: _tempVar0 16),
-            let _temp0
-            if let t = .foregroundColor: textColor {
-                _temp0 = t
-            } else {
-                _temp0 = .label
-            }
-_temp0
+            .font: fontToUse,
+            .foregroundColor: colorToUse
         ], range: NSRange(location: 0, length: text.count))
 
         highlightRanges.removeAll()
@@ -606,7 +619,7 @@ _temp0
 
         for (range, rule) in highlightRanges {
             if nsRange.location >= range.location && nsRange.location < range.location + range.length {
-                if let tappedText = (text as NSString?).substring(with: range) as? String {
+                if let tappedText = (text as NSString).substring(with: range) as String? {
                     rule.action?(tappedText)
                     onHighlightTap?(tappedText, rule)
                 }
@@ -822,9 +835,9 @@ extension LSAutoCompleteTextView: UITableViewDataSource, UITableViewDelegate {
     }
 
     private func insertText(_ text: String) {
-        let currentText
-        if let tempCurrenttext = self.text {
-            currentText = tempCurrenttext
+        let currentText: String
+        if let tempText = self.text {
+            currentText = tempText
         } else {
             currentText = ""
         }

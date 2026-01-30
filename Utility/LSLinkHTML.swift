@@ -80,7 +80,7 @@ public class LSLinkHTML: NSObject {
     /// - Returns: 链接数组
     public static func detectURLs(in text: String) -> [LSLink] {
         let urlPattern = "(?i)\\b((?:https?://|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(?:\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(?:\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?]))"
-        return detectPattern(in: text, pattern: urlPattern, type: .url)
+        return detectPattern(in: text, pattern: urlPattern, type: LSLink.LSLinkType.url)
     }
 
     /// 检测文本中的邮箱地址
@@ -89,7 +89,7 @@ public class LSLinkHTML: NSObject {
     /// - Returns: 链接数组
     public static func detectEmails(in text: String) -> [LSLink] {
         let emailPattern = "(?i)\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,64}\\b"
-        return detectPattern(in: text, pattern: emailPattern, type: .email)
+        return detectPattern(in: text, pattern: emailPattern, type: LSLink.LSLinkType.email)
     }
 
     /// 检测文本中的电话号码
@@ -98,7 +98,7 @@ public class LSLinkHTML: NSObject {
     /// - Returns: 链接数组
     public static func detectPhoneNumbers(in text: String) -> [LSLink] {
         let phonePattern = "\\b\\d{3}[-.]?\\d{3}[-.]?\\d{4}\\b|\\b\\d{11}\\b"
-        return detectPattern(in: text, pattern: phonePattern, type: .phoneNumber)
+        return detectPattern(in: text, pattern: phonePattern, type: LSLink.LSLinkType.phoneNumber)
     }
 
     /// 检测文本中的 Mentions
@@ -107,7 +107,7 @@ public class LSLinkHTML: NSObject {
     /// - Returns: 链接数组
     public static func detectMentions(in text: String) -> [LSLink] {
         let mentionPattern = "(?<!\\w)@[A-Za-z0-9_]{1,20}"
-        return detectPattern(in: text, pattern: mentionPattern, type: .mention)
+        return detectPattern(in: text, pattern: mentionPattern, type: LSLink.LSLinkType.mention)
     }
 
     /// 检测文本中的 Hashtags
@@ -116,7 +116,7 @@ public class LSLinkHTML: NSObject {
     /// - Returns: 链接数组
     public static func detectHashtags(in text: String) -> [LSLink] {
         let hashtagPattern = "(?<!\\w)#[A-Za-z0-9_]{1,50}"
-        return detectPattern(in: text, pattern: hashtagPattern, type: .hashtag)
+        return detectPattern(in: text, pattern: hashtagPattern, type: LSLink.LSLinkType.hashtag)
     }
 
     // MARK: - 文本转换

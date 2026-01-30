@@ -530,17 +530,16 @@ public struct LSBannerConfig {
 
 public extension UIViewController {
 
-    /// 关联的轮播视图
-    private static var bannerViewKey: UInt8 = 0
-
-    var ls_bannerView: LSBannerView? {
+    private enum AssociatedKeys {
+        static var bannerViewKey: UInt8 = 0
+    }var ls_bannerView: LSBannerView? {
         get {
-            return objc_getAssociatedObject(self, &UIViewController.bannerViewKey) as? LSBannerView
+            return objc_getAssociatedObject(self, &AssociatedKeys.bannerViewKey) as? LSBannerView
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIViewController.bannerViewKey,
+                &AssociatedKeys.bannerViewKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

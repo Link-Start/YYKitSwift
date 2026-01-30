@@ -97,7 +97,7 @@ public final class LSThreadSafeArray<Element>: NSObject, @unchecked Sendable {
     public func index(of object: Element, in range: NSRange) -> Int {
         lock.wait()
         defer { lock.signal() }
-        return array.index(of: object, inRange: range)
+        return array.index(of: object, in: range)
     }
 
     // MARK: - 修改方法
@@ -196,7 +196,7 @@ public final class LSThreadSafeArray<Element>: NSObject, @unchecked Sendable {
     // MARK: - 枚举方法
 
     /// 使用 block 枚举对象
-    public func enumerate(_ block: (Element, Int, UnsafeMutablePointer<Bool>) -> Void) {
+    public func enumerate(_ block: (Element, Int, UnsafeMutablePointer<ObjCBool>) -> Void) {
         lock.wait()
         defer { lock.signal() }
         array.enumerateObjects { obj, idx, stop in
@@ -210,7 +210,7 @@ public final class LSThreadSafeArray<Element>: NSObject, @unchecked Sendable {
     public func toArray() -> [Element] {
         lock.wait()
         defer { lock.signal() }
-        return array as! [Element]
+        return (array as NSArray) as? [Element] ?? []
     }
 
     // MARK: - NSObject
@@ -231,7 +231,7 @@ public final class LSThreadSafeArray<Element>: NSObject, @unchecked Sendable {
             other.lock.signal()
             lock.signal()
         }
-        return array.isEqual(to: other.array as [Any])
+        return array.isEqual(other.array)
     }
 
     public override var hash: Int {

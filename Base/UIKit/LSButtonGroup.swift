@@ -830,17 +830,16 @@ public class LSRadioGroup: LSButtonGroup {
 
 public extension UIView {
 
-    /// 关联的按钮组
-    private static var buttonGroupKey: UInt8 = 0
-
-    var ls_buttonGroup: LSButtonGroup? {
+    private enum AssociatedKeys {
+        static var buttonGroupKey: UInt8 = 0
+    }var ls_buttonGroup: LSButtonGroup? {
         get {
-            return objc_getAssociatedObject(self, &UIView.buttonGroupKey) as? LSButtonGroup
+            return objc_getAssociatedObject(self, &AssociatedKeys.buttonGroupKey) as? LSButtonGroup
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIView.buttonGroupKey,
+                &AssociatedKeys.buttonGroupKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

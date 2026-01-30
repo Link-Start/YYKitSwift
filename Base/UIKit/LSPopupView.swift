@@ -377,17 +377,16 @@ public extension LSPopupView {
 
 public extension UIViewController {
 
-    /// 关联的弹出视图
-    private static var popupViewKey: UInt8 = 0
-
-    var ls_popupView: LSPopupView? {
+    private enum AssociatedKeys {
+        static var popupViewKey: UInt8 = 0
+    }var ls_popupView: LSPopupView? {
         get {
-            return objc_getAssociatedObject(self, &UIViewController.popupViewKey) as? LSPopupView
+            return objc_getAssociatedObject(self, &AssociatedKeys.popupViewKey) as? LSPopupView
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIViewController.popupViewKey,
+                &AssociatedKeys.popupViewKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

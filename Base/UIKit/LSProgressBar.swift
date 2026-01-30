@@ -801,17 +801,16 @@ public class LSBufferProgressBar: LSProgressBar {
 
 public extension UIView {
 
-    /// 关联的进度条
-    private static var progressBarKey: UInt8 = 0
-
-    var ls_progressBar: LSProgressBar? {
+    private enum AssociatedKeys {
+        static var progressBarKey: UInt8 = 0
+    }var ls_progressBar: LSProgressBar? {
         get {
-            return objc_getAssociatedObject(self, &UIView.progressBarKey) as? LSProgressBar
+            return objc_getAssociatedObject(self, &AssociatedKeys.progressBarKey) as? LSProgressBar
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIView.progressBarKey,
+                &AssociatedKeys.progressBarKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

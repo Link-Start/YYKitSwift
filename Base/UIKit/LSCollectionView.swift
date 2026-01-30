@@ -326,34 +326,32 @@ public extension UICollectionView {
 
 public extension UICollectionViewCell {
 
-    /// 关联的数据
-    private static var dataKey: UInt8 = 0
-
-    var ls_data: Any? {
+    private enum AssociatedKeys {
+        static var dataKey: UInt8 = 0
+    }var ls_data: Any? {
         get {
-            return objc_getAssociatedObject(self, &UICollectionViewCell.dataKey)
+            return objc_getAssociatedObject(self, &AssociatedKeys.dataKey)
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UICollectionViewCell.dataKey,
+                &AssociatedKeys.dataKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
         }
     }
 
-    /// 关联的 indexPath
-    private static var indexPathKey: UInt8 = 0
-
-    var ls_indexPath: IndexPath? {
+    private enum AssociatedKeys {
+        static var indexPathKey: UInt8 = 0
+    }var ls_indexPath: IndexPath? {
         get {
-            return objc_getAssociatedObject(self, &UICollectionViewCell.indexPathKey) as? IndexPath
+            return objc_getAssociatedObject(self, &AssociatedKeys.indexPathKey) as? IndexPath
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UICollectionViewCell.indexPathKey,
+                &AssociatedKeys.indexPathKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
@@ -365,34 +363,32 @@ public extension UICollectionViewCell {
 
 public extension UICollectionReusableView {
 
-    /// 关联的数据
-    private static var dataKey: UInt8 = 0
-
-    var ls_data: Any? {
+    private enum AssociatedKeys {
+        static var dataKey: UInt8 = 0
+    }var ls_data: Any? {
         get {
-            return objc_getAssociatedObject(self, &UICollectionReusableView.dataKey)
+            return objc_getAssociatedObject(self, &AssociatedKeys.dataKey)
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UICollectionReusableView.dataKey,
+                &AssociatedKeys.dataKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
         }
     }
 
-    /// 关联的 indexPath
-    private static var indexPathKey: UInt8 = 0
-
-    var ls_indexPath: IndexPath? {
+    private enum AssociatedKeys {
+        static var indexPathKey: UInt8 = 0
+    }var ls_indexPath: IndexPath? {
         get {
-            return objc_getAssociatedObject(self, &UICollectionReusableView.indexPathKey) as? IndexPath
+            return objc_getAssociatedObject(self, &AssociatedKeys.indexPathKey) as? IndexPath
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UICollectionReusableView.indexPathKey,
+                &AssociatedKeys.indexPathKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

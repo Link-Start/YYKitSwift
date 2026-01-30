@@ -525,7 +525,7 @@ public class LSKeychain: NSObject {
         }
 
         let query = item.queryDictionary()
-        var update = item.dictionary() as [AnyHashable: Any]
+        let update = item.dictionary() as! [AnyHashable: Any]
 
         // 移除 kSecClass，不能在更新中指定
         let key = kSecClass as String
@@ -597,7 +597,7 @@ public class LSKeychain: NSObject {
             return nil
         }
 
-        var query = item.queryDictionary() as [AnyHashable: Any]
+        var query = item.queryDictionary() as! [AnyHashable: Any]
         query[kSecMatchLimit] = kSecMatchLimitOne
         query[kSecReturnAttributes] = kCFBooleanTrue
         query[kSecReturnData] = kCFBooleanTrue
@@ -641,7 +641,7 @@ public class LSKeychain: NSObject {
     ///   - error: 错误信息
     /// - Returns: 查询到的项数组
     public static func selectItems(_ item: LSKeychainItem, error: NSErrorPointer) -> [LSKeychainItem] {
-        var query = item.queryDictionary() as [AnyHashable: Any]
+        var query = item.queryDictionary() as! [AnyHashable: Any]
         query[kSecMatchLimit] = kSecMatchLimitAll
         query[kSecReturnAttributes] = kCFBooleanTrue
         query[kSecReturnData] = kCFBooleanTrue
@@ -690,7 +690,7 @@ public class LSKeychain: NSObject {
             userInfo = [NSLocalizedDescriptionKey: desc]
         }
 
-        return NSError(domain: "com.xiaoyueyun.yykitswift.keychain", code: Int(rawValue), userInfo: userInfo)
+        return NSError(domain: "com.xiaoyueyun.yykitswift.keychain", code: code.rawValue, userInfo: userInfo)
     }
 
     /// 将 OSStatus 转换为 LSKeychainErrorCode

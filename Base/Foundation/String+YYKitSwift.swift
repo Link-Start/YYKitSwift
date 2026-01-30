@@ -235,10 +235,10 @@ public extension String {
 
         ls_enumerateRegex(regex: "@[0-9]+\\.?[0-9]*x$") { match, range, _ in
             let scaleStr = match.dropFirst().dropLast()
-            if let tempValue = CGFloat(Double(scaleStr) {
+            if let tempValue = CGFloat(Double(scaleStr)) {
                 scale = tempValue
             } else {
-                scale = 1)
+                scale = 1
             }
         }
 
@@ -305,19 +305,16 @@ public extension String {
     static func ls_named(_ name: String) -> String? {
         // 尝试读取无扩展名文件
         var path = Bundle.main.path(forResource: name, ofType: "")
-        if let tempValue = try? String(contentsOfFile: path {
-            content = tempValue
-        } else {
-            content = "", encoding: .utf8)
+        var content: String?
+        if let tempPath = path {
+            content = try? String(contentsOfFile: tempPath, encoding: .utf8)
         }
 
         // 如果失败，尝试读取 .txt 文件
         if content == nil {
             path = Bundle.main.path(forResource: name, ofType: "txt")
-            if let tempValue = try? String(contentsOfFile: path {
-                content = tempValue
-            } else {
-                content = "", encoding: .utf8)
+            if let tempPath = path {
+                content = try? String(contentsOfFile: tempPath, encoding: .utf8)
             }
         }
 

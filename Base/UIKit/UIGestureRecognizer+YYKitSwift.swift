@@ -15,9 +15,9 @@ import UIKit
 @MainActor
 public extension UIGestureRecognizer {
 
-    /// 关联对象 key
-    private static var actionBlockKey: UInt8 = 0
-
+    private enum AssociatedKeys {
+        static var actionBlockKey: UInt8 = 0
+    }
     /// 设置回调 Block
     func ls_action(_ block: @escaping (UIGestureRecognizer) -> Void) {
         let wrapper = GestureActionWrapper(action: block)
@@ -30,7 +30,7 @@ public extension UIGestureRecognizer {
         addTarget(wrapper, action: #selector(GestureActionWrapper.invoke(_:)))
 
         // 使用关联对象保持引用
-        objc_setAssociatedObject(self, &Self.actionBlockKey, wrapper, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        objc_setAssociatedObject(self, &AssociatedKeys.actionBlockKey, wrapper, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
 }
 

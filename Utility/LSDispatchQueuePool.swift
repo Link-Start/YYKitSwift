@@ -153,19 +153,6 @@ private class DispatchContext {
 // MARK: - OSAtomic Compatibility
 
 private func OSAtomicIncrement32(_ value: UnsafeMutablePointer<Int32>) -> Int32 {
-    #if arch(arm) || arch(arm64)
-        return __sync_add_and_fetch(value, 1)
-    #elseif arch(x86_64)
-        return OSAtomicIncrement32(value)
-    #else
-        var oldValue = value.pointee
-        while true {
-            let newValue = oldValue + 1
-            if OSAtomicCompareAndSwap32Barrier(oldValue, newValue, value) {
-                return newValue
-            }
-            oldValue = value.pointee
-        }
-    #endif
+    return OSAtomicIncrement32(value)
 }
 #endif

@@ -156,16 +156,16 @@ public class LSShadowView: UIView {
 
 public extension UIView {
 
-    /// 关联的阴影视图
-    private static var shadowViewKey: UInt8 = 0
-
+    private enum AssociatedKeys {
+        static var shadowViewKey: UInt8 = 0
+    }
     /// 阴影视图
     var ls_shadowView: LSShadowView? {
         get {
-            return objc_getAssociatedObject(self, &UIView.shadowViewKey) as? LSShadowView
+            return objc_getAssociatedObject(self, &AssociatedKeys.shadowViewKey) as? LSShadowView
         }
         set {
-            objc_setAssociatedObject(self, &UIView.shadowViewKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.shadowViewKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 

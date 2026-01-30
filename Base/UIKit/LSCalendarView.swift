@@ -739,17 +739,16 @@ public class LSCalendarHeaderView: UIView {
 
 public extension UIView {
 
-    /// 关联的日历视图
-    private static var calendarViewKey: UInt8 = 0
-
-    var ls_calendarView: LSCalendarView? {
+    private enum AssociatedKeys {
+        static var calendarViewKey: UInt8 = 0
+    }var ls_calendarView: LSCalendarView? {
         get {
-            return objc_getAssociatedObject(self, &UIView.calendarViewKey) as? LSCalendarView
+            return objc_getAssociatedObject(self, &AssociatedKeys.calendarViewKey) as? LSCalendarView
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIView.calendarViewKey,
+                &AssociatedKeys.calendarViewKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

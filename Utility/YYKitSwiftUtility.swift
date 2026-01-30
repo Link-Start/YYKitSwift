@@ -59,32 +59,35 @@ import UIKit
 /// - ✅ **完全独立**: 不依赖任何其他 YYKitSwift 模块
 /// - ⚠️ **依赖 Core**: 需要引入 YYKitSwiftCore
 ///
-// MARK: - 模块导出
+// MARK: - 模块说明
 
-// 网络和存储
-@_exported import class YYKitSwift.LSReachability
-@_exported import class YYKitSwift.LSKeychain
+/// 此模块包含以下工具类，它们会自动加载：
+///
+/// ### 网络和存储
+/// - LSReachability
+/// - LSKeychain
+///
+/// ### 定时器和队列
+/// - LSTimer
+/// - LSGCDQueue
+/// - LSGCDTimer
+/// - LSDispatchQueuePool
+///
+/// ### 文件和哈希
+/// - LSFileHash
+/// - LSImageTransformer
+///
+/// ### 手势和交互
+/// - LSGestureRecognizer
+/// - LSSentinel
+///
+/// ### 并发和线程安全
+/// - LSAsyncLayer
+/// - LSThreadSafeArray
+/// - LSThreadSafeDictionary
+///
+/// ### 其他工具
+/// - LSWeakProxy
+/// - LSTransaction
+/// - LSLinkHTML
 
-// 定时器和队列
-@_exported import class YYKitSwift.LSTimer
-@_exported import class YYKitSwift.LSGCDQueue
-@_exported import class YYKitSwift.LSGCDTimer
-@_exported import class YYKitSwift.LSDispatchQueuePool
-
-// 文件和哈希
-@_exported import class YYKitSwift.LSFileHash
-@_exported import class YYKitSwift.LSImageTransformer
-
-// 手势和交互
-@_exported import class YYKitSwift.LSGestureRecognizer
-@_exported import class YYKitSwift.LSSentinel
-
-// 并发和线程安全
-@_exported import class YYKitSwift.LSAsyncLayer
-@_exported import class YYKitSwift.LSThreadSafeArray
-@_exported import class YYKitSwift.LSThreadSafeDictionary
-
-// 其他工具
-@_exported import class YYKitSwift.LSWeakProxy
-@_exported import class YYKitSwift.LSTransaction
-@_exported import class YYKitSwift.LSLinkHTML

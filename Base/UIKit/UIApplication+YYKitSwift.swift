@@ -27,14 +27,10 @@ public extension UIApplication {
 
     /// 应用程序名称
     var ls_appName: String? {
-        return Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String
-            let _temp0
-            if let t =  {
-                _temp0 = t
-            } else {
-                _temp0 = Bundle.main.infoDictionary?["CFBundleName"
-            }
-_temp0] as? String
+        if let tempValue = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String {
+            return tempValue
+        }
+        return Bundle.main.infoDictionary?["CFBundleName"] as? String
     }
 
     /// 应用程序 Bundle ID

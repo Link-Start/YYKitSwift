@@ -345,14 +345,14 @@ public class LSTabBar: UIView {
 
 private extension UIButton {
 
-    private static var badgeKey: UInt8 = 0
-
-    var ls_badgeValue: String? {
+    private enum AssociatedKeys {
+        static var badgeKey: UInt8 = 0
+    }var ls_badgeValue: String? {
         get {
-            return objc_getAssociatedObject(self, &UIButton.badgeKey) as? String
+            return objc_getAssociatedObject(self, &AssociatedKeys.badgeKey) as? String
         }
         set {
-            objc_setAssociatedObject(self, &UIButton.badgeKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.badgeKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 
             // 移除旧徽章
             subviews.first { $0 is LSBadgeView }?.removeFromSuperview()

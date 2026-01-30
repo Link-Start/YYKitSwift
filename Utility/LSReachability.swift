@@ -36,7 +36,7 @@ public class LSReachability: NSObject {
     // MARK: - 属性
 
     /// 当前网络标志（只读）
-    public private(set) var flags: SCNetworkReachabilityFlags = 0
+    public private(set) var flags: SCNetworkReachabilityFlags = SCNetworkReachabilityFlags()
 
     /// 当前网络状态（只读）
     public private(set) var status: LSReachabilityStatus = .none
@@ -52,21 +52,21 @@ public class LSReachability: NSObject {
     /// 网络变化通知块，在主线程调用
     public var notifyBlock: ((LSReachability) -> Void)? {
         didSet {
-            scheduled = (notifyBlock != nil)
+            setScheduled(notifyBlock != nil)
         }
     }
 
     // MARK: - 内部属性
 
     private var ref: SCNetworkReachability?
-    private var scheduled = false
+    private var _isScheduled = false
     private var allowWWAN = true
     private var networkInfo: CTTelephonyNetworkInfo?
 
     // MARK: - 共享队列
 
     private static let sharedQueue: DispatchQueue = {
-        DispatchQueue(label: "com.xiaoyueyun.yykitswift.reachability", attributes: .serial)
+        DispatchQueue(label: "com.xiaoyueyun.yykitswift.reachability")
     }()
 
     // MARK: - 初始化
@@ -112,7 +112,7 @@ public class LSReachability: NSObject {
 
     deinit {
         notifyBlock = nil
-        scheduled = false
+        setScheduled(false)
     }
 
     // MARK: - 访问方法
@@ -176,17 +176,17 @@ public class LSReachability: NSObject {
 
     // MARK: - 私有方法
 
-    private var scheduled: Bool {
+    private var isScheduled: Bool {
         get {
-            return scheduled
+            return _isScheduled
         }
         set {
-            if scheduled == newValue { return }
-            scheduled = newValue
+            if _isScheduled == newValue { return }
+            _isScheduled = newValue
 
             guard let ref = ref else { return }
 
-            if scheduled {
+            if newValue {
                 var context = SCNetworkReachabilityContext(
                     version: 0,
                     info: Unmanaged.passUnretained(self).toOpaque(),
@@ -212,9 +212,13 @@ public class LSReachability: NSObject {
         }
     }
 
+    private func setScheduled(_ value: Bool) {
+        isScheduled = value
+    }
+
     private func updateFlags() {
         guard let ref = ref else { return }
-        var flags: SCNetworkReachabilityFlags = 0
+        var flags: SCNetworkReachabilityFlags = SCNetworkReachabilityFlags()
         SCNetworkReachabilityGetFlags(ref, &flags)
         self.flags = flags
         self.status = Self.statusFromFlags(flags, allowWWAN: allowWWAN)
@@ -269,8 +273,8 @@ public class LSReachability: NSObject {
             CTRadioAccessTechnologyLTE: ._4G            // LTE: 3.9G
         ]
 
-        // 5G 检测 (iOS 14+)
-        if #available(iOS 14.0, *) {
+        // 5G 检测 (iOS 14.1+)
+        if #available(iOS 14.1, *) {
             if radioTech == CTRadioAccessTechnologyNR {
                 return ._5G
             }

@@ -122,33 +122,24 @@ public extension UIButton {
     // MARK: - 私有方法
 
     private var currentLayoutStyle: Int {
-        let _tempVar0
-        if let t = Int {
-            _tempVar0 = t
-        } else {
-            _tempVar0 = 0
+        if let tempValue = objc_getAssociatedObject(self, &kLayoutStyleKey) as? Int {
+            return tempValue
         }
-        objc_getAssociatedObject(self, &kLayoutStyleKey) as? _tempVar0
+        return 0
     }
 
     private var currentSpacing: CGFloat {
-        let _tempVar0
-        if let t = CGFloat {
-            _tempVar0 = t
-        } else {
-            _tempVar0 = 0
+        if let tempValue = objc_getAssociatedObject(self, &kImageSpacingKey) as? CGFloat {
+            return tempValue
         }
-        objc_getAssociatedObject(self, &kImageSpacingKey) as? _tempVar0
+        return 0
     }
 
     private var currentMargin: CGFloat {
-        let _tempVar0
-        if let t = CGFloat {
-            _tempVar0 = t
-        } else {
-            _tempVar0 = 5
+        if let tempValue = objc_getAssociatedObject(self, &kImageMarginKey) as? CGFloat {
+            return tempValue
         }
-        objc_getAssociatedObject(self, &kImageMarginKey) as? _tempVar0
+        return 5
     }
 
     /// 应用内容布局
@@ -174,12 +165,13 @@ public extension UIButton {
         } else {
             font = UIFont.systemFont(ofSize: 17)
         }
-        let textSize
-        if let tempTextsize = titleLabel.text {
-            textSize = tempTextsize
+        let textSize: String
+        if let tempText = titleLabel.text {
+            textSize = tempText
         } else {
-            textSize = "").size(withAttributes: [.font: font])
+            textSize = ""
         }
+        let size = textSize.size(withAttributes: [.font: font])
 
         let imageWidth = imageSize.width
         let imageHeight = imageSize.height

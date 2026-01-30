@@ -813,17 +813,16 @@ public extension LSChartView {
 
 public extension UIView {
 
-    /// 关联的图表视图
-    private static var chartViewKey: UInt8 = 0
-
-    var ls_chartView: LSChartView? {
+    private enum AssociatedKeys {
+        static var chartViewKey: UInt8 = 0
+    }var ls_chartView: LSChartView? {
         get {
-            return objc_getAssociatedObject(self, &UIView.chartViewKey) as? LSChartView
+            return objc_getAssociatedObject(self, &AssociatedKeys.chartViewKey) as? LSChartView
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIView.chartViewKey,
+                &AssociatedKeys.chartViewKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

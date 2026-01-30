@@ -480,34 +480,32 @@ public extension UITableView {
 
 public extension UITableViewCell {
 
-    /// 关联的数据
-    private static var dataKey: UInt8 = 0
-
-    var ls_data: Any? {
+    private enum AssociatedKeys {
+        static var dataKey: UInt8 = 0
+    }var ls_data: Any? {
         get {
-            return objc_getAssociatedObject(self, &UITableViewCell.dataKey)
+            return objc_getAssociatedObject(self, &AssociatedKeys.dataKey)
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UITableViewCell.dataKey,
+                &AssociatedKeys.dataKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
         }
     }
 
-    /// 关联的 indexPath
-    private static var indexPathKey: UInt8 = 0
-
-    var ls_indexPath: IndexPath? {
+    private enum AssociatedKeys {
+        static var indexPathKey: UInt8 = 0
+    }var ls_indexPath: IndexPath? {
         get {
-            return objc_getAssociatedObject(self, &UITableViewCell.indexPathKey) as? IndexPath
+            return objc_getAssociatedObject(self, &AssociatedKeys.indexPathKey) as? IndexPath
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UITableViewCell.indexPathKey,
+                &AssociatedKeys.indexPathKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
@@ -519,34 +517,32 @@ public extension UITableViewCell {
 
 public extension UITableViewHeaderFooterView {
 
-    /// 关联的数据
-    private static var dataKey: UInt8 = 0
-
-    var ls_data: Any? {
+    private enum AssociatedKeys {
+        static var dataKey: UInt8 = 0
+    }var ls_data: Any? {
         get {
-            return objc_getAssociatedObject(self, &UITableViewHeaderFooterView.dataKey)
+            return objc_getAssociatedObject(self, &AssociatedKeys.dataKey)
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UITableViewHeaderFooterView.dataKey,
+                &AssociatedKeys.dataKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
         }
     }
 
-    /// 关联的 section
-    private static var sectionKey: UInt8 = 0
-
-    var ls_section: Int? {
+    private enum AssociatedKeys {
+        static var sectionKey: UInt8 = 0
+    }var ls_section: Int? {
         get {
-            return objc_getAssociatedObject(self, &UITableViewHeaderFooterView.sectionKey) as? Int
+            return objc_getAssociatedObject(self, &AssociatedKeys.sectionKey) as? Int
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UITableViewHeaderFooterView.sectionKey,
+                &AssociatedKeys.sectionKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

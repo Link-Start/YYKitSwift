@@ -299,17 +299,16 @@ public extension LSPlaceholderView {
 
 public extension UIView {
 
-    /// 关联的占位视图
-    private static var placeholderViewKey: UInt8 = 0
-
-    var ls_placeholderView: LSPlaceholderView? {
+    private enum AssociatedKeys {
+        static var placeholderViewKey: UInt8 = 0
+    }var ls_placeholderView: LSPlaceholderView? {
         get {
-            return objc_getAssociatedObject(self, &UIView.placeholderViewKey) as? LSPlaceholderView
+            return objc_getAssociatedObject(self, &AssociatedKeys.placeholderViewKey) as? LSPlaceholderView
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIView.placeholderViewKey,
+                &AssociatedKeys.placeholderViewKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

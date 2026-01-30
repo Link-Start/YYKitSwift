@@ -322,17 +322,16 @@ public class LSMenuView: UIView {
 
 public extension UIButton {
 
-    /// 关联的菜单视图
-    private static var menuViewKey: UInt8 = 0
-
-    var ls_menuView: LSMenuView? {
+    private enum AssociatedKeys {
+        static var menuViewKey: UInt8 = 0
+    }var ls_menuView: LSMenuView? {
         get {
-            return objc_getAssociatedObject(self, &UIButton.menuViewKey) as? LSMenuView
+            return objc_getAssociatedObject(self, &AssociatedKeys.menuViewKey) as? LSMenuView
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIButton.menuViewKey,
+                &AssociatedKeys.menuViewKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
@@ -386,17 +385,16 @@ public extension UIButton {
 
 public extension UIBarButtonItem {
 
-    /// 关联的菜单视图
-    private static var menuViewKey: UInt8 = 0
-
-    var ls_menuView: LSMenuView? {
+    private enum AssociatedKeys {
+        static var menuViewKey: UInt8 = 0
+    }var ls_menuView: LSMenuView? {
         get {
-            return objc_getAssociatedObject(self, &UIBarButtonItem.menuViewKey) as? LSMenuView
+            return objc_getAssociatedObject(self, &AssociatedKeys.menuViewKey) as? LSMenuView
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIBarButtonItem.menuViewKey,
+                &AssociatedKeys.menuViewKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

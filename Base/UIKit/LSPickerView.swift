@@ -204,17 +204,16 @@ extension LSPickerView: UIPickerViewDelegate {
 
 public extension UITextField {
 
-    /// 关联的选择器视图
-    private static var pickerViewKey: UInt8 = 0
-
-    var ls_pickerView: LSPickerView? {
+    private enum AssociatedKeys {
+        static var pickerViewKey: UInt8 = 0
+    }var ls_pickerView: LSPickerView? {
         get {
-            return objc_getAssociatedObject(self, &UITextField.pickerViewKey) as? LSPickerView
+            return objc_getAssociatedObject(self, &AssociatedKeys.pickerViewKey) as? LSPickerView
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UITextField.pickerViewKey,
+                &AssociatedKeys.pickerViewKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

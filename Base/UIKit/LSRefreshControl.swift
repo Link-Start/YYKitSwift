@@ -252,17 +252,16 @@ public class LSRefreshControl: UIView {
 
 public extension UIScrollView {
 
-    /// 关联的刷新控件
-    private static var refreshControlKey: UInt8 = 0
-
-    var ls_refreshControl: LSRefreshControl? {
+    private enum AssociatedKeys {
+        static var refreshControlKey: UInt8 = 0
+    }var ls_refreshControl: LSRefreshControl? {
         get {
-            return objc_getAssociatedObject(self, &UIScrollView.refreshControlKey) as? LSRefreshControl
+            return objc_getAssociatedObject(self, &AssociatedKeys.refreshControlKey) as? LSRefreshControl
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIScrollView.refreshControlKey,
+                &AssociatedKeys.refreshControlKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
@@ -490,17 +489,16 @@ public class LSInfiniteScrollControl: UIView {
 
 public extension UIScrollView {
 
-    /// 关联的无限滚动控件
-    private static var infiniteScrollControlKey: UInt8 = 0
-
-    var ls_infiniteScrollControl: LSInfiniteScrollControl? {
+    private enum AssociatedKeys {
+        static var infiniteScrollControlKey: UInt8 = 0
+    }var ls_infiniteScrollControl: LSInfiniteScrollControl? {
         get {
-            return objc_getAssociatedObject(self, &UIScrollView.infiniteScrollControlKey) as? LSInfiniteScrollControl
+            return objc_getAssociatedObject(self, &AssociatedKeys.infiniteScrollControlKey) as? LSInfiniteScrollControl
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIScrollView.infiniteScrollControlKey,
+                &AssociatedKeys.infiniteScrollControlKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

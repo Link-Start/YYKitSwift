@@ -70,8 +70,7 @@ public extension LSEnum {
         }
 
         // 尝试直接使用 rawValue 初始化
-        if let convertible = self as? Int convertible {
-            let _ = convertible
+        if let _ = self as? Int.Type {
             // 这里需要具体的枚举类型支持
         }
 

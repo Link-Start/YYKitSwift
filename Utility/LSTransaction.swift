@@ -26,8 +26,8 @@ public class LSTransaction: NSObject {
 
     // MARK: - 静态属性
 
-    private static var transactionSet: Set<LSTransaction> = []
-    private static let lock = NSLock()
+    nonisolated(unsafe) private static var transactionSet: Set<LSTransaction> = []
+    nonisolated(unsafe) private static let lock = NSLock()
 
     // MARK: - 类方法
 
@@ -64,8 +64,8 @@ public class LSTransaction: NSObject {
 
         Self.setupRunLoopObserver()
 
-        lock.lock()
-        defer { lock.unlock() }
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
 
         Self.transactionSet.insert(self)
     }
@@ -74,7 +74,7 @@ public class LSTransaction: NSObject {
 
     private static func setupRunLoopObserver() {
         struct Static {
-            static var onceToken: Int = 0
+            nonisolated(unsafe) static var onceToken: Int = 0
         }
 
         DispatchQueue.once(token: &Static.onceToken) {
@@ -123,15 +123,8 @@ public class LSTransaction: NSObject {
 
 // MARK: - Hashable
 
-extension LSTransaction: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        let selectorPtr = UnsafeRawPointer(Unmanaged.passUnretained(selector as AnyObject).toOpaque())
-        let targetPtr = Unmanaged.passUnretained(target as AnyObject).toOpaque()
-
-        hasher.combine(bitPattern: Int64(Int(bitPattern: selectorPtr)))
-        hasher.combine(bitPattern: Int64(Int(bitPattern: targetPtr)))
-    }
-
+extension LSTransaction {
+    // NSObject 已经实现了 Hashable，这里只需要实现 == 操作符
     public static func == (lhs: LSTransaction, rhs: LSTransaction) -> Bool {
         return lhs.selector == rhs.selector && lhs.target === rhs.target
     }

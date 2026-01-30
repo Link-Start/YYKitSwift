@@ -63,36 +63,13 @@ public class LSWeakProxy: NSObject {
     // MARK: - 消息转发
 
     override public func forwardingTarget(for aSelector: Selector!) -> Any? {
+        // 将所有消息转发到目标对象
         return target
     }
 
-    override public func methodSignature(for aSelector: Selector!) -> NSMethodSignature? {
-        guard let target = target else {
-            // 如果 target 已释放，返回一个默认的方法签名
-            return NSObject.instanceMethodSignature(for: Selector(("init")))
-        }
-
-        // 让 target 处理方法签名
-        guard let sig = target.methodSignature(for: aSelector) else {
-            return super.methodSignature(for: aSelector)
-        }
-
-        return sig
-    }
-
-    override public func forward(_ aSelector: Selector!) -> UNrecognized {
-        // 如果 target 已释放，不做任何操作
-        guard let target = target else {
-            return super.forward(aSelector)
-        }
-
-        // 尝试让 target 处理
-        if target.responds(to: aSelector) {
-            return super.forward(aSelector)
-        }
-
-        return super.forward(aSelector)
-    }
+    // 注意: 在 Swift 中，NSMethodSignature 和 NSInvocation 不可用
+    // 大多数情况下，forwardingTarget(for:) 已经足够处理消息转发
+    // 如果需要更复杂的消息转发，可以使用 @objc 协议或其他方法
 
     // MARK: - NSObject Protocol Override
 
@@ -121,11 +98,11 @@ public class LSWeakProxy: NSObject {
         return target?.superclass
     }
 
-    override public var `class`: AnyClass {
-        if let tempValue = type(of: target {
-            return tempValue
+    public var `class`: AnyClass {
+        if let target = target {
+            return type(of: target)
         }
-        return self)
+        return type(of: self)
     }
 
     override public func isKind(of aClass: AnyClass) -> Bool {
@@ -149,7 +126,7 @@ public class LSWeakProxy: NSObject {
         return super.conforms(to: aProtocol)
     }
 
-    override public var isProxy: Bool {
+    public var isProxy: Bool {
         return true
     }
 

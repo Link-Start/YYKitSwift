@@ -15,16 +15,16 @@ import UIKit
 @MainActor
 public extension UITableView {
 
-    /// 关联对象 key
-    private static var emptyViewKey: UInt8 = 0
-
+    private enum AssociatedKeys {
+        static var emptyViewKey: UInt8 = 0
+    }
     /// 空视图
     var ls_emptyView: UIView? {
         get {
-            return objc_getAssociatedObject(self, &Self.emptyViewKey) as? UIView
+            return objc_getAssociatedObject(self, &AssociatedKeys.emptyViewKey) as? UIView
         }
         set {
-            objc_setAssociatedObject(self, &Self.emptyViewKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.emptyViewKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             updateEmptyViewVisibility()
         }
     }

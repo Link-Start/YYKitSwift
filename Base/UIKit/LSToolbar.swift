@@ -701,17 +701,16 @@ public class LSNavigationToolbar: UIView {
 
 public extension UIView {
 
-    /// 关联的工具栏
-    private static var toolbarKey: UInt8 = 0
-
-    var ls_toolbar: LSToolbar? {
+    private enum AssociatedKeys {
+        static var toolbarKey: UInt8 = 0
+    }var ls_toolbar: LSToolbar? {
         get {
-            return objc_getAssociatedObject(self, &UIView.toolbarKey) as? LSToolbar
+            return objc_getAssociatedObject(self, &AssociatedKeys.toolbarKey) as? LSToolbar
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIView.toolbarKey,
+                &AssociatedKeys.toolbarKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

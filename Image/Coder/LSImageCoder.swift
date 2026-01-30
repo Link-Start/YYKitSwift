@@ -980,25 +980,25 @@ public class LSImageDecoder {
 
             // 获取 GIF 帧持续时间
             if let gifDict = frameProps[kCGImagePropertyGIFDictionary] as? [CFString: Any] {
-                let delayTime
-                if let tempDelaytime = TimeInterval {
-                    delayTime = tempDelaytime
+                let delayTime: TimeInterval
+                if let tempDelay = gifDict[kCGImagePropertyGIFDelayTime] as? TimeInterval {
+                    delayTime = tempDelay
                 } else {
                     delayTime = 0
                 }
                 let unclampedDelayTime = gifDict[kCGImagePropertyGIFUnclampedDelayTime] as? TimeInterval
-                if let tempValue = unclampedDelayTime {
-                    duration = tempValue
+                if let tempValue = unclampedDelayTime, tempValue > 0 {
+                    frame.duration = tempValue
                 } else {
-                    duration = delayTime
+                    frame.duration = (delayTime > 0 ? delayTime : 0.1)
                 }
 
                 // 获取 GIF 处理方法
-                if let disposeMethod = gifDict[kCGImagePropertyGIFUnclampedDelayTime] as? UInt {
+                if let disposeMethod = gifDict[kCGImagePropertyGIFDisposeMethod] as? UInt {
                     if let tempValue = LSImageDisposeMethod(rawValue: disposeMethod) {
-                        dispose = tempValue
+                        frame.dispose = tempValue
                     } else {
-                        dispose = .none
+                        frame.dispose = .none
                     }
                 }
             }
@@ -1052,20 +1052,17 @@ public class LSImageDecoder {
 
         // 尝试从 GIF 获取
         if let gifDict = frameProps[kCGImagePropertyGIFDictionary] as? [CFString: Any] {
-            let delayTime
-            if let tempDelaytime = TimeInterval {
-                delayTime = tempDelaytime
+            let delayTime: TimeInterval
+            if let tempDelay = gifDict[kCGImagePropertyGIFDelayTime] as? TimeInterval {
+                delayTime = tempDelay
             } else {
                 delayTime = 0
             }
             let unclampedDelayTime = gifDict[kCGImagePropertyGIFUnclampedDelayTime] as? TimeInterval
-            let duration
-            if let tempDuration = unclampedDelayTime {
-                duration = tempDuration
-            } else {
-                duration = (delayTime > 0 ? delayTime : nil) {
-            }
-                return duration
+            if let tempDuration = unclampedDelayTime, tempDuration > 0 {
+                return tempDuration
+            } else if delayTime > 0 {
+                return delayTime
             }
         }
 

@@ -737,17 +737,16 @@ public class LSCapsuleSegmentView: LSSegmentView {
 
 public extension UIView {
 
-    /// 关联的分段视图
-    private static var segmentViewKey: UInt8 = 0
-
-    var ls_segmentView: LSSegmentView? {
+    private enum AssociatedKeys {
+        static var segmentViewKey: UInt8 = 0
+    }var ls_segmentView: LSSegmentView? {
         get {
-            return objc_getAssociatedObject(self, &UIView.segmentViewKey) as? LSSegmentView
+            return objc_getAssociatedObject(self, &AssociatedKeys.segmentViewKey) as? LSSegmentView
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIView.segmentViewKey,
+                &AssociatedKeys.segmentViewKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

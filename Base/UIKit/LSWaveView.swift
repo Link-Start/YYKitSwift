@@ -629,17 +629,16 @@ public class LSRippleButton: UIButton {
 
 public extension UIView {
 
-    /// 关联的波浪视图
-    private static var waveViewKey: UInt8 = 0
-
-    var ls_waveView: LSWaveView? {
+    private enum AssociatedKeys {
+        static var waveViewKey: UInt8 = 0
+    }var ls_waveView: LSWaveView? {
         get {
-            return objc_getAssociatedObject(self, &UIView.waveViewKey) as? LSWaveView
+            return objc_getAssociatedObject(self, &AssociatedKeys.waveViewKey) as? LSWaveView
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIView.waveViewKey,
+                &AssociatedKeys.waveViewKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

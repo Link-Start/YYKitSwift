@@ -15,9 +15,9 @@ import UIKit
 
 public extension UIView {
 
-    /// 关联的圆角遮罩视图
-    private static var cornerMaskViewKey: UInt8 = 0
-
+    private enum AssociatedKeys {
+        static var cornerMaskViewKey: UInt8 = 0
+    }
     /// 设置圆角（支持阴影）
     ///
     /// - Parameters:

@@ -324,16 +324,16 @@ public class LSBadgeView: UIView {
 
 public extension UIView {
 
-    /// 关联的角标视图
-    private static var badgeKey: UInt8 = 0
-
+    private enum AssociatedKeys {
+        static var badgeKey: UInt8 = 0
+    }
     /// 角标视图
     var ls_badge: LSBadgeView? {
         get {
-            return objc_getAssociatedObject(self, &UIView.badgeKey) as? LSBadgeView
+            return objc_getAssociatedObject(self, &AssociatedKeys.badgeKey) as? LSBadgeView
         }
         set {
-            objc_setAssociatedObject(self, &UIView.badgeKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.badgeKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 

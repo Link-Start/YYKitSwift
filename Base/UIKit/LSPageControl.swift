@@ -537,17 +537,16 @@ public class LSDotPageControl: LSPageControl {
 
 public extension UIScrollView {
 
-    /// 关联的页面指示器
-    private static var pageControlKey: UInt8 = 0
-
-    var ls_pageControl: LSPageControl? {
+    private enum AssociatedKeys {
+        static var pageControlKey: UInt8 = 0
+    }var ls_pageControl: LSPageControl? {
         get {
-            return objc_getAssociatedObject(self, &UIScrollView.pageControlKey) as? LSPageControl
+            return objc_getAssociatedObject(self, &AssociatedKeys.pageControlKey) as? LSPageControl
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIScrollView.pageControlKey,
+                &AssociatedKeys.pageControlKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

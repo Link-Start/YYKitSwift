@@ -19,7 +19,7 @@ import Foundation
 ///
 /// - Note: 此类使用 DispatchSemaphore 保护内部状态，在 Swift 6 严格并发模式下
 ///         使用 @unchecked Sendable 表示手动实现了线程安全。
-public final class LSThreadSafeDictionary<Key: Hashable, Value>: NSObject, @unchecked Sendable {
+public final class LSThreadSafeDictionary<Key: Hashable & NSCopying, Value: AnyObject>: NSObject, @unchecked Sendable {
 
     // MARK: - 属性
 
@@ -35,7 +35,7 @@ public final class LSThreadSafeDictionary<Key: Hashable, Value>: NSObject, @unch
     public init(dictionary: [Key: Value]) {
         super.init()
         for (key, value) in dictionary {
-            self.dictionary.setObject(value as AnyObject, forKey: key as AnyObject)
+            self.dictionary.setObject(value, forKey: key)
         }
     }
 
@@ -68,7 +68,7 @@ public final class LSThreadSafeDictionary<Key: Hashable, Value>: NSObject, @unch
     public func object(forKey key: Key) -> Value? {
         lock.wait()
         defer { lock.signal() }
-        return dictionary.object(forKey: key as AnyObject) as? Value
+        return dictionary.object(forKey: key) as? Value
     }
 
     /// 下标访问
@@ -89,7 +89,7 @@ public final class LSThreadSafeDictionary<Key: Hashable, Value>: NSObject, @unch
     public func contains(key: Key) -> Bool {
         lock.wait()
         defer { lock.signal() }
-        return dictionary.object(forKey: key as AnyObject) != nil
+        return dictionary.object(forKey: key) != nil
     }
 
     // MARK: - 修改方法
@@ -98,14 +98,14 @@ public final class LSThreadSafeDictionary<Key: Hashable, Value>: NSObject, @unch
     public func set(_ value: Value, forKey key: Key) {
         lock.wait()
         defer { lock.signal() }
-        dictionary.setObject(value as AnyObject, forKey: key as AnyObject)
+        dictionary.setObject(value, forKey: key)
     }
 
     /// 移除指定键的值
     public func removeObject(forKey key: Key) {
         lock.wait()
         defer { lock.signal() }
-        dictionary.removeObject(forKey: key as AnyObject)
+        dictionary.removeObject(forKey: key)
     }
 
     /// 移除所有对象
@@ -120,14 +120,14 @@ public final class LSThreadSafeDictionary<Key: Hashable, Value>: NSObject, @unch
         lock.wait()
         defer { lock.signal() }
         for (key, value) in dictionary {
-            self.dictionary.setObject(value as AnyObject, forKey: key as AnyObject)
+            self.dictionary.setObject(value, forKey: key)
         }
     }
 
     // MARK: - 枚举方法
 
     /// 使用 block 枚举键值对
-    public func enumerateKeysAndObjects(_ block: (Key, Value, UnsafeMutablePointer<Bool>) -> Void) {
+    public func enumerateKeysAndObjects(_ block: (Key, Value, UnsafeMutablePointer<ObjCBool>) -> Void) {
         lock.wait()
         defer { lock.signal() }
         dictionary.enumerateKeysAndObjects { key, value, stop in
@@ -138,7 +138,7 @@ public final class LSThreadSafeDictionary<Key: Hashable, Value>: NSObject, @unch
     }
 
     /// 使用 block 枚举键和对象
-    public func enumerateKeysAndObjects(options: NSEnumerationOptions = [], using block: (Key, Value, UnsafeMutablePointer<Bool>) -> Void) {
+    public func enumerateKeysAndObjects(options: NSEnumerationOptions = [], using block: (Key, Value, UnsafeMutablePointer<ObjCBool>) -> Void) {
         lock.wait()
         defer { lock.signal() }
         dictionary.enumerateKeysAndObjects(options: options) { key, value, stop in
@@ -199,7 +199,7 @@ public final class LSThreadSafeDictionary<Key: Hashable, Value>: NSObject, @unch
             other.lock.signal()
             lock.signal()
         }
-        return dictionary.isEqual(to: other.dictionary)
+        return dictionary == other.dictionary
     }
 
     public override var hash: Int {

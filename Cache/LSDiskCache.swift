@@ -26,9 +26,9 @@ public final class LSDiskCache: NSObject, @unchecked Sendable {
 
     // MARK: - 关联对象键
 
-    private static var extendedDataKey: UInt8 = 0
-
-    // MARK: - 属性
+    private enum AssociatedKeys {
+        static var extendedDataKey: UInt8 = 0
+    }// MARK: - 属性
 
     /// 缓存名称
     public var name: String?

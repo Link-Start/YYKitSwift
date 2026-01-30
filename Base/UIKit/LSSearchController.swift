@@ -653,17 +653,16 @@ public class LSSearchBar: UIView {
 
 public extension UIView {
 
-    /// 关联的搜索栏
-    private static var searchBarKey: UInt8 = 0
-
-    var ls_searchBar: LSSearchBar? {
+    private enum AssociatedKeys {
+        static var searchBarKey: UInt8 = 0
+    }var ls_searchBar: LSSearchBar? {
         get {
-            return objc_getAssociatedObject(self, &UIView.searchBarKey) as? LSSearchBar
+            return objc_getAssociatedObject(self, &AssociatedKeys.searchBarKey) as? LSSearchBar
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIView.searchBarKey,
+                &AssociatedKeys.searchBarKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

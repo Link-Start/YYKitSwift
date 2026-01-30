@@ -156,20 +156,20 @@ public extension YYKitSwift where Base: UIButton {
 
     // MARK: - 关联对象键
 
-    private static var stateOperationsKey: UInt8 = 0
-
-    // MARK: - 私有辅助属性
+    private enum AssociatedKeys {
+        static var stateOperationsKey: UInt8 = 0
+    }// MARK: - 私有辅助属性
 
     /// 获取指定状态的操作
     private var stateOperations: [UInt: LSWebImageOperation] {
         get {
-            if let dict = objc_getAssociatedObject(base, &Self.stateOperationsKey) as? [UInt: LSWebImageOperation] {
+            if let dict = objc_getAssociatedObject(base, &AssociatedKeys.stateOperationsKey) as? [UInt: LSWebImageOperation] {
                 return dict
             }
             return [:]
         }
         set {
-            objc_setAssociatedObject(base, &Self.stateOperationsKey, newValue as AnyObject?, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(base, &AssociatedKeys.stateOperationsKey, newValue as AnyObject?, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 
@@ -298,28 +298,29 @@ public extension YYKitSwift where Base: CALayer {
 
     // MARK: - 关联对象键
 
-    private static var currentImageURLKey: UInt8 = 0
-    private static var currentImageOperationKey: UInt8 = 0
-
-    // MARK: - 属性
+    private enum AssociatedKeys {
+        static var currentImageURLKey: UInt8 = 0
+    }private enum AssociatedKeys {
+    static var currentImageOperationKey: UInt8 = 0
+}// MARK: - 属性
 
     /// 当前图像 URL
     var ls_currentImageURL: URL? {
         get {
-            return objc_getAssociatedObject(base, &Self.currentImageURLKey) as? URL
+            return objc_getAssociatedObject(base, &AssociatedKeys.currentImageURLKey) as? URL
         }
         set {
-            objc_setAssociatedObject(base, &Self.currentImageURLKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(base, &AssociatedKeys.currentImageURLKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 
     /// 当前图像操作
     private var ls_currentImageOperation: LSWebImageOperation? {
         get {
-            return objc_getAssociatedObject(base, &Self.currentImageOperationKey) as? LSWebImageOperation
+            return objc_getAssociatedObject(base, &AssociatedKeys.currentImageOperationKey) as? LSWebImageOperation
         }
         set {
-            objc_setAssociatedObject(base, &Self.currentImageOperationKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(base, &AssociatedKeys.currentImageOperationKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 
@@ -398,28 +399,29 @@ public extension YYKitSwift where Base: MKAnnotationView {
 
     // MARK: - 关联对象键
 
-    private static var currentImageURLKey: UInt8 = 0
-    private static var currentImageOperationKey: UInt8 = 0
-
-    // MARK: - 属性
+    private enum AssociatedKeys {
+        static var currentImageURLKey: UInt8 = 0
+    }private enum AssociatedKeys {
+    static var currentImageOperationKey: UInt8 = 0
+}// MARK: - 属性
 
     /// 当前图像 URL
     var ls_currentImageURL: URL? {
         get {
-            return objc_getAssociatedObject(base, &Self.currentImageURLKey) as? URL
+            return objc_getAssociatedObject(base, &AssociatedKeys.currentImageURLKey) as? URL
         }
         set {
-            objc_setAssociatedObject(base, &Self.currentImageURLKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(base, &AssociatedKeys.currentImageURLKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 
     /// 当前图像操作
     private var ls_currentImageOperation: LSWebImageOperation? {
         get {
-            return objc_getAssociatedObject(base, &Self.currentImageOperationKey) as? LSWebImageOperation
+            return objc_getAssociatedObject(base, &AssociatedKeys.currentImageOperationKey) as? LSWebImageOperation
         }
         set {
-            objc_setAssociatedObject(base, &Self.currentImageOperationKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(base, &AssociatedKeys.currentImageOperationKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 

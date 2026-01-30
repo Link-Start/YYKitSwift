@@ -15,16 +15,16 @@ import UIKit
 @MainActor
 public extension UITextField {
 
-    /// 关联对象 key
-    private static var maxLenghtKey: UInt8 = 0
-
+    private enum AssociatedKeys {
+        static var maxLenghtKey: UInt8 = 0
+    }
     /// 最大长度限制
     var ls_maxLength: Int? {
         get {
-            return objc_getAssociatedObject(self, &Self.maxLenghtKey) as? Int
+            return objc_getAssociatedObject(self, &AssociatedKeys.maxLenghtKey) as? Int
         }
         set {
-            objc_setAssociatedObject(self, &Self.maxLenghtKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.maxLenghtKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             setupMaxLengthObserver()
         }
     }

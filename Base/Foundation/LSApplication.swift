@@ -466,8 +466,12 @@ _temp1
     ///
     /// - Parameter appId: App ID
     public static func openInAppStore(appId: String) {
-        let url = URL(string: "itms-apps://itunes.apple.com/app/id\(appId)") ??
-                  URL(string: "https://apps.apple.com/app/id\(appId)")
+        let url: URL?
+        if let tempUrl = URL(string: "itms-apps://itunes.apple.com/app/id\(appId)") {
+            url = tempUrl
+        } else {
+            url = URL(string: "https://apps.apple.com/app/id\(appId)")
+        }
 
         if let url = url {
             UIApplication.shared.open(url)

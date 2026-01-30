@@ -294,17 +294,16 @@ public extension LSDividerView {
 
 public extension UIView {
 
-    /// 关联的分割线
-    private static var dividerViewKey: UInt8 = 0
-
-    var ls_dividerView: LSDividerView? {
+    private enum AssociatedKeys {
+        static var dividerViewKey: UInt8 = 0
+    }var ls_dividerView: LSDividerView? {
         get {
-            return objc_getAssociatedObject(self, &UIView.dividerViewKey) as? LSDividerView
+            return objc_getAssociatedObject(self, &AssociatedKeys.dividerViewKey) as? LSDividerView
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIView.dividerViewKey,
+                &AssociatedKeys.dividerViewKey,
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )

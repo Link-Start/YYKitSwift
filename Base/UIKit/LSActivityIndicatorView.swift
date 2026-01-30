@@ -407,16 +407,16 @@ public class LSActivityIndicatorView: UIView {
 
 public extension UIView {
 
-    /// 关联的加载指示器
-    private static var activityIndicatorKey: UInt8 = 0
-
+    private enum AssociatedKeys {
+        static var activityIndicatorKey: UInt8 = 0
+    }
     /// 加载指示器
     var ls_activityIndicator: LSActivityIndicatorView? {
         get {
-            return objc_getAssociatedObject(self, &UIView.activityIndicatorKey) as? LSActivityIndicatorView
+            return objc_getAssociatedObject(self, &AssociatedKeys.activityIndicatorKey) as? LSActivityIndicatorView
         }
         set {
-            objc_setAssociatedObject(self, &UIView.activityIndicatorKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.activityIndicatorKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 

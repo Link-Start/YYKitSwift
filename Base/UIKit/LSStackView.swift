@@ -325,7 +325,7 @@ public extension UIView {
     }
 
     /// 创建垂直栈
-    @discard0Result
+    @discardableResult
     func ls_vStack(
         spacing: CGFloat = 8,
         alignment: UIStackView.Alignment = .fill,
@@ -738,6 +738,7 @@ public class LSEqualWidthStackView: LSStackView {
         } else {
             distribution = .fill
         }
+    }
 }
 
 #endif
