@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'YYKitSwift'
-  s.version          = '0.1.0'
+  s.version          = '2.0.0'
   s.summary          = 'YYKit 的 Swift 6 重写版本，提供 iOS 13+ 支持'
   s.description      = <<-DESC
 YYKitSwift 是 YYKit 的 Swift 6 重写版本，提供了完整的 iOS 13+ 支持。
